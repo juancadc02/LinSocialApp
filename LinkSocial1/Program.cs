@@ -1,4 +1,5 @@
 using DB;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,12 @@ builder.Services.AddDbContext<GestorLinkSocialDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("CadenaConexionPostgreSQL"));
 });
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/ControladorIniciarSesion/irAIniciarSesion";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+    });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,6 +33,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 

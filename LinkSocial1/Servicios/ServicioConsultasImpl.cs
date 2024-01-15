@@ -43,7 +43,10 @@ namespace LinkSocial1.Servicios
                     correoElectronico=nuevoUsuario.correoElectronico,
                     dniUsuario=nuevoUsuario.dniUsuario,
                     movilUsuario=nuevoUsuario.movilUsuario,
-                    contraseña=encriptar.Encriptar(nuevoUsuario.contraseña)
+                    contraseña=encriptar.Encriptar(nuevoUsuario.contraseña),
+                    fchNacimiento=nuevoUsuario.fchNacimiento,
+                    fchRegistro=nuevoUsuario.fchRegistro,
+                    idAcceso=nuevoUsuario.idAcceso
                 };
 
                 contexto.Usuarios.Add(nuevoUsuario);
@@ -53,6 +56,10 @@ namespace LinkSocial1.Servicios
         public bool existeCorreoElectronico(string correoElectronico)
         {
             return dbContext.Usuarios.Any(u => u.correoElectronico == correoElectronico);
+        }
+        public bool existeDNI(string dni)
+        {
+            return dbContext.Usuarios.Any(u => u.dniUsuario == dni);
         }
     }
 }

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LinkSocial1.Controllers
 {
+    [Authorize]
     public class ControladorPaginaInicio : Controller
     {
         public ActionResult cargarPaginaInicio()

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -23,7 +24,7 @@
                 <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
                     <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
                         Bienvenido a<br />
-                        <span style="color: hsl(216, 20%, 5%)">BiblioGest</span>
+                        <span style="color: hsl(216, 20%, 5%)">LinkSocial</span>
                     </h1>
                 </div>
 
@@ -50,7 +51,7 @@
                                 </div>
 
                                 <!-- Botón de Iniciar Sesión -->
-                                <button type="submit" class="btn btn-primary btn-block mb-4">
+                                <button id="btn-iniciarSesion" type="submit" class="btn btn-primary btn-block mb-4">
                                     Iniciar Sesión
                                 </button>
 
@@ -70,7 +71,18 @@
                                 </div>
 
                             </form>
-                           
+                            @if (TempData["Error"] != null)
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @TempData["Error"]
+                                </div>
+                            }
+                            @if (TempData["MensajeRegistroExitoso"] != null)
+                            {
+                                <div class="alert alert-success" role="alert">
+                                    @TempData["MensajeRegistroExitoso"]
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

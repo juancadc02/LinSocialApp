@@ -20,6 +20,13 @@ namespace DB.Modelo
         public string dniUsuario { get; set; }
         public string movilUsuario { get; set; }
         public string contraseña { get; set; }
+        public DateTime fchRegistro { get; set; }
+        public DateTime fchNacimiento { get; set; }
+        [ForeignKey("Accesos")]
+        public int idAcceso { get; set; }
+
+
+        public Accesos Accesos { get; set; }
 
 
 
@@ -43,6 +50,14 @@ namespace DB.Modelo
         public Usuarios()
         {
         }
+
+        public Usuarios(string nombreCompleto, string correoElectronico, string dniUsuario, string movilUsuario, string contraseña, DateTime fchRegistro, DateTime fchNacimiento, int idAcceso) : this(nombreCompleto, correoElectronico, dniUsuario, movilUsuario, contraseña)
+        {
+            this.fchRegistro = fchRegistro;
+            this.fchNacimiento = fchNacimiento;
+            this.idAcceso = idAcceso;
+        }
+
 
 
 

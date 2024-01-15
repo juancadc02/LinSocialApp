@@ -13,19 +13,20 @@ namespace LinkSocial1.Controllers
         }
         
         [HttpPost]
-        public IActionResult RegistrarUsuario(string nombreCompleto,string correoElectronico,string dniUsuario,string movilUsuario,string contraseña)
+        public IActionResult RegistrarUsuario(string nombreCompleto,string correoElectronico,string dniUsuario,string movilUsuario,string contraseña,DateTime fchNacimiento)
         {
             ServicioConsultas consulta = new ServicioConsultasImpl();
 
-            if (consulta.existeCorreoElectronico(correoElectronico))
+            if (consulta.existeCorreoElectronico(correoElectronico) || consulta.existeDNI(dniUsuario))
             {
                 TempData["ErrorRegistro"] = "El correo electrónico o el DNI ya están registrados.";
                 return RedirectToAction("irARegistro", "ControladorRegistrarUsuarios"); // Puedes redirigir a una vista de error o a la misma página de registro
             }
 
             //Si el correo electronico no existe, pasamos al registro del usuario.
+            DateTime fchRegistro = DateTime.Now.ToUniversalTime();
 
-            Usuarios nuevoUsuario = new Usuarios(nombreCompleto, correoElectronico, dniUsuario, movilUsuario, contraseña);
+            Usuarios nuevoUsuario = new Usuarios(nombreCompleto, correoElectronico, dniUsuario, movilUsuario, contraseña, fchRegistro.Date,fchNacimiento.ToUniversalTime(),1);
             consulta.registrarUsuario(nuevoUsuario);
             TempData["MensajeRegistroExitoso"] = "Usuario registrado con éxito.";
             return RedirectToAction("irAIniciarSesion", "ControladorIniciarSesion");
