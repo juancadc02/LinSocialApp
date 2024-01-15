@@ -42,7 +42,7 @@ namespace LinkSocial1.Controllers
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties);
-
+               
                 return RedirectToAction("cargarPaginaInicio", "ControladorPaginaInicio");
             }
             else

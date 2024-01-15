@@ -1,4 +1,5 @@
 using DB;
+using LinkSocial1.Controllers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,8 @@ builder.Services.AddDbContext<GestorLinkSocialDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("CadenaConexionPostgreSQL"));
 });
+
+
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

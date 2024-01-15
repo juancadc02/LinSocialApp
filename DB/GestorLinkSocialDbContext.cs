@@ -24,6 +24,7 @@ namespace DB
             optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=BBDD-LinkSocial;User Id=postgres;Password=1234; SearchPath=public");
         }
 
+
         public DbSet<Usuarios> Usuarios { get; set; }
         public DbSet<Accesos> Accesos { get; set; }
     }
