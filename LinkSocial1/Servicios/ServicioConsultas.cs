@@ -7,7 +7,7 @@ namespace LinkSocial1.Servicios
     /// </summary>
     public interface ServicioConsultas
     {
-        public bool IniciarSesion(string email_usuario, string clave_usuario);
+        public bool IniciarSesion(string correoElectronico, string contraseña, out string rolUsuario);
         /// <summary>
         /// Método encargado de registrar nuevos usuarios
         /// </summary>

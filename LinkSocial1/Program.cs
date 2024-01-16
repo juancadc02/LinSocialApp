@@ -2,6 +2,7 @@ using DB;
 using LinkSocial1.Controllers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/ControladorIniciarSesion/irAIniciarSesion";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     });
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

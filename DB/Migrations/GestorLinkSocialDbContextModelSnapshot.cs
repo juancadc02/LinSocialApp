@@ -22,26 +22,6 @@ namespace DB.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("DB.Modelo.Accesos", b =>
-                {
-                    b.Property<int>("idAcceso")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("idAcceso"));
-
-                    b.Property<int>("codigoAcceso")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("descripcionAcceso")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("idAcceso");
-
-                    b.ToTable("Accesos");
-                });
-
             modelBuilder.Entity("DB.Modelo.Usuarios", b =>
                 {
                     b.Property<int>("idUsuario")
@@ -68,9 +48,6 @@ namespace DB.Migrations
                     b.Property<DateTime>("fchRegistro")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("idAcceso")
-                        .HasColumnType("integer");
-
                     b.Property<string>("movilUsuario")
                         .IsRequired()
                         .HasColumnType("text");
@@ -79,22 +56,13 @@ namespace DB.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("rolAcceso")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("idUsuario");
 
-                    b.HasIndex("idAcceso");
-
                     b.ToTable("Usuarios");
-                });
-
-            modelBuilder.Entity("DB.Modelo.Usuarios", b =>
-                {
-                    b.HasOne("DB.Modelo.Accesos", "Accesos")
-                        .WithMany()
-                        .HasForeignKey("idAcceso")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Accesos");
                 });
 #pragma warning restore 612, 618
         }

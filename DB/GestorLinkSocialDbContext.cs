@@ -26,6 +26,5 @@ namespace DB
 
 
         public DbSet<Usuarios> Usuarios { get; set; }
-        public DbSet<Accesos> Accesos { get; set; }
     }
 }

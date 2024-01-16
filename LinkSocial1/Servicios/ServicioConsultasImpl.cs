@@ -17,21 +17,24 @@ namespace LinkSocial1.Servicios
         {
             dbContext = new GestorLinkSocialDbContext();
         }
-        public bool IniciarSesion(string correoElectronico, string contraseña)
+        public bool IniciarSesion(string correoElectronico, string contraseña, out string rolUsuario)
         {
             ServicioEncriptar encriptarContraseña = new ServicioEncriptarImpl();
 
             var usuario = dbContext.Usuarios.FirstOrDefault(u => u.correoElectronico == correoElectronico && u.contraseña == encriptarContraseña.Encriptar(contraseña));
 
-            if(usuario == null)
+            if (usuario == null)
             {
+                rolUsuario = null; // Usuario no encontrado, no hay rol que devolver
                 return false;
             }
             else
             {
+                rolUsuario = usuario.rolAcceso;
                 return true;
             }
         }
+
         public void registrarUsuario(Usuarios nuevoUsuario)
         {
             ServicioEncriptar encriptar = new ServicioEncriptarImpl();
@@ -46,7 +49,7 @@ namespace LinkSocial1.Servicios
                     contraseña=encriptar.Encriptar(nuevoUsuario.contraseña),
                     fchNacimiento=nuevoUsuario.fchNacimiento,
                     fchRegistro=nuevoUsuario.fchRegistro,
-                    idAcceso=nuevoUsuario.idAcceso
+                    rolAcceso=nuevoUsuario.rolAcceso
                 };
 
                 contexto.Usuarios.Add(nuevoUsuario);

@@ -17,32 +17,40 @@ namespace LinkSocial1.Controllers
         public IActionResult IniciarSesion(string correoElectronico, string contraseña)
         {
             ServicioConsultas consultas = new ServicioConsultasImpl();
+
             if (string.IsNullOrEmpty(correoElectronico) || string.IsNullOrEmpty(contraseña))
             {
                 return RedirectToAction("Error", "Home");
             }
-            if (consultas.IniciarSesion(correoElectronico, contraseña))
+
+            if (consultas.IniciarSesion(correoElectronico, contraseña, out string rolUsuario))
             {
                 // Autenticar al usuario
                 var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, correoElectronico),
+        };
+
+                // Verificar si el usuario tiene el rol "admin"
+                if (rolUsuario == "admin")
                 {
-                    new Claim(ClaimTypes.Name, correoElectronico),
-                };
+                    claims.Add(new Claim(ClaimTypes.Role, "admin"));
+                    // Puedes agregar otros roles aquí según la lógica de tu aplicación
+                }
 
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(
-                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
                 AuthenticationProperties authProperties = new AuthenticationProperties
                 {
                     AllowRefresh = true
-
                 };
 
                 HttpContext.SignInAsync(
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties);
-               
+
                 return RedirectToAction("cargarPaginaInicio", "ControladorPaginaInicio");
             }
             else
@@ -50,9 +58,8 @@ namespace LinkSocial1.Controllers
                 TempData["Error"] = "Usuario o contraseña incorrectos. Inténtelo de nuevo.";
                 return View("~/Views/InicioSesion/IniciarSesion.cshtml");
             }
-
-
         }
+
         public IActionResult CerrarSesion()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
