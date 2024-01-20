@@ -1,6 +1,42 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<h1>Administracion</h1>
+﻿<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+    }
+
+    .fixed-sidebar {
+        position: fixed;
+        height: 100%;
+        top: 67px; /* Ajusta el margen superior según tus necesidades */
+        left: 0;
+        background-color: #f0f0f0; /* Puedes cambiar el color de fondo según tus preferencias */
+        padding: 20px; /* Puedes ajustar el espacio interno según tus necesidades */
+        box-sizing: border-box;
+        width:250px;
+    }
+
+    .nav {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav-item {
+        margin-bottom: 10px; /* Espacio entre cada opción de navegación */
+    }
+
+    .nav-link {
+        text-decoration: none;
+        color: #333; /* Color del texto */
+        font-weight: bold;
+    }
+</style>
+
+<nav class="fixed-sidebar">
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="ControladorAdministracion" asp-action="irUsuario">Usuario</a>
+
+        </li>
+    </ul>
+</nav>

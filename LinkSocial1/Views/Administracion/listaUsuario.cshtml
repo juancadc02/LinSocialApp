@@ -1,0 +1,97 @@
+﻿﻿@{
+    ViewData["Title"] = "Lista de Usuarios";
+    // Obtén la lista de préstamos desde ViewData
+    var listaUsuario = ViewData["listaUsuario"] as List<DB.Modelo.Usuarios>;
+}
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+    }
+
+    .fixed-sidebar {
+        position: fixed;
+        height: 100%;
+        top: 67px; /* Ajusta el margen superior según tus necesidades */
+        left: 0;
+        background-color: #f0f0f0; /* Puedes cambiar el color de fondo según tus preferencias */
+        padding: 20px; /* Puedes ajustar el espacio interno según tus necesidades */
+        box-sizing: border-box;
+        width: 250px;
+    }
+
+    .nav {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav-item {
+        margin-bottom: 10px; /* Espacio entre cada opción de navegación */
+    }
+
+    .nav-link {
+        text-decoration: none;
+        color: #333; /* Color del texto */
+        font-weight: bold;
+    }
+</style>
+
+<nav class="fixed-sidebar">
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="ControladorAdministracion" asp-action="irUsuario">Usuario</a>
+
+        </li>
+    </ul>
+</nav>
+<div class="container" >
+
+    <table class="table" style="margin-left:50px;">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Dni</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Fch Nacimiento</th>
+                <th scope="col">Permisos</th>
+                <th scope="col">Acciones</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usu in listaUsuario)
+            {
+                <tr>
+                    <!-- usu.nombreCompleto, usu.correoElectronico, usu.dniUsuario, usu.movilUsuario, usu.fchNacimiento, usu.rolAcceso-->
+                    <td>@usu.nombreCompleto</td>
+                    <td>@usu.correoElectronico</td>
+                    <td>@usu.dniUsuario</td>
+                    <td>@usu.movilUsuario</td>
+                    <td>@usu.fchNacimiento</td>
+                    <td>@usu.rolAcceso</td>
+
+
+                    <td>
+                        <a href="@Url.Action("EliminarUsuario", "ControladorAdmin", new { id = usu.idUsuario })" class="btn btn-outline-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">Borrar</a>
+                        <a href="@Url.Action("EditarUsuario", "ControladorAdmin", new { id = usu.idUsuario })" class="btn btn-outline-success">Editar</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+</div>
+
+
+
+
+

@@ -25,5 +25,10 @@ namespace LinkSocial1.Servicios
         /// <param name="dni"></param>
         /// <returns></returns>
         public bool existeDNI(string dni);
+
+        /// <summary>
+        /// Interfaz del metodo que devuelve un listado con todos los usuarios de la base de datos.
+        /// </summary>
+        public List<Usuarios> mostrarUsuarios();
     }
 }

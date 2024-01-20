@@ -64,5 +64,35 @@ namespace LinkSocial1.Servicios
         {
             return dbContext.Usuarios.Any(u => u.dniUsuario == dni);
         }
+        public List<Usuarios> mostrarUsuarios()
+        {
+
+            try
+            {
+                using (var contexto = new GestorLinkSocialDbContext())
+                {
+                    List<Usuarios> listaUsuarios = contexto.Usuarios.ToList();
+
+                    if (listaUsuarios.Count == 0)
+                    {
+                        Console.WriteLine("No existe ningun usuario");
+                    }
+                    else
+                    {
+                        foreach (var usu in listaUsuarios)
+                        {
+                            Console.WriteLine("\n\n\t{0}   {1}  {2} {3} {4} {5}", usu.nombreCompleto, usu.correoElectronico, usu.dniUsuario, usu.movilUsuario, usu.fchNacimiento, usu.rolAcceso);
+                        }
+                    }
+                    return listaUsuarios;
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Se ha producido un error:{0}",ex);
+                return null;
+            }
+            
+        }
     }
 }
