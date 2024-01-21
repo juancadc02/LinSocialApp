@@ -74,8 +74,8 @@
 
 
                     <td>
-                        <a href="@Url.Action("EliminarUsuario", "ControladorAdmin", new { id = usu.idUsuario })" class="btn btn-outline-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">Borrar</a>
-                        <a href="@Url.Action("EditarUsuario", "ControladorAdmin", new { id = usu.idUsuario })" class="btn btn-outline-success">Editar</a>
+                        <a href="@Url.Action("EliminarUsuario", "ControladorAdministracion", new { id = usu.idUsuario })" class="btn btn-outline-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario:?');">Borrar</a>
+                        <a href="@Url.Action("EditarUsuario", "ControladorAdministracion", new { id = usu.idUsuario })" class="btn btn-outline-success">Editar</a>
 
                     </td>
                 </tr>
@@ -83,10 +83,18 @@
         </tbody>
 
     </table>
+    <!--Mostramos mensajes de existo-->
     @if (TempData["SuccessMessage"] != null)
     {
         <div class="alert alert-success">
             @TempData["SuccessMessage"]
+        </div>
+    }
+    <!--Mostramos mensajes de errores-->
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
         </div>
     }
 </div>

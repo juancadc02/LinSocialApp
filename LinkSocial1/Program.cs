@@ -2,6 +2,7 @@ using DB;
 using LinkSocial1.Controllers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,5 +47,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=ControladorIniciarSesion}/{action=irAIniciarSesion}/{id?}");
+
+
 
 app.Run();

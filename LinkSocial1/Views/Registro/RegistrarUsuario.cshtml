@@ -61,6 +61,12 @@
                                     <label class="form-label" for="contraseña">Contraseña</label>
                                     <input type="password" id="contraseña" name="contraseña" class="form-control" />
                                 </div>
+                                <!-- Confirmar Contraseña -->
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="confirmarContraseña">Confirmar Contraseña</label>
+                                    <input type="password" id="confirmarContraseña" name="confirmarContraseña" class="form-control" />
+                                </div>
+                                
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="contraseña">Fecha Nacimiento.</label>
                                     <input type="date" id="fchNacimiento" name="fchNacimiento" class="form-control" />
@@ -70,6 +76,8 @@
                                 <button id="btn-registrar" type="submit" class="btn btn-primary btn-block mb-4">
                                     Crear Cuenta
                                 </button>
+                                <div id="mensajeError" class="text-danger mb-4" style="display: none;"></div>
+
                               
                             </form>
                             @if (TempData["ErrorRegistro"] != null)
@@ -86,3 +94,22 @@
     </section>
 </body>
 </html>
+<script>
+    // Obtén referencias a los campos de contraseña y confirmación
+    var contraseña = document.getElementById("contraseña");
+    var confirmarContraseña = document.getElementById("confirmarContraseña");
+    var mensajeError = document.getElementById("mensajeError");
+
+    // Agrega un listener al formulario para validar la confirmación de la contraseña antes de enviar
+    document.getElementById("formularioInicio").addEventListener("submit", function (event) {
+        if (contraseña.value !== confirmarContraseña.value) {
+            // Muestra el mensaje de error
+            mensajeError.innerText = "Las contraseñas no coinciden.";
+            mensajeError.style.display = "block";
+            event.preventDefault(); // Evita que el formulario se envíe
+        } else {
+            // Oculta el mensaje de error si las contraseñas coinciden
+            mensajeError.style.display = "none";
+        }
+    });
+</script>

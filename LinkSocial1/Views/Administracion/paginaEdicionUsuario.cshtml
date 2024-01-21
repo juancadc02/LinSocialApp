@@ -1,0 +1,90 @@
+﻿@model DB.Modelo.Usuarios
+
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+    }
+
+    .fixed-sidebar {
+        position: fixed;
+        height: 100%;
+        top: 67px; /* Ajusta el margen superior según tus necesidades */
+        left: 0;
+        background-color: #f0f0f0; /* Puedes cambiar el color de fondo según tus preferencias */
+        padding: 20px; /* Puedes ajustar el espacio interno según tus necesidades */
+        box-sizing: border-box;
+        width: 250px;
+    }
+
+    .nav {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav-item {
+        margin-bottom: 10px; /* Espacio entre cada opción de navegación */
+    }
+
+    .nav-link {
+        text-decoration: none;
+        color: #333; /* Color del texto */
+        font-weight: bold;
+    }
+</style>
+
+<nav class="fixed-sidebar">
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="ControladorAdministracion" asp-action="irUsuario">Usuario</a>
+
+        </li>
+    </ul>
+</nav>
+
+
+<div style="margin-right:auto;" class="container">
+
+    <div class="container">
+        <h2 style="text-align:center;">Actualizar Usuarios</h2>
+    </div>
+    <form asp-controller="ControladorAdministracion" asp-action="GuardarEdicion" method="post">
+        <input type="hidden" asp-for="idUsuario" />
+        <input type="hidden" asp-for="dniUsuario" />
+        <input type="hidden" asp-for="contraseña" />
+
+
+        <div class="form-outline mb-4">
+            <label class="form-label" for="nombreCompleto">Nombre Completo.</label>
+            <input type="text" asp-for="nombreCompleto" class="form-control" />
+        </div>
+
+        <div class="form-outline mb-4">
+            <label class="form-label" for="correoElectronico">Correo Electronico.</label>
+            <input type="email" class="form-control" asp-for="correoElectronico" />
+        </div>
+
+
+        <div class="form-outline mb-4">
+            <label class="form-label" for="movilUsuario">Telefono</label>
+            <input type="tel" asp-for="movilUsuario" class="form-control" />
+        </div>
+
+        <div class="form-outline mb-4">
+            <label class="form-label" for="rolAcceso">Rol.</label>
+            <select class="form-control" asp-for="rolAcceso" id="rolAcceso" name="rolAcceso">
+                <option value="basico">Basico</option>
+                <option value="admin">Administrador</option>
+            </select>
+        </div>
+
+        <!-- Botón de Iniciar Sesión -->
+        <button id="btn-actualizar" type="submit" class="btn btn-primary">
+            Actualizar Datos
+        </button>
+
+    </form>
+
+
+</div>

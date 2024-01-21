@@ -25,7 +25,7 @@ namespace LinkSocial1.Controllers
 
             //Si el correo electronico no existe, pasamos al registro del usuario.
             DateTime fchRegistro = DateTime.Now.ToUniversalTime();
-            string rolAcceso = "admin";
+            string rolAcceso = "basico";
             Usuarios nuevoUsuario = new Usuarios(nombreCompleto, correoElectronico, dniUsuario, movilUsuario, contraseña, fchRegistro.Date,fchNacimiento.ToUniversalTime(), rolAcceso);
             consulta.registrarUsuario(nuevoUsuario);
             TempData["MensajeRegistroExitoso"] = "Usuario registrado con éxito.";

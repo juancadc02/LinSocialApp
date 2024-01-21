@@ -6,6 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\imagenes\fotoFondoInicioSesion.jpg" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="bootstrap" Version="5.3.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.13">
