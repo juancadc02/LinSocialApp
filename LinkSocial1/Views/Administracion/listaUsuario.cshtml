@@ -33,7 +33,6 @@
     .nav-link {
         text-decoration: none;
         color: #333; /* Color del texto */
-        font-weight: bold;
     }
 </style>
 
@@ -47,7 +46,7 @@
 </nav>
 <div class="container" >
 
-    <table class="table" style="margin-left:50px;">
+    <table class="table table-secondary" style="margin-left:50px;">
         <thead>
             <tr>
                 <th scope="col">Nombre</th>
@@ -57,32 +56,27 @@
                 <th scope="col">Fch Nacimiento</th>
                 <th scope="col">Permisos</th>
                 <th scope="col">Acciones</th>
-
             </tr>
         </thead>
         <tbody>
             @foreach (var usu in listaUsuario)
             {
-                <tr>
-                    <!-- usu.nombreCompleto, usu.correoElectronico, usu.dniUsuario, usu.movilUsuario, usu.fchNacimiento, usu.rolAcceso-->
+                <tr class="table-secondary">
                     <td>@usu.nombreCompleto</td>
                     <td>@usu.correoElectronico</td>
                     <td>@usu.dniUsuario</td>
                     <td>@usu.movilUsuario</td>
                     <td>@usu.fchNacimiento</td>
                     <td>@usu.rolAcceso</td>
-
-
                     <td>
                         <a href="@Url.Action("EliminarUsuario", "ControladorAdministracion", new { id = usu.idUsuario })" class="btn btn-outline-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario:?');">Borrar</a>
                         <a href="@Url.Action("EditarUsuario", "ControladorAdministracion", new { id = usu.idUsuario })" class="btn btn-outline-success">Editar</a>
-
                     </td>
                 </tr>
             }
         </tbody>
-
     </table>
+
     <!--Mostramos mensajes de existo-->
     @if (TempData["SuccessMessage"] != null)
     {

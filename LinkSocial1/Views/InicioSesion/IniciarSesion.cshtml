@@ -6,34 +6,49 @@
     <meta charset="UTF-8">
     <title>Tu título aquí</title>
 
-    <!-- Integra los estilos CSS de Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Otros estilos personalizados si los tienes -->
-    <link rel="stylesheet" href="tu_ruta_a_tus_estilos.css">
     <style>
-        body {
-            background-image: url('/imagenes/fotoFondoInicioSesion.jpg'); /* Ajusta la ruta y el nombre de tu imagen */
-            background-size: cover; /* Cubre todo el área del body sin distorsionar */
-            background-repeat: no-repeat; /* Evita que se repita la imagen */
-            background-position: center; /* Centra la imagen */
-            height: 100vh; /* Establece la altura del body al 100% de la ventana */
-            margin: 0; /* Elimina el margen predeterminado del body */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Color negro con 50% de opacidad */
+            z-index: -1; /* Asegura que el fondo oscuro esté detrás de la imagen */
         }
+
+        body {
+            background-image: url('/imagenes/fotoFondoInicioSesion.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 100vh;
+            margin: 0;
+        }
+        /* Añade estos estilos para el formulario transparente y bordes redondeados */
+        .bg-glass {
+            background-color: rgba(255, 255, 255, 0.5); /* Color blanco con 50% de opacidad */
+            border-radius: 15px; /* Ajusta el radio de los bordes según tu preferencia */
+        }
+
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
 </head>
 <body>
     <section class="background-radial-gradient vh-100 overflow-hidden">
         <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
             <div class="row gx-lg-5 align-items-center mb-5">
-                <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
-                    <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+                <div class="col-lg-6 mb-5 mb-lg-0 text-white" style="z-index: 10">
+                    <h1 class="my-5 display-3 fw-bold ls-tight animate__animated animate__fadeIn" style="color: hsl(218, 81%, 95%); font-size: 3.5rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">
                         Bienvenido a<br />
-                        <span style="color: hsl(216, 20%, 5%)">LinkSocial</span>
+                        <span style="color: hsl(216, 20%, 5%); font-weight: bold;">LinkSocial</span>
                     </h1>
                 </div>
 
-                <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+
+                <div id="containerPrincipal" class="col-lg-6 mb-5 mb-lg-0 position-relative">
                     <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
                     <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
 
