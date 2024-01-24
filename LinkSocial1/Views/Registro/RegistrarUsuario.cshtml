@@ -61,35 +61,35 @@
                                 <!-- Email -->
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="nombreCompleto">Nombre Completo.</label>
-                                    <input type="text" id="nombreCompleto" name="nombreCompleto" class="form-control" />
+                                    <input type="text" id="nombreCompleto" name="nombreCompleto" class="form-control" required/>
                                 </div>
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="correoElectronico">Correo.</label>
-                                    <input type="email" id="correoElectronico" name="correoElectronico" class="form-control" />
+                                    <input type="email" id="correoElectronico" name="correoElectronico" class="form-control" required />
                                 </div>
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="dniUsuario">Dni.</label>
-                                    <input type="text" id="dniUsuario" name="dniUsuario" class="form-control" />
+                                    <input type="text" id="dniUsuario" name="dniUsuario" class="form-control" required />
                                 </div>
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="movilUsuario">Movil.</label>
-                                    <input type="tel" id="movilUsuario" name="movilUsuario" class="form-control" />
+                                    <input type="tel" id="movilUsuario" name="movilUsuario" class="form-control" required />
                                 </div>
 
                                 <!-- Contraseña -->
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="contraseña">Contraseña</label>
-                                    <input type="password" id="contraseña" name="contraseña" class="form-control" />
+                                    <input type="password" id="contraseña" name="contraseña" class="form-control" required />
                                 </div>
                                 <!-- Confirmar Contraseña -->
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="confirmarContraseña">Confirmar Contraseña</label>
-                                    <input type="password" id="confirmarContraseña" name="confirmarContraseña" class="form-control" />
+                                    <input type="password" id="confirmarContraseña" name="confirmarContraseña" class="form-control" required />
                                 </div>
                                 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="contraseña">Fecha Nacimiento.</label>
-                                    <input type="date" id="fchNacimiento" name="fchNacimiento" class="form-control" />
+                                    <input type="date" id="fchNacimiento" name="fchNacimiento" class="form-control" required />
                                 </div>
                                 
                                 <!-- Botón de Iniciar Sesión -->
@@ -122,13 +122,21 @@
 
     // Agrega un listener al formulario para validar la confirmación de la contraseña antes de enviar
     document.getElementById("formularioInicio").addEventListener("submit", function (event) {
+        // Expresión regular que verifica que la contraseña tenga al menos una letra y al menos un número
+        var regex = /^(?=.*[A-Za-z])(?=.*\d).+$/;
+
         if (contraseña.value !== confirmarContraseña.value) {
-            // Muestra el mensaje de error
+            // Muestra el mensaje de error si las contraseñas no coinciden
             mensajeError.innerText = "Las contraseñas no coinciden.";
             mensajeError.style.display = "block";
             event.preventDefault(); // Evita que el formulario se envíe
+        } else if (!regex.test(contraseña.value)) {
+            // Muestra el mensaje de error si la contraseña no cumple con los requisitos
+            mensajeError.innerText = "La contraseña debe contener al menos una letra y al menos un número.";
+            mensajeError.style.display = "block";
+            event.preventDefault(); // Evita que el formulario se envíe
         } else {
-            // Oculta el mensaje de error si las contraseñas coinciden
+            // Oculta el mensaje de error si las contraseñas coinciden y cumplen con los requisitos
             mensajeError.style.display = "none";
         }
     });

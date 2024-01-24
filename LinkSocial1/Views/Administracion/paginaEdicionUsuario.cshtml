@@ -1,89 +1,83 @@
 ﻿@model DB.Modelo.Usuarios
+<!doctype html>
 
-<style>
-    body, html {
-        height: 100%;
-        margin: 0;
-    }
 
-    .fixed-sidebar {
-        position: fixed;
-        height: 100%;
-        top: 67px;
-        left: 0;
-        background-color: #f0f0f0;
-        padding: 20px;
-        box-sizing: border-box;
-        width: 250px;
-    }
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    .nav {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    .nav-item {
-        margin-bottom: 10px;
-    }
+    <title>Hello, world!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #sidebar {
+            width: 20%;
+            height: 100vh;
+            background: #343a40;
+        }
+    </style>
+</head>
 
-    .nav-link {
-        text-decoration: none;
-        color: #333;
-        font-weight: bold;
-    }
 
-    /* Estilo adicional para hacer scroll horizontal en el formulario */
-    .form-container {
-        overflow-x: auto;
-        margin-left: 250px; /* Ajusta según el ancho del menú lateral */
-        margin-right: 20px; /* Ajusta según tus necesidades */
-        margin-top: 20px;
-    }
-</style>
+<div class="d-flex">
+    <div id="sidebar">
+        <div class="p-2">
+            <a href="#" class="navbar-brand text-center text-light w-100 p-4 border-bottom">
+                LinkSocial
+            </a>
+        </div>
+        <div id="sidebar-accordion" class="accordion">
+            <div class="list-group">
 
-<nav class="fixed-sidebar">
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link" asp-controller="ControladorAdministracion" asp-action="irUsuario">Usuario</a>
-        </li>
-    </ul>
-</nav>
-
-<div class="form-container">
-    <div class="container">
-        <h2 style="text-align:center;">Actualizar Usuarios</h2>
+                <a asp-controller="ControladorAdministracion" asp-action="irUsuario" data-toggle="collapse" aria-expanded="false"
+                   class="list-group-item list-group-item-action bg-dark text-light">
+                    <i class="fa fa-cog mr-3" aria-hidden="true"></i>Usuarios
+                </a>
+            </div>
+        </div>
     </div>
-    <form asp-controller="ControladorAdministracion" asp-action="GuardarEdicion" method="post">
-        <input type="hidden" asp-for="idUsuario" />
-        <input type="hidden" asp-for="dniUsuario" />
-        <input type="hidden" asp-for="contraseña" />
 
-        <div class="form-outline mb-4">
-            <label class="form-label" for="nombreCompleto">Nombre Completo.</label>
-            <input type="text" asp-for="nombreCompleto" class="form-control" />
+    <div class="flex-grow-1">
+        <div class="container">
+            <h2 style="text-align:center;">Actualizar Usuarios</h2>
         </div>
+        <form asp-controller="ControladorAdministracion" asp-action="GuardarEdicion" method="post">
+            <input type="hidden" asp-for="idUsuario" />
+            <input type="hidden" asp-for="dniUsuario" />
+            <input type="hidden" asp-for="contraseña" />
 
-        <div class="form-outline mb-4">
-            <label class="form-label" for="correoElectronico">Correo Electronico.</label>
-            <input type="email" class="form-control" asp-for="correoElectronico" />
-        </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="nombreCompleto">Nombre Completo.</label>
+                <input type="text" asp-for="nombreCompleto" class="form-control" />
+            </div>
 
-        <div class="form-outline mb-4">
-            <label class="form-label" for="movilUsuario">Telefono</label>
-            <input type="tel" asp-for="movilUsuario" class="form-control" />
-        </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="correoElectronico">Correo Electronico.</label>
+                <input type="email" class="form-control" asp-for="correoElectronico" />
+            </div>
 
-        <div class="form-outline mb-4">
-            <label class="form-label" for="rolAcceso">Rol.</label>
-            <select class="form-control" asp-for="rolAcceso" id="rolAcceso" name="rolAcceso">
-                <option value="basico">Basico</option>
-                <option value="admin">Administrador</option>
-            </select>
-        </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="movilUsuario">Telefono</label>
+                <input type="tel" asp-for="movilUsuario" class="form-control" />
+            </div>
 
-        <button id="btn-actualizar" type="submit" class="btn btn-primary">
-            Actualizar Datos
-        </button>
-    </form>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="rolAcceso">Rol.</label>
+                <select class="form-control" asp-for="rolAcceso" id="rolAcceso" name="rolAcceso">
+                    <option value="basico">Basico</option>
+                    <option value="admin">Administrador</option>
+                </select>
+            </div>
+
+            <button id="btn-actualizar" type="submit" class="btn btn-primary">
+                Actualizar Datos
+            </button>
+        </form>
+    </div>
+   
 </div>

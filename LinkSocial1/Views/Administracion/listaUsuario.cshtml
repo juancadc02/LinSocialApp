@@ -52,34 +52,6 @@
         </div>
         <div id="sidebar-accordion" class="accordion">
             <div class="list-group">
-                <a href="#dashboard-items" data-toggle="collapse" aria-expanded="false"
-                   class="list-group-item list-group-item-action bg-dark text-light">
-                    <i class="fa fa-tachometer mr-3" aria-hidden="true"></i>Dashboard
-                </a>
-                <div id="dashboard-items" class="collapse" data-parent="#sidebar-accordion">
-                    <a href="#" class="list-group-item list-group-item-action bg-dark text-light pl-5">
-                        Item 1
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action bg-dark text-light pl-5">
-                        Item 2
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action bg-dark text-light pl-5">
-                        Item 3
-                    </a>
-                </div>
-                <a href="#profile-items" data-toggle="collapse" aria-expanded="false"
-                   class="list-group-item list-group-item-action bg-dark text-light">
-                    <i class="fa fa-user mr-3" aria-hidden="true"></i>Profile
-                </a>
-                <div id="profile-items" class="collapse" data-parent="#sidebar-accordion">
-                    <a href="#" class="list-group-item list-group-item-action bg-dark text-light pl-5">
-                        Item 1
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action bg-dark text-light pl-5">
-                        Item 2
-                    </a>
-                </div>
-
 
                 <a asp-controller="ControladorAdministracion" asp-action="irUsuario" data-toggle="collapse" aria-expanded="false"
                    class="list-group-item list-group-item-action bg-dark text-light">
@@ -121,9 +93,6 @@
                     }
                 </tbody>
             </table>
-        </div>
-
-        <div class="message-container" style="width: 100%; margin-top: 20px;">
             @if (TempData["SuccessMessage"] != null)
             {
                 <div class="alert alert-success">
