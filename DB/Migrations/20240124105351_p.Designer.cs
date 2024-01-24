@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DB.Migrations
 {
     [DbContext(typeof(GestorLinkSocialDbContext))]
-    [Migration("20240116170701_p")]
+    [Migration("20240124105351_p")]
     partial class p
     {
         /// <inheritdoc />

@@ -1,99 +1,142 @@
-﻿﻿@{
+﻿@{
     ViewData["Title"] = "Lista de Usuarios";
-    // Obtén la lista de préstamos desde ViewData
     var listaUsuario = ViewData["listaUsuario"] as List<DB.Modelo.Usuarios>;
 }
-<style>
-    body, html {
-        height: 100%;
-        margin: 0;
-    }
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    .fixed-sidebar {
-        position: fixed;
-        height: 100%;
-        top: 67px; /* Ajusta el margen superior según tus necesidades */
-        left: 0;
-        background-color: #f0f0f0; /* Puedes cambiar el color de fondo según tus preferencias */
-        padding: 20px; /* Puedes ajustar el espacio interno según tus necesidades */
-        box-sizing: border-box;
-        width: 250px;
-    }
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    .nav {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
+    <title>Hello, world!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #sidebar {
+            width: 20%;
+            height: 100vh;
+            background: #343a40;
+        }
+        /* Estilo adicional para hacer scroll horizontal en la tabla */
+        .table-container {
+            overflow-x: auto;
+            margin-left: 250px; /* Ajusta según el ancho del menú lateral */
+            margin-top: 20px;
+        }
 
-    .nav-item {
-        margin-bottom: 10px; /* Espacio entre cada opción de navegación */
-    }
+        .message-container {
+            overflow-x: auto;
+            margin-left: 250px; /* Ajusta según el ancho del menú lateral */
+            margin-right: 20px; /* Ajusta según el espacio deseado a la derecha */
+            box-sizing: border-box;
+            padding: 0 20px; /* Ajusta según el espaciado deseado */
+        }
 
-    .nav-link {
-        text-decoration: none;
-        color: #333; /* Color del texto */
-    }
-</style>
+    </style>
+</head>
 
-<nav class="fixed-sidebar">
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link" asp-controller="ControladorAdministracion" asp-action="irUsuario">Usuario</a>
 
-        </li>
-    </ul>
-</nav>
-<div class="container" >
 
-    <table class="table table-secondary" style="margin-left:50px;">
-        <thead>
-            <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Dni</th>
-                <th scope="col">Telefono</th>
-                <th scope="col">Fch Nacimiento</th>
-                <th scope="col">Permisos</th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var usu in listaUsuario)
+
+
+
+<div class="d-flex">
+    <div id="sidebar">
+        <div class="p-2">
+            <a href="#" class="navbar-brand text-center text-light w-100 p-4 border-bottom">
+                LinkSocial
+            </a>
+        </div>
+        <div id="sidebar-accordion" class="accordion">
+            <div class="list-group">
+                <a href="#dashboard-items" data-toggle="collapse" aria-expanded="false"
+                   class="list-group-item list-group-item-action bg-dark text-light">
+                    <i class="fa fa-tachometer mr-3" aria-hidden="true"></i>Dashboard
+                </a>
+                <div id="dashboard-items" class="collapse" data-parent="#sidebar-accordion">
+                    <a href="#" class="list-group-item list-group-item-action bg-dark text-light pl-5">
+                        Item 1
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action bg-dark text-light pl-5">
+                        Item 2
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action bg-dark text-light pl-5">
+                        Item 3
+                    </a>
+                </div>
+                <a href="#profile-items" data-toggle="collapse" aria-expanded="false"
+                   class="list-group-item list-group-item-action bg-dark text-light">
+                    <i class="fa fa-user mr-3" aria-hidden="true"></i>Profile
+                </a>
+                <div id="profile-items" class="collapse" data-parent="#sidebar-accordion">
+                    <a href="#" class="list-group-item list-group-item-action bg-dark text-light pl-5">
+                        Item 1
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action bg-dark text-light pl-5">
+                        Item 2
+                    </a>
+                </div>
+
+
+                <a asp-controller="ControladorAdministracion" asp-action="irUsuario" data-toggle="collapse" aria-expanded="false"
+                   class="list-group-item list-group-item-action bg-dark text-light">
+                    <i class="fa fa-cog mr-3" aria-hidden="true"></i>Usuarios
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-grow-1">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Dni</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Fch Nacimiento</th>
+                        <th scope="col">Permisos</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var usu in listaUsuario)
+                    {
+                        <tr>
+                            <td>@usu.nombreCompleto</td>
+                            <td>@usu.correoElectronico</td>
+                            <td>@usu.dniUsuario</td>
+                            <td>@usu.movilUsuario</td>
+                            <td>@usu.fchNacimiento</td>
+                            <td>@usu.rolAcceso</td>
+                            <td>
+                                <a href="@Url.Action("EliminarUsuario", "ControladorAdministracion", new { id = usu.idUsuario })" class="btn btn-outline-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario:?');">Borrar</a>
+                                <a href="@Url.Action("EditarUsuario", "ControladorAdministracion", new { id = usu.idUsuario })" class="btn btn-outline-success">Editar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="message-container" style="width: 100%; margin-top: 20px;">
+            @if (TempData["SuccessMessage"] != null)
             {
-                <tr class="table-secondary">
-                    <td>@usu.nombreCompleto</td>
-                    <td>@usu.correoElectronico</td>
-                    <td>@usu.dniUsuario</td>
-                    <td>@usu.movilUsuario</td>
-                    <td>@usu.fchNacimiento</td>
-                    <td>@usu.rolAcceso</td>
-                    <td>
-                        <a href="@Url.Action("EliminarUsuario", "ControladorAdministracion", new { id = usu.idUsuario })" class="btn btn-outline-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario:?');">Borrar</a>
-                        <a href="@Url.Action("EditarUsuario", "ControladorAdministracion", new { id = usu.idUsuario })" class="btn btn-outline-success">Editar</a>
-                    </td>
-                </tr>
+                <div class="alert alert-success">
+                    @TempData["SuccessMessage"]
+                </div>
             }
-        </tbody>
-    </table>
 
-    <!--Mostramos mensajes de existo-->
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <div class="alert alert-success">
-            @TempData["SuccessMessage"]
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
         </div>
-    }
-    <!--Mostramos mensajes de errores-->
-    @if (TempData["ErrorMessage"] != null)
-    {
-        <div class="alert alert-danger">
-            @TempData["ErrorMessage"]
-        </div>
-    }
+    </div>
 </div>
-
-
-
-
-

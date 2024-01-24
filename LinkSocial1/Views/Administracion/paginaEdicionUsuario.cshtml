@@ -9,10 +9,10 @@
     .fixed-sidebar {
         position: fixed;
         height: 100%;
-        top: 67px; /* Ajusta el margen superior según tus necesidades */
+        top: 67px;
         left: 0;
-        background-color: #f0f0f0; /* Puedes cambiar el color de fondo según tus preferencias */
-        padding: 20px; /* Puedes ajustar el espacio interno según tus necesidades */
+        background-color: #f0f0f0;
+        padding: 20px;
         box-sizing: border-box;
         width: 250px;
     }
@@ -24,13 +24,21 @@
     }
 
     .nav-item {
-        margin-bottom: 10px; /* Espacio entre cada opción de navegación */
+        margin-bottom: 10px;
     }
 
     .nav-link {
         text-decoration: none;
-        color: #333; /* Color del texto */
+        color: #333;
         font-weight: bold;
+    }
+
+    /* Estilo adicional para hacer scroll horizontal en el formulario */
+    .form-container {
+        overflow-x: auto;
+        margin-left: 250px; /* Ajusta según el ancho del menú lateral */
+        margin-right: 20px; /* Ajusta según tus necesidades */
+        margin-top: 20px;
     }
 </style>
 
@@ -38,14 +46,11 @@
     <ul class="nav flex-column">
         <li class="nav-item">
             <a class="nav-link" asp-controller="ControladorAdministracion" asp-action="irUsuario">Usuario</a>
-
         </li>
     </ul>
 </nav>
 
-
-<div style="margin-right:auto;" class="container">
-
+<div class="form-container">
     <div class="container">
         <h2 style="text-align:center;">Actualizar Usuarios</h2>
     </div>
@@ -53,7 +58,6 @@
         <input type="hidden" asp-for="idUsuario" />
         <input type="hidden" asp-for="dniUsuario" />
         <input type="hidden" asp-for="contraseña" />
-
 
         <div class="form-outline mb-4">
             <label class="form-label" for="nombreCompleto">Nombre Completo.</label>
@@ -64,7 +68,6 @@
             <label class="form-label" for="correoElectronico">Correo Electronico.</label>
             <input type="email" class="form-control" asp-for="correoElectronico" />
         </div>
-
 
         <div class="form-outline mb-4">
             <label class="form-label" for="movilUsuario">Telefono</label>
@@ -79,12 +82,8 @@
             </select>
         </div>
 
-        <!-- Botón de Iniciar Sesión -->
         <button id="btn-actualizar" type="submit" class="btn btn-primary">
             Actualizar Datos
         </button>
-
     </form>
-
-
 </div>
