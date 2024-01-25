@@ -1,0 +1,99 @@
+﻿@model LinkSocial1.DTO.RecuperacionDTO
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tu título aquí</title>
+
+    <style>
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        body {
+            background-image: url('/imagenes/fotoFondoInicioSesion.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bg-glass {
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+        }
+
+        #formularioInicio {
+            width: 100%;
+        }
+
+        #containerPrincipal {
+            max-width: 800px; /* Establece un ancho máximo para el contenedor principal */
+            width: 100%;
+        }
+
+        #formularioInicio {
+            width: 100%; /* Puedes ajustar este valor según tus preferencias */
+            max-width: 400px; /* Establece un ancho máximo para el formulario */
+            margin: 0 auto; /* Centra el formulario dentro del contenedor principal */
+        }
+    </style>
+
+   
+</head>
+
+<body>
+    <section class="background-radial-gradient vh-100 overflow-hidden">
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+                <div id="containerPrincipal" class="col-md-8 position-relative">
+                    <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+                    <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+                    <div id="formularioInicio" class="card bg-glass">
+                        <div class="card-body px-4 py-5 px-md-5">
+
+                            <div class="container">
+                                <p class="titulo text-center">Establecer la nueva contraseña</p>
+                            </div>
+                            <form asp-controller="ControladorRecuperarContraseña" asp-action="Recuperar" method="post">
+                                @Html.HiddenFor(u => u.Token)
+
+                                <label for="email">Introduce tu nueva contraseña</label>
+                                @Html.PasswordFor(u => u.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(u => u.Password, null, new { @class = "text-danger" })
+                                <br />
+                                <label for="email">Vuelve a introducir tu nueva contraseña</label>
+                                @Html.PasswordFor(u => u.Password2, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(u => u.Password2, null, new { @class = "text-danger" })
+                                <br />
+                                <div class="container">
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Modificar</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </body>
+
+</html>

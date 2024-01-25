@@ -25,7 +25,9 @@ namespace DB.Migrations
                     contraseña = table.Column<string>(type: "text", nullable: false),
                     fchRegistro = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     fchNacimiento = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    rolAcceso = table.Column<string>(type: "text", nullable: false)
+                    rolAcceso = table.Column<string>(type: "text", nullable: false),
+                    tokenRecuperacion = table.Column<string>(type: "text", nullable: true),
+                    fchVencimientoToken = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -1,4 +1,5 @@
 ﻿using DB.Modelo;
+using System.Net.Mail;
 
 namespace LinkSocial1.Servicios
 {
@@ -30,5 +31,8 @@ namespace LinkSocial1.Servicios
         /// Interfaz del metodo que devuelve un listado con todos los usuarios de la base de datos.
         /// </summary>
         public List<Usuarios> mostrarUsuarios();
+
+        public void EnviarEmail(string emailDestino, string nombreUser, string token);
+       
     }
 }

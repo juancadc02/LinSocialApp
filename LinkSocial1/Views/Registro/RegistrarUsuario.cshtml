@@ -46,12 +46,9 @@
                     </h1>
                 </div>
 
-
-
                 <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
                     <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
                     <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
-
 
                     <div id="formularioInicio" class="card bg-glass">
                         <div class="card-body px-4 py-5 px-md-5">
@@ -100,6 +97,7 @@
 
                               
                             </form>
+                            <!--Mensaje de error si el correo o dni ya existen.-->
                             @if (TempData["ErrorRegistro"] != null)
                             {
                                 <div class="alert alert-danger">

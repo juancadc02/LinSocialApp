@@ -43,7 +43,9 @@ namespace LinkSocial1.Controllers
 
                 if (string.IsNullOrEmpty(correoElectronico) || string.IsNullOrEmpty(contraseña))
                 {
-                    return RedirectToAction("Error", "Home");
+                    TempData["MensajeCampoVacios"] = "Introduzca el correo y contraseña";
+                    return View("~/Views/InicioSesion/IniciarSesion.cshtml");
+
                 }
 
                 if (consultas.IniciarSesion(correoElectronico, contraseña, out string rolUsuario))

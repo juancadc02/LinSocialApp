@@ -32,6 +32,7 @@
             border-radius: 15px; /* Ajusta el radio de los bordes según tu preferencia */
         }
 
+
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
@@ -78,6 +79,7 @@
                                 <!-- Otras opciones -->
                                 <div class="text-center">
                                     <p>¿No estás registrado? <a asp-controller="ControladorRegistrarUsuarios" asp-action="irARegistro">Registrar</a></p>
+                                    <p>¿Has olvidado tu contaseña? <a asp-controller="ControladorRecuperarContraseña" asp-action="irARecuperarContraseña">Recuperar Contraseña</a></p>
                                     <p>O regístrate con:</p>
                                     <button type="button" class="btn btn-link btn-floating mx-1">
                                         <i class="bi bi-facebook"></i>
@@ -97,12 +99,46 @@
                                     @TempData["Error"]
                                 </div>
                             }
+                            <!-- Mensaje de registro exitoso-->
                             @if (TempData["MensajeRegistroExitoso"] != null)
                             {
                                 <div class="alert alert-success" role="alert">
                                     @TempData["MensajeRegistroExitoso"]
                                 </div>
                             }
+                            <!--Mensaje de recuperacion de contraseña exitosa-->
+                            @if (TempData["MensajeRecuperacionExitoso"] != null)
+                            {
+                                <div class="alert alert-success" role="alert">
+                                    @TempData["MensajeRecuperacionExitoso"]
+                                </div>
+                            }
+                            <!--Mensaje de token caducado-->
+                            @if (TempData["MensajeTokenInvalido"] != null)
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @TempData["MensajeTokenInvalido"]
+                                </div>
+                            }
+                            <!--Mensaje de que no estan rellenados los campos-->
+                            @if (TempData["MensajeCampoVacios"] != null)
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @TempData["MensajeCampoVacios"]
+                                </div>
+                            }
+
+                            <!--Mensaje contraseña modificada-->
+                            @if (TempData["MensajeModificacionContraseñaExito"] != null)
+                            {
+                                <div class="alert alert-success" role="alert">
+                                    @TempData["MensajeModificacionContraseñaExito"]
+                                </div>
+                            }
+                           
+
+                                
+
                         </div>
                     </div>
                 </div>

@@ -23,6 +23,8 @@ namespace DB.Modelo
         public DateTime fchRegistro { get; set; }
         public DateTime fchNacimiento { get; set; }
         public string rolAcceso { get; set; }
+        public string? tokenRecuperacion { get; set; }
+        public DateTime? fchVencimientoToken { get; set; }
 
 
 
@@ -49,12 +51,25 @@ namespace DB.Modelo
         {
         }
 
-        public Usuarios(string nombreCompleto, string correoElectronico, string dniUsuario, string movilUsuario, string contraseña, DateTime fchRegistro, DateTime fchNacimiento,string rolAcceso) : this(nombreCompleto, correoElectronico, dniUsuario, movilUsuario, contraseña)
+        public Usuarios(string nombreCompleto, string correoElectronico, string dniUsuario, string movilUsuario, string contraseña, DateTime fchRegistro, DateTime fchNacimiento, string rolAcceso, string? tokenRecuperacion, DateTime? fchVencimientoToken) : this(nombreCompleto, correoElectronico, dniUsuario, movilUsuario, contraseña)
         {
             this.fchRegistro = fchRegistro;
             this.fchNacimiento = fchNacimiento;
-            this.rolAcceso=rolAcceso;
+            this.rolAcceso = rolAcceso;
+            this.tokenRecuperacion = tokenRecuperacion;
+            this.fchVencimientoToken = fchVencimientoToken;
         }
+
+        //Constructor para el registro de usuarios.
+        public Usuarios(string nombreCompleto, string correoElectronico, string dniUsuario, string movilUsuario, string contraseña, DateTime fchRegistro, DateTime fchNacimiento, string rolAcceso) : this(nombreCompleto, correoElectronico, dniUsuario, movilUsuario, contraseña)
+        {
+            this.fchRegistro = fchRegistro;
+            this.fchNacimiento = fchNacimiento;
+            this.rolAcceso = rolAcceso;
+          
+        }
+
+
 
 
 

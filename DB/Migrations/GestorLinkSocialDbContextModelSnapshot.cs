@@ -48,6 +48,9 @@ namespace DB.Migrations
                     b.Property<DateTime>("fchRegistro")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<DateTime?>("fchVencimientoToken")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("movilUsuario")
                         .IsRequired()
                         .HasColumnType("text");
@@ -58,6 +61,9 @@ namespace DB.Migrations
 
                     b.Property<string>("rolAcceso")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("tokenRecuperacion")
                         .HasColumnType("text");
 
                     b.HasKey("idUsuario");

@@ -1,6 +1,7 @@
 ﻿using DB;
 using DB.Modelo;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Mail;
 
 namespace LinkSocial1.Servicios
 {
@@ -94,5 +95,35 @@ namespace LinkSocial1.Servicios
             }
             
         }
+        public void EnviarEmail(string emailDestino, string nombreUser, string token)
+        {
+            string urlDominio = "https://localhost:7294";
+
+            string EmailOrigen = "juanccaaa15@gmail.com";
+            //Se crea la URL de recuperación con el token que se enviará al mail del user.
+            string urlDeRecuperacion = String.Format("{0}/ControladorRecuperarContraseña/Recuperar/?token={1}", urlDominio, token);
+
+            //Hacemos que el texto del email sea un archivo html que se encuentra en la carpeta Plantilla.
+            string directorioProyecto = System.IO.Directory.GetCurrentDirectory();
+            string rutaArchivo = System.IO.Path.Combine(directorioProyecto, "Plantilla/RecuperacionContraseñaCorreo.html");
+            string htmlContent = System.IO.File.ReadAllText(rutaArchivo);
+            //Asignamos el nombre de usuario que tendrá el cuerpo del mail y el URL de recuperación con el token al HTML.
+            htmlContent = String.Format(htmlContent, nombreUser, urlDeRecuperacion);
+
+            MailMessage mensajeDelCorreo = new MailMessage(EmailOrigen, emailDestino, "RESTABLECER CONTRASEÑA", htmlContent);
+
+            mensajeDelCorreo.IsBodyHtml = true;
+
+            SmtpClient smtpCliente = new SmtpClient("smtp.gmail.com");
+            smtpCliente.EnableSsl = true;
+            smtpCliente.UseDefaultCredentials = false;
+            smtpCliente.Port = 587;
+            smtpCliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, "tkgn lppw wopr xrih");
+
+            smtpCliente.Send(mensajeDelCorreo);
+
+            smtpCliente.Dispose();
+        }
+
     }
 }
