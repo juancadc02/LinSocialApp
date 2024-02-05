@@ -53,9 +53,9 @@
                     <div id="formularioInicio" class="card bg-glass">
                         <div class="card-body px-4 py-5 px-md-5">
 
-                            <form method="post" action="@Url.Action("RegistrarUsuario", "ControladorRegistrarUsuarios")">
+                            <form method="post" enctype="multipart/form-data" action="@Url.Action("RegistrarUsuario", "ControladorRegistrarUsuarios")">
 
-                                <!-- Email -->
+                                
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="nombreCompleto">Nombre Completo.</label>
                                     <input type="text" id="nombreCompleto" name="nombreCompleto" class="form-control" required/>
@@ -89,7 +89,12 @@
                                     <input type="date" id="fchNacimiento" name="fchNacimiento" class="form-control" required />
                                 </div>
                                 
-                                <!-- Botón de Iniciar Sesión -->
+                                <!--Imagen-->
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="imagen">Foto Perfil.</label>
+                                    <input type="file" accept="image/jpeg,image/png, image/jpg" id="imagen" name="imagen" class="form-control" />
+                                </div>
+
                                 <button id="btn-registrar" type="submit" class="btn btn-primary btn-block mb-4">
                                     Crear Cuenta
                                 </button>

@@ -25,12 +25,8 @@ namespace DB.Modelo
         public string rolAcceso { get; set; }
         public string? tokenRecuperacion { get; set; }
         public DateTime? fchVencimientoToken { get; set; }
-
-
-
-
-
-
+        //Para poder tener imagen los usuarios.
+        public string? rutaImagen { get; set; }
 
 
         #region Constructores
@@ -61,12 +57,12 @@ namespace DB.Modelo
         }
 
         //Constructor para el registro de usuarios.
-        public Usuarios(string nombreCompleto, string correoElectronico, string dniUsuario, string movilUsuario, string contraseña, DateTime fchRegistro, DateTime fchNacimiento, string rolAcceso) : this(nombreCompleto, correoElectronico, dniUsuario, movilUsuario, contraseña)
+        public Usuarios(string nombreCompleto, string correoElectronico, string dniUsuario, string movilUsuario, string contraseña, DateTime fchRegistro, DateTime fchNacimiento, string rolAcceso, string rutaImagen) : this(nombreCompleto, correoElectronico, dniUsuario, movilUsuario, contraseña)
         {
             this.fchRegistro = fchRegistro;
             this.fchNacimiento = fchNacimiento;
             this.rolAcceso = rolAcceso;
-          
+            this.rutaImagen = rutaImagen;
         }
 
 

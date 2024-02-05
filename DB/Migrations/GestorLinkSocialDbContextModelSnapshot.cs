@@ -63,6 +63,9 @@ namespace DB.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("rutaImagen")
+                        .HasColumnType("text");
+
                     b.Property<string>("tokenRecuperacion")
                         .HasColumnType("text");
 

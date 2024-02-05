@@ -33,6 +33,12 @@ namespace LinkSocial1.Servicios
         public List<Usuarios> mostrarUsuarios();
 
         public void EnviarEmail(string emailDestino, string nombreUser, string token);
+
+
+
+        //Metodos para subir publicaciones 
+
+        public void subirPublicacion(Publicaciones nuevaPublicacion);
        
     }
 }

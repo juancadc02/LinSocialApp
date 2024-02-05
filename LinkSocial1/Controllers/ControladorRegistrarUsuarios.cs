@@ -38,12 +38,23 @@ namespace LinkSocial1.Controllers
         /// <param name="fchNacimiento"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult RegistrarUsuario(string nombreCompleto,string correoElectronico,string dniUsuario,string movilUsuario,string contraseña,DateTime fchNacimiento)
+        public IActionResult RegistrarUsuario(string nombreCompleto,string correoElectronico,string dniUsuario,string movilUsuario,string contraseña,DateTime fchNacimiento,IFormFile imagen)
         {
             try
             {
                 ServicioConsultas consulta = new ServicioConsultasImpl();
-
+                string nombreImagen;
+                string rutaImagen="";
+                if (imagen!=null && imagen.Length > 0)
+                {
+                     nombreImagen = Guid.NewGuid().ToString() + Path.GetExtension(imagen.FileName);
+                    string rutaCompleta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imagenes/usuarios", nombreImagen);
+                    using(var stream = new FileStream(rutaCompleta,FileMode.Create))
+                    {
+                        imagen.CopyTo(stream);
+                    }
+                    rutaImagen = "/imagenes/usuarios/" + nombreImagen;
+                }
                 if (consulta.existeCorreoElectronico(correoElectronico) || consulta.existeDNI(dniUsuario))
                 {
                     TempData["ErrorRegistro"] = "El correo electrónico o el DNI ya están registrados.";
@@ -53,7 +64,8 @@ namespace LinkSocial1.Controllers
                 //Si el correo electronico no existe, pasamos al registro del usuario.
                 DateTime fchRegistro = DateTime.Now.ToUniversalTime();
                 string rolAcceso = "basico";
-                Usuarios nuevoUsuario = new Usuarios(nombreCompleto, correoElectronico, dniUsuario, movilUsuario, contraseña, fchRegistro.Date, fchNacimiento.ToUniversalTime(), rolAcceso);
+               
+                Usuarios nuevoUsuario = new Usuarios(nombreCompleto, correoElectronico, dniUsuario, movilUsuario, contraseña, fchRegistro.Date, fchNacimiento.ToUniversalTime(), rolAcceso,rutaImagen);
                 consulta.registrarUsuario(nuevoUsuario);
                 TempData["MensajeRegistroExitoso"] = "Usuario registrado con éxito.";
                 return RedirectToAction("irAIniciarSesion", "ControladorIniciarSesion");

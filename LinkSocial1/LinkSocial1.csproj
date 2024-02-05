@@ -25,5 +25,10 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\DB\DB.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\imagenes\publicaciones\" />
+	  <Folder Include="wwwroot\imagenes\usuarios\" />
+	</ItemGroup>
 	
 </Project>

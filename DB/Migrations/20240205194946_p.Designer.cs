@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DB.Migrations
 {
     [DbContext(typeof(GestorLinkSocialDbContext))]
-    [Migration("20240125165513_p")]
+    [Migration("20240205194946_p")]
     partial class p
     {
         /// <inheritdoc />
@@ -64,6 +64,9 @@ namespace DB.Migrations
 
                     b.Property<string>("rolAcceso")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("rutaImagen")
                         .HasColumnType("text");
 
                     b.Property<string>("tokenRecuperacion")

@@ -14,6 +14,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles.css">
     <style>
+        #imagenPrevia {
+            max-width: 300px;
+            max-height: 300px;
+            margin: 20px auto;
+            border: 2px solid #ccc;
+            display: none;
+        }
         #sidebar {
             width: 10%;
             height: 100vh;
@@ -22,7 +29,6 @@
 
         main {
             text-align: center;
-
         }
 
         .img-container {
@@ -32,7 +38,6 @@
             background-color: #fff;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
             font-size: 10px; /* Ajusta el tamaño de fuente según tus preferencias */
-
         }
 
             .img-container header,
@@ -104,26 +109,39 @@
 
             <!-- Contenido principal -->
             <main>
-                <div class="img-container">
-                    <header>
-                        <h2>Encabezado de la Imagen</h2>
-                    </header>
-                    <img src="/imagenes/fotoFondoInicioSesion.jpg" alt="Descripción de la imagen">
-                    <footer>
-                        <p>Pie de la Imagen - Comentario sobre la imagen</p>
-                    </footer>
-                </div>
-                <div class="img-container">
-                    <header>
-                        <h2>Encabezado de la Imagen</h2>
-                    </header>
-                    <img src="/imagenes/fotoFondoInicioSesion.jpg" alt="Descripción de la imagen">
-                    <footer>
-                        <p>Pie de la Imagen - Comentario sobre la imagen</p>
-                    </footer>
-                </div>
+                <h1>Nueva Publicacion</h1>
+                <img id="imagenMostrada" src="#" alt="Imagen" style="display:none; max-width: 500px; max-height: 500px; margin: 20px auto; border: 2px solid #ccc;" />
+
+
+                <form method="post" enctype="multipart/form-data" action="@Url.Action("guardarPublicacion", "ControladorSubirPublicaciones")">
+
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="imagen">Foto.</label>
+                        <input type="file" accept="image/jpeg,image/png, image/jpg" id="imagen" name="imagen" onchange="mostrarImagen()" class="form-control " />
+                    </div>
+
+                    <button id="btn-registrar" type="submit" class="btn btn-primary btn-block mb-4">
+                        Subir Foto
+                    </button>
+
+                </form>
             </main>
         </div>
     </div>
+    <script>
+        function mostrarImagen() {
+            var input = document.getElementById('imagen');
+            var imagenMostrada = document.getElementById('imagenMostrada');
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                imagenMostrada.src = e.target.result;
+                imagenMostrada.style.display = 'block';
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
 </body>
+
 </html>

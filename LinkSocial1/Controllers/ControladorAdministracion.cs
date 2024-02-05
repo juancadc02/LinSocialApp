@@ -89,10 +89,20 @@ namespace LinkSocial1.Controllers
         /// <param name="usuarioEditado"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult GuardarEdicion(Usuarios usuarioEditado)
+        public IActionResult GuardarEdicion(Usuarios usuarioEditado,IFormFile imagen)
         {
             try
             {
+                if (imagen != null && imagen.Length > 0)
+                {
+                    string nombreImagen = Guid.NewGuid().ToString() + Path.GetExtension(imagen.FileName);
+                    string rutaCompleta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imagenes/usuarios", nombreImagen);
+                    using (var stream = new FileStream(rutaCompleta, FileMode.Create))
+                    {
+                        imagen.CopyTo(stream);
+                    }
+                    usuarioEditado.rutaImagen = "/imagenes/usuarios/" + nombreImagen;
+                }
                 // Actualiza el estado del usuario en la base de datos
                 _contexto.Update(usuarioEditado);
                 _contexto.SaveChanges();

@@ -50,7 +50,8 @@ namespace LinkSocial1.Servicios
                     contraseña=encriptar.Encriptar(nuevoUsuario.contraseña),
                     fchNacimiento=nuevoUsuario.fchNacimiento,
                     fchRegistro=nuevoUsuario.fchRegistro,
-                    rolAcceso=nuevoUsuario.rolAcceso
+                    rolAcceso=nuevoUsuario.rolAcceso,
+                    rutaImagen=nuevoUsuario.rutaImagen
                 };
 
                 contexto.Usuarios.Add(nuevoUsuario);
@@ -123,6 +124,23 @@ namespace LinkSocial1.Servicios
             smtpCliente.Send(mensajeDelCorreo);
 
             smtpCliente.Dispose();
+        }
+
+        public void subirPublicacion(Publicaciones nuevaPublicacion)
+        {
+            using(var contexto = new GestorLinkSocialDbContext())
+            {
+                nuevaPublicacion = new Publicaciones
+                {
+                    idUsuario=nuevaPublicacion.idUsuario,
+                    fchPublicacion=nuevaPublicacion.fchPublicacion,
+                    contenidoPublicacion=nuevaPublicacion.contenidoPublicacion
+                };
+
+                contexto.Add(nuevaPublicacion);
+                contexto.SaveChanges();
+                Console.WriteLine("Nueva publicacion guardada.");
+            }
         }
 
     }

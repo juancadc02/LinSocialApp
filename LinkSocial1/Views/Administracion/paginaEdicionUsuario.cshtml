@@ -46,11 +46,16 @@
         <div class="container">
             <h2 style="text-align:center;">Actualizar Usuarios</h2>
         </div>
-        <form asp-controller="ControladorAdministracion" asp-action="GuardarEdicion" method="post">
+        <form asp-controller="ControladorAdministracion" asp-action="GuardarEdicion" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="idUsuario" />
             <input type="hidden" asp-for="dniUsuario" />
             <input type="hidden" asp-for="contraseña" />
 
+            <div class="text-center mt-4">
+                <div class="rounded-circle overflow-hidden mx-auto" style="width: 150px; height: 150px; border: 5px solid #fff;">
+                    <img src="@Model.rutaImagen" class="img-fluid" alt="Foto del Usuario">
+                </div>
+            </div>
             <div class="form-outline mb-4">
                 <label class="form-label" for="nombreCompleto">Nombre Completo.</label>
                 <input type="text" asp-for="nombreCompleto" class="form-control" />
@@ -72,6 +77,11 @@
                     <option value="basico">Basico</option>
                     <option value="admin">Administrador</option>
                 </select>
+            </div>
+
+            <div class="form-outline mt-4">
+                <label class="form-label" for="imagen">Cambiar Imagen</label>
+                <input type="file" accept="image/jpeg,image/png, image/jpg" asp-for="rutaImagen" id="rutaImagen" name="imagen" class="form-control" />
             </div>
 
             <button id="btn-actualizar" type="submit" class="btn btn-primary">
