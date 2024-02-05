@@ -22,6 +22,31 @@ namespace DB.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("DB.Modelo.Publicaciones", b =>
+                {
+                    b.Property<int>("idPublicacion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("idPublicacion"));
+
+                    b.Property<string>("contenidoPublicacion")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("fchPublicacion")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("idUsuario")
+                        .HasColumnType("integer");
+
+                    b.HasKey("idPublicacion");
+
+                    b.HasIndex("idUsuario");
+
+                    b.ToTable("Publicaciones");
+                });
+
             modelBuilder.Entity("DB.Modelo.Usuarios", b =>
                 {
                     b.Property<int>("idUsuario")
@@ -72,6 +97,17 @@ namespace DB.Migrations
                     b.HasKey("idUsuario");
 
                     b.ToTable("Usuarios");
+                });
+
+            modelBuilder.Entity("DB.Modelo.Publicaciones", b =>
+                {
+                    b.HasOne("DB.Modelo.Usuarios", "usuarios")
+                        .WithMany()
+                        .HasForeignKey("idUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("usuarios");
                 });
 #pragma warning restore 612, 618
         }

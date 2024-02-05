@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DB.Modelo;
+using LinkSocial1.Servicios;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LinkSocial1.Controllers
@@ -14,6 +16,10 @@ namespace LinkSocial1.Controllers
         {
             try
             {
+                ServicioConsultas consultas = new ServicioConsultasImpl();
+                //Creamos una lista y llamamos al metodo lista usuarios.
+                List<Publicaciones> listaPublicaciones = consultas.mostrarPublicaciones();
+                ViewData["listaPublicaciones"] = listaPublicaciones;
                 return View("~/Views/Home/PaginaInicio.cshtml");
 
             }catch (Exception ex)

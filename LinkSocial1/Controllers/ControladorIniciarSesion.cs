@@ -48,12 +48,13 @@ namespace LinkSocial1.Controllers
 
                 }
 
-                if (consultas.IniciarSesion(correoElectronico, contraseña, out string rolUsuario))
+                if (consultas.IniciarSesion(correoElectronico, contraseña, out int idUsuario, out string rolUsuario))
                 {
                     // Autenticar al usuario
                     var claims = new List<Claim>
                 {
                      new Claim(ClaimTypes.Name, correoElectronico),
+                      new Claim(ClaimTypes.NameIdentifier, idUsuario.ToString()), // Añadir el ID del usuario como reclamación
                  };
 
                     // Verificar si el usuario tiene el rol "admin"

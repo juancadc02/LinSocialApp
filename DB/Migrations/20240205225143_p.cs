@@ -34,11 +34,40 @@ namespace DB.Migrations
                 {
                     table.PrimaryKey("PK_Usuarios", x => x.idUsuario);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Publicaciones",
+                columns: table => new
+                {
+                    idPublicacion = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    idUsuario = table.Column<int>(type: "integer", nullable: false),
+                    fchPublicacion = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    contenidoPublicacion = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Publicaciones", x => x.idPublicacion);
+                    table.ForeignKey(
+                        name: "FK_Publicaciones_Usuarios_idUsuario",
+                        column: x => x.idUsuario,
+                        principalTable: "Usuarios",
+                        principalColumn: "idUsuario",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Publicaciones_idUsuario",
+                table: "Publicaciones",
+                column: "idUsuario");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Publicaciones");
+
             migrationBuilder.DropTable(
                 name: "Usuarios");
         }

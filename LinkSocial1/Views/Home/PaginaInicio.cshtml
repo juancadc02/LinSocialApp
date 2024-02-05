@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewData["Title"] = "Lista de Publicaciones";
+    var listaPublicaciones = ViewData["listaPublicaciones"] as List<DB.Modelo.Publicaciones>;
+}
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -7,12 +11,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
-    <title>Hello, world!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="styles.css">
+    
     <style>
         #sidebar {
             width: 10%;
@@ -32,29 +33,23 @@
             background-color: #fff;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
             font-size: 10px; /* Ajusta el tamaño de fuente según tus preferencias */
-
+            width: 400px; /* Ajusta el ancho del contenedor según tus preferencias */
+            height: 400px; /* Establece la altura igual al ancho para hacerlo cuadrado */
         }
 
-            .img-container header,
-            .img-container footer {
-                background-color: #333;
-                color: #fff;
-                padding: 5px;
-                font-size: 11px; /* Ajusta el tamaño de fuente según tus preferencias */
+            .img-container img {
+                max-width: 100%;
+                max-height: 100%;
+                display: block;
+                margin: 0 auto;
             }
-
-        img {
-            max-width: 30%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-        }
 
     </style>
 </head>
 
 <body>
     <div class="d-flex">
+        <!--Menu lateral-->
         <div id="sidebar">
             <div class="p-2">
                 <a href="#" class="navbar-brand text-center text-light w-100 p-4 border-bottom">
@@ -97,33 +92,25 @@
             </div>
         </div>
         <div class="flex-grow-1 mx-auto col-6">
-            <!-- Ajusta el ancho de la columna según tus necesidades -->
+            
             <div class="container">
                 <h2 style="text-align:center;">LinkSocial</h2>
             </div>
 
-            <!-- Contenido principal -->
+          
             <main>
-                <div class="img-container">
-                    <header>
-                        <h2>Encabezado de la Imagen</h2>
-                    </header>
-                    <img src="/imagenes/fotoFondoInicioSesion.jpg" alt="Descripción de la imagen">
-                    <footer>
-                        <p>Pie de la Imagen - Comentario sobre la imagen</p>
-                    </footer>
-                </div>
-                <div class="img-container">
-                    <header>
-                        <h2>Encabezado de la Imagen</h2>
-                    </header>
-                    <img src="/imagenes/fotoFondoInicioSesion.jpg" alt="Descripción de la imagen">
-                    <footer>
-                        <p>Pie de la Imagen - Comentario sobre la imagen</p>
-                    </footer>
-                </div>
+                @foreach (var publicacion in listaPublicaciones)
+                {
+                    <div class="img-container mx-auto mb-4">
+                        <!-- Añade margen inferior (mb-4) para separar las imágenes -->
+
+                        <img src="@publicacion.contenidoPublicacion" class="img-fluid" style="width: 400px; height: 400px;"> <!-- Reemplaza con el nombre del campo que contiene la ruta de la imagen -->
+
+                    </div>
+                }
             </main>
+
         </div>
-    </div>
+    </div> 
 </body>
 </html>

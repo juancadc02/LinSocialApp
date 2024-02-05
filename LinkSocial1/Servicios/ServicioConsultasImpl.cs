@@ -18,7 +18,7 @@ namespace LinkSocial1.Servicios
         {
             dbContext = new GestorLinkSocialDbContext();
         }
-        public bool IniciarSesion(string correoElectronico, string contraseña, out string rolUsuario)
+        public bool IniciarSesion(string correoElectronico, string contraseña, out int idUsuario, out string rolUsuario)
         {
             ServicioEncriptar encriptarContraseña = new ServicioEncriptarImpl();
 
@@ -26,15 +26,18 @@ namespace LinkSocial1.Servicios
 
             if (usuario == null)
             {
-                rolUsuario = null; // Usuario no encontrado, no hay rol que devolver
+                idUsuario = 0; // Usuario no encontrado, asignamos un valor por defecto
+                rolUsuario = null; // No hay rol que devolver
                 return false;
             }
             else
             {
+                idUsuario = usuario.idUsuario; // Asignamos el ID del usuario encontrado
                 rolUsuario = usuario.rolAcceso;
                 return true;
             }
         }
+
 
         public void registrarUsuario(Usuarios nuevoUsuario)
         {
@@ -132,7 +135,7 @@ namespace LinkSocial1.Servicios
             {
                 nuevaPublicacion = new Publicaciones
                 {
-                    idUsuario=nuevaPublicacion.idUsuario,
+                   idUsuario=nuevaPublicacion.idUsuario,
                     fchPublicacion=nuevaPublicacion.fchPublicacion,
                     contenidoPublicacion=nuevaPublicacion.contenidoPublicacion
                 };
@@ -140,6 +143,20 @@ namespace LinkSocial1.Servicios
                 contexto.Add(nuevaPublicacion);
                 contexto.SaveChanges();
                 Console.WriteLine("Nueva publicacion guardada.");
+            }
+        }
+
+        public List<Publicaciones> mostrarPublicaciones()
+        {
+            using(var contexto = new GestorLinkSocialDbContext())
+            {
+                var listaPublicaciones =contexto.Publicaciones.ToList();
+
+                foreach(var publi in listaPublicaciones)
+                {
+                    Console.WriteLine("{0}",publi.contenidoPublicacion);
+                }
+                return listaPublicaciones;
             }
         }
 

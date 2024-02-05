@@ -8,9 +8,9 @@ namespace LinkSocial1.Servicios
     /// </summary>
     public interface ServicioConsultas
     {
-        public bool IniciarSesion(string correoElectronico, string contraseña, out string rolUsuario);
-        /// <summary>
-        /// Método encargado de registrar nuevos usuarios
+        public bool IniciarSesion(string correoElectronico, string contraseña, out int idUsuario, out string rolUsuario);
+        /// <summary>                                                                                                               
+        /// Método encargado de registrar nuevos usuarios                                                                                                           
         /// </summary>
         /// <param name="nuevoUsuario"> Objeto usuario que se va registrar en la bbdd</param>
         public void registrarUsuario(Usuarios nuevoUsuario);
@@ -40,5 +40,6 @@ namespace LinkSocial1.Servicios
 
         public void subirPublicacion(Publicaciones nuevaPublicacion);
        
+        public List<Publicaciones> mostrarPublicaciones();
     }
 }
