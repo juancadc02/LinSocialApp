@@ -1,7 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Lista de Publicaciones";
     var listaPublicaciones = ViewData["listaPublicaciones"] as List<DB.Modelo.Publicaciones>;
+    var listaComentarios = ViewData["listaComentarios"] as List<DB.Modelo.Comentarios>;
 }
+
+@model DB.Modelo.Publicaciones
 <!DOCTYPE html>
 <html lang="en">
 
@@ -97,18 +100,33 @@
                 <h2 style="text-align:center;">LinkSocial</h2>
             </div>
 
-          
+
             <main>
                 @foreach (var publicacion in listaPublicaciones)
                 {
-                    <div class="img-container mx-auto mb-4">
+                    <div class="publicacion-container mx-auto mb-4">
                         <!-- Añade margen inferior (mb-4) para separar las imágenes -->
 
                         <img src="@publicacion.contenidoPublicacion" class="img-fluid" style="width: 400px; height: 400px;"> <!-- Reemplaza con el nombre del campo que contiene la ruta de la imagen -->
+                        <!-- Mostrar comentarios existentes -->
+                        <h4>Comentarios:</h4>
+                        <ul>
+                            @foreach (var comentario in listaComentarios.Where(c => c.idPublicacion == publicacion.idPublicacion))
+                            {
+                                <li> @comentario.contenidoComentario</li>
+                            }
+                        </ul>
 
+                        <form method="post" action="@Url.Action("añadirComentario", "ControladorSubirPublicaciones")">
+                            <!-- Reemplaza "/Comentario/Agregar" con la ruta correcta de tu controlador y acción -->
+                            <input type="hidden" name="idPublicacion" value="@publicacion.idPublicacion" />
+                            <textarea name="ContenidoComentario" placeholder="Escribe tu comentario"></textarea>
+                            <button type="submit">Comentar</button>
+                        </form>
                     </div>
                 }
             </main>
+
 
         </div>
     </div> 

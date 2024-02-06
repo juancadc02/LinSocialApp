@@ -22,6 +22,36 @@ namespace DB.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("DB.Modelo.Comentarios", b =>
+                {
+                    b.Property<int>("idComentario")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("idComentario"));
+
+                    b.Property<string>("contenidoComentario")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("fchComentario")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("idPublicacion")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("idUsuario")
+                        .HasColumnType("integer");
+
+                    b.HasKey("idComentario");
+
+                    b.HasIndex("idPublicacion");
+
+                    b.HasIndex("idUsuario");
+
+                    b.ToTable("Comentarios");
+                });
+
             modelBuilder.Entity("DB.Modelo.Publicaciones", b =>
                 {
                     b.Property<int>("idPublicacion")
@@ -97,6 +127,25 @@ namespace DB.Migrations
                     b.HasKey("idUsuario");
 
                     b.ToTable("Usuarios");
+                });
+
+            modelBuilder.Entity("DB.Modelo.Comentarios", b =>
+                {
+                    b.HasOne("DB.Modelo.Publicaciones", "publicaciones")
+                        .WithMany()
+                        .HasForeignKey("idPublicacion")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DB.Modelo.Usuarios", "usuarios")
+                        .WithMany()
+                        .HasForeignKey("idUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("publicaciones");
+
+                    b.Navigation("usuarios");
                 });
 
             modelBuilder.Entity("DB.Modelo.Publicaciones", b =>

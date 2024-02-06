@@ -19,7 +19,9 @@ namespace LinkSocial1.Controllers
                 ServicioConsultas consultas = new ServicioConsultasImpl();
                 //Creamos una lista y llamamos al metodo lista usuarios.
                 List<Publicaciones> listaPublicaciones = consultas.mostrarPublicaciones();
+                List<Comentarios> listaComentarios =consultas.mostrarComentarios();
                 ViewData["listaPublicaciones"] = listaPublicaciones;
+                ViewData["listaComentarios"] = listaComentarios;
                 return View("~/Views/Home/PaginaInicio.cshtml");
 
             }catch (Exception ex)

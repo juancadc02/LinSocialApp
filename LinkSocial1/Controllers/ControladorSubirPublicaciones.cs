@@ -56,6 +56,21 @@ namespace LinkSocial1.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult añadirComentario(string idPublicacion, string contenidoComentario)
+        {
+            ServicioConsultas consultas = new ServicioConsultasImpl();
+            var claimsPrincipal = User;
+            string idUsuarioString = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+           
+            DateTime fchComentario = DateTime.Now.ToUniversalTime();
+
+            Comentarios nuevoComentario = new Comentarios(Convert.ToInt32(idUsuarioString),Convert.ToInt32(idPublicacion),contenidoComentario, fchComentario);
+            consultas.añadirComentario(nuevoComentario);
+            return RedirectToAction("cargarPaginaInicio", "ControladorPaginaInicio");
+
+        }
+
 
 
 

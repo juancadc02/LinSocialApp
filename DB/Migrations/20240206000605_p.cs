@@ -56,6 +56,44 @@ namespace DB.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Comentarios",
+                columns: table => new
+                {
+                    idComentario = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    idUsuario = table.Column<int>(type: "integer", nullable: false),
+                    idPublicacion = table.Column<int>(type: "integer", nullable: false),
+                    contenidoComentario = table.Column<string>(type: "text", nullable: false),
+                    fchComentario = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comentarios", x => x.idComentario);
+                    table.ForeignKey(
+                        name: "FK_Comentarios_Publicaciones_idPublicacion",
+                        column: x => x.idPublicacion,
+                        principalTable: "Publicaciones",
+                        principalColumn: "idPublicacion",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comentarios_Usuarios_idUsuario",
+                        column: x => x.idUsuario,
+                        principalTable: "Usuarios",
+                        principalColumn: "idUsuario",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comentarios_idPublicacion",
+                table: "Comentarios",
+                column: "idPublicacion");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comentarios_idUsuario",
+                table: "Comentarios",
+                column: "idUsuario");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Publicaciones_idUsuario",
                 table: "Publicaciones",
@@ -65,6 +103,9 @@ namespace DB.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Comentarios");
+
             migrationBuilder.DropTable(
                 name: "Publicaciones");
 

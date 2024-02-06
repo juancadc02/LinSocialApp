@@ -160,5 +160,36 @@ namespace LinkSocial1.Servicios
             }
         }
 
+        public void añadirComentario(Comentarios nuevoComentario)
+        {
+            using(var contexto = new GestorLinkSocialDbContext())
+            {
+                nuevoComentario = new Comentarios
+                {
+                    idUsuario=nuevoComentario.idUsuario,
+                    idPublicacion=nuevoComentario.idPublicacion,
+                    contenidoComentario=nuevoComentario.contenidoComentario,
+                    fchComentario=nuevoComentario.fchComentario
+                };
+
+                contexto.Comentarios.Add(nuevoComentario);
+                contexto.SaveChanges();
+            }
+        }
+
+        public List<Comentarios> mostrarComentarios()
+        {
+            using (var contexto = new GestorLinkSocialDbContext())
+            {
+                var listaComentarios = contexto.Comentarios.ToList();
+                foreach (var comen in listaComentarios)
+                {
+                    Console.WriteLine("{0}", comen.contenidoComentario);
+                }
+                return listaComentarios;
+            }
+
+        }
+
     }
 }

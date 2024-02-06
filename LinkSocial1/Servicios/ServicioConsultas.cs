@@ -41,5 +41,8 @@ namespace LinkSocial1.Servicios
         public void subirPublicacion(Publicaciones nuevaPublicacion);
        
         public List<Publicaciones> mostrarPublicaciones();
+
+        public void añadirComentario(Comentarios nuevoComentario);
+        public List<Comentarios> mostrarComentarios();
     }
 }
