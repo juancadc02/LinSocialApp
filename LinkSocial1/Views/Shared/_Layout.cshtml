@@ -7,56 +7,79 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/LinkSocial.styles.css" asp-append-version="true" />
-    
+
 </head>
 
 <body>
 
     @if (User.Identity.IsAuthenticated)
     {
-       @*  <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-3">
-                <div class="container-fluid">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                        <img src="/imagenes/logoNegro.jpg" >
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li>
 
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Menú lateral -->
+                <div id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar">
+                    <div class="p-2">
+                        <a href="#" class="navbar-brand text-center text-light w-100 p-4 border-bottom">
+                            LinkSocial
+                        </a>
+                    </div>
+                    <div id="sidebar-accordion" class="accordion">
+                        <div class="list-group">
+
+                            <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorPaginaInicio" asp-action="cargarPaginaInicio">
+                                <i class="fa fa-home" aria-hidden="true"></i> Inicio
+                            </a>
+                            <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorSubirPublicaciones" asp-action="cargarPaginaSubirPublicaciones">
+                                <i class="fa fa-file-image-o" aria-hidden="true"></i> Subir Publicacion
+                            </a>
+
+                            <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorBuscarUsuarios" asp-action="irABuscarUsuarios">
+                                <i class="fa fa-search" aria-hidden="true"></i> Buscar
+                            </a>
+                            <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorIniciarSesion" asp-action="CerrarSesion">
+                                <i class="fa fa-envelope-open" aria-hidden="true"></i> Mensajes
+                            </a>
                             @if (User.IsInRole("admin"))
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="ControladorAdministracion" asp-action="irPaginaAdmin">Administracion</a>
-                                </li>
+                                <a asp-area="" asp-controller="ControladorAdministracion" asp-action="irPaginaAdmin"
+                                   class="list-group-item list-group-item-action bg-dark text-light">
+                                    <i class="fa fa-address-card" aria-hidden="true"></i> Administracion
+                                </a>
                             }
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="ControladorIniciarSesion" asp-action="CerrarSesion">Cerrar Sesion</a>
-                            </li>
-                        </ul>
+
+                            <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorIniciarSesion" asp-action="CerrarSesion">
+                                <i class="fa fa-user-circle" aria-hidden="true"></i> Perfil
+                            </a>
+                            <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorIniciarSesion" asp-action="CerrarSesion">
+                                <i class="fa fa-cog" aria-hidden="true"></i> Ajustes
+                            </a>
+                            <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorIniciarSesion" asp-action="CerrarSesion">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>Cerrar Sesión
+                            </a>
+
+                        </div>
                     </div>
                 </div>
-            </nav>
-        </header>
- *@
-    }
 
-    
+                <!-- Contenido principal -->
+                <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+
+    }
+    else
+    {
+
+
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
+    }
 
 
-    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

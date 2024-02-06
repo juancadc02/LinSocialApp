@@ -21,6 +21,7 @@
             border: 2px solid #ccc;
             display: none;
         }
+
         #sidebar {
             width: 10%;
             height: 100vh;
@@ -59,75 +60,29 @@
 </head>
 
 <body>
-    <div class="d-flex">
-        <div id="sidebar">
-            <div class="p-2">
-                <a href="#" class="navbar-brand text-center text-light w-100 p-4 border-bottom">
-                    LinkSocial
-                </a>
-            </div>
-            <div id="sidebar-accordion" class="accordion">
-                <div class="list-group">
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorPaginaInicio" asp-action="cargarPaginaInicio">
-                        <i class="fa fa-home" aria-hidden="true"></i> Inicio
-                    </a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorSubirPublicaciones" asp-action="cargarPaginaSubirPublicaciones">
-                        <i class="fa fa-file-image-o" aria-hidden="true"></i> Subir Publicacion
-                    </a>
+    <!-- Contenido principal -->
+    <main>
+        <div class="container">
+            <h1>Nueva Publicacion</h1>
+            <img id="imagenMostrada" src="#" alt="Imagen" style="display:none; max-width: 500px; max-height: 500px; margin: 20px auto; border: 2px solid #ccc;" />
 
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorIniciarSesion" asp-action="CerrarSesion">
-                        <i class="fa fa-search" aria-hidden="true"></i> Buscar
-                    </a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorIniciarSesion" asp-action="CerrarSesion">
-                        <i class="fa fa-envelope-open" aria-hidden="true"></i> Mensajes
-                    </a>
-                    @if (User.IsInRole("admin"))
-                    {
-                        <a asp-area="" asp-controller="ControladorAdministracion" asp-action="irPaginaAdmin"
-                           class="list-group-item list-group-item-action bg-dark text-light">
-                            <i class="fa fa-address-card" aria-hidden="true"></i> Administracion
-                        </a>
-                    }
 
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorIniciarSesion" asp-action="CerrarSesion">
-                        <i class="fa fa-user-circle" aria-hidden="true"></i> Perfil
-                    </a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorIniciarSesion" asp-action="CerrarSesion">
-                        <i class="fa fa-cog" aria-hidden="true"></i> Ajustes
-                    </a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorIniciarSesion" asp-action="CerrarSesion">
-                        <i class="fa fa-sign-out" aria-hidden="true"></i>Cerrar Sesión
-                    </a>
+            <form method="post" enctype="multipart/form-data" action="@Url.Action("guardarPublicacion", "ControladorSubirPublicaciones")">
+
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="imagen">Foto.</label>
+                    <input type="file" accept="image/jpeg,image/png, image/jpg" id="imagen" name="imagen" onchange="mostrarImagen()" class="form-control " />
                 </div>
-            </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Subir Foto
+                </button>
+
+            </form>
         </div>
-        <div class="flex-grow-1 mx-auto col-6">
-            <!-- Ajusta el ancho de la columna según tus necesidades -->
-            <div class="container">
-                <h2 style="text-align:center;">LinkSocial</h2>
-            </div>
-
-            <!-- Contenido principal -->
-            <main>
-                <h1>Nueva Publicacion</h1>
-                <img id="imagenMostrada" src="#" alt="Imagen" style="display:none; max-width: 500px; max-height: 500px; margin: 20px auto; border: 2px solid #ccc;" />
+    </main>
 
 
-                <form method="post" enctype="multipart/form-data" action="@Url.Action("guardarPublicacion", "ControladorSubirPublicaciones")">
-
-                    <div class="form-outline mb-4">
-                        <label class="form-label" for="imagen">Foto.</label>
-                        <input type="file" accept="image/jpeg,image/png, image/jpg" id="imagen" name="imagen" onchange="mostrarImagen()" class="form-control " />
-                    </div>
-
-                    <button id="btn-registrar" type="submit" class="btn btn-primary btn-block mb-4">
-                        Subir Foto
-                    </button>
-
-                </form>
-            </main>
-        </div>
-    </div>
     <script>
         function mostrarImagen() {
             var input = document.getElementById('imagen');
@@ -136,6 +91,7 @@
             var reader = new FileReader();
             reader.onload = function (e) {
                 imagenMostrada.src = e.target.result;
+                imagenMostrada.style.display = 'block';
                 imagenMostrada.style.display = 'block';
             }
 

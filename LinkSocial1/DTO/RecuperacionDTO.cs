@@ -2,6 +2,9 @@
 
 namespace LinkSocial1.DTO
 {
+    /// <summary>
+    /// Clase DTO para la recuperacion de contraseña.
+    /// </summary>
     public class RecuperacionDTO
     {
         [Required(ErrorMessage = "El campo de la contraseña es obligatorio.")]

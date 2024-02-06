@@ -1,10 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Lista de Publicaciones";
     var listaPublicaciones = ViewData["listaPublicaciones"] as List<DB.Modelo.Publicaciones>;
-    var listaComentarios = ViewData["listaComentarios"] as List<DB.Modelo.Comentarios>;
+    var listaComentarios = ViewData["comentariosConUsuario"] as List<ComentarioConUsuarioViewModel>;
 }
 
+@using LinkSocial1.DTO
 @model DB.Modelo.Publicaciones
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +18,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+
     <style>
         #sidebar {
             width: 10%;
@@ -26,7 +28,13 @@
 
         main {
             text-align: center;
+            margin-top: 20px; /* Ajusta el margen superior según sea necesario */
+        }
 
+        .publicacion-container {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
         }
 
         .img-container {
@@ -35,9 +43,9 @@
             padding: 5px;
             background-color: #fff;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            font-size: 10px; /* Ajusta el tamaño de fuente según tus preferencias */
-            width: 400px; /* Ajusta el ancho del contenedor según tus preferencias */
-            height: 400px; /* Establece la altura igual al ancho para hacerlo cuadrado */
+            font-size: 14px;
+            width: 100%;
+            height: 400px;
         }
 
             .img-container img {
@@ -47,88 +55,76 @@
                 margin: 0 auto;
             }
 
+        .comentarios-container {
+            margin-top: 20px;
+        }
+
+        .comentario-form {
+            margin-top: 20px;
+        }
+
+        .scrollable-container {
+            overflow-y: auto; /* Agrega desplazamiento vertical si el contenido es demasiado grande */
+            max-height: 99vh; /* Ajusta la altura máxima según sea necesario */
+        }
     </style>
 </head>
 
 <body>
-    <div class="d-flex">
-        <!--Menu lateral-->
-        <div id="sidebar">
-            <div class="p-2">
-                <a href="#" class="navbar-brand text-center text-light w-100 p-4 border-bottom">
-                    LinkSocial
-                </a>
-            </div>
-            <div id="sidebar-accordion" class="accordion">
-                <div class="list-group">
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorPaginaInicio" asp-action="cargarPaginaInicio">
-                        <i class="fa fa-home" aria-hidden="true"></i> Inicio
-                    </a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorSubirPublicaciones" asp-action="cargarPaginaSubirPublicaciones">
-                        <i class="fa fa-file-image-o" aria-hidden="true"></i> Subir Publicacion
-                    </a>
+    <div class="scrollable-container">
+        <div class="d-flex">
 
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorIniciarSesion" asp-action="CerrarSesion">
-                        <i class="fa fa-search" aria-hidden="true"></i> Buscar
-                    </a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorIniciarSesion" asp-action="CerrarSesion">
-                        <i class="fa fa-envelope-open" aria-hidden="true"></i> Mensajes
-                    </a>
-                    @if (User.IsInRole("admin"))
-                    {
-                        <a asp-area="" asp-controller="ControladorAdministracion" asp-action="irPaginaAdmin"
-                           class="list-group-item list-group-item-action bg-dark text-light">
-                            <i class="fa fa-address-card" aria-hidden="true"></i> Administracion
-                        </a>
-                    }
 
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorIniciarSesion" asp-action="CerrarSesion">
-                        <i class="fa fa-user-circle" aria-hidden="true"></i> Perfil
-                    </a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorIniciarSesion" asp-action="CerrarSesion">
-                        <i class="fa fa-cog" aria-hidden="true"></i> Ajustes
-                    </a>
-                    <a class="list-group-item list-group-item-action bg-dark text-light" asp-area="" asp-controller="ControladorIniciarSesion" asp-action="CerrarSesion">
-                        <i class="fa fa-sign-out" aria-hidden="true"></i>Cerrar Sesión
-                    </a>
+            <div class="flex-grow-1 mx-auto col-6">
+                <div class="container">
+                    <h2 style="text-align: center;">LinkSocial</h2>
                 </div>
+
+                <main>
+                    @foreach (var publicacion in listaPublicaciones)
+                    {
+                        <div class="publicacion-container mx-auto mb-4">
+                            <div class="img-container">
+                                <img src="@publicacion.contenidoPublicacion" class="img-fluid">
+                            </div>
+
+                            <div class="comentarios-container">
+                                <h4>Comentarios:</h4>
+                                <ul class="list-unstyled">
+                                    @foreach (var comentarioConUsuario in listaComentarios)
+                                    {
+                                        if (comentarioConUsuario.Comentario.idPublicacion == publicacion.idPublicacion)
+                                        {
+                                            <li>
+                                                <strong>
+                                                    @if (comentarioConUsuario.Usuario != null)
+                                                    {
+                                                        @comentarioConUsuario.Usuario.nombreCompleto
+                                                    }
+                                                </strong>: @comentarioConUsuario.Comentario.contenidoComentario
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+
+                            <form class="comentario-form" method="post" action="@Url.Action("añadirComentario", "ControladorSubirPublicaciones")">
+                                <input type="hidden" name="idPublicacion" value="@publicacion.idPublicacion" />
+                                <div class="form-group">
+                                    <textarea class="form-control" name="ContenidoComentario" placeholder="Escribe tu comentario"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Comentar</button>
+                            </form>
+                        </div>
+                    }
+                </main>
+
             </div>
         </div>
-        <div class="flex-grow-1 mx-auto col-6">
-            
-            <div class="container">
-                <h2 style="text-align:center;">LinkSocial</h2>
-            </div>
+    </div>
 
-
-            <main>
-                @foreach (var publicacion in listaPublicaciones)
-                {
-                    <div class="publicacion-container mx-auto mb-4">
-                        <!-- Añade margen inferior (mb-4) para separar las imágenes -->
-
-                        <img src="@publicacion.contenidoPublicacion" class="img-fluid" style="width: 400px; height: 400px;"> <!-- Reemplaza con el nombre del campo que contiene la ruta de la imagen -->
-                        <!-- Mostrar comentarios existentes -->
-                        <h4>Comentarios:</h4>
-                        <ul>
-                            @foreach (var comentario in listaComentarios.Where(c => c.idPublicacion == publicacion.idPublicacion))
-                            {
-                                <li> @comentario.contenidoComentario</li>
-                            }
-                        </ul>
-
-                        <form method="post" action="@Url.Action("añadirComentario", "ControladorSubirPublicaciones")">
-                            <!-- Reemplaza "/Comentario/Agregar" con la ruta correcta de tu controlador y acción -->
-                            <input type="hidden" name="idPublicacion" value="@publicacion.idPublicacion" />
-                            <textarea name="ContenidoComentario" placeholder="Escribe tu comentario"></textarea>
-                            <button type="submit">Comentar</button>
-                        </form>
-                    </div>
-                }
-            </main>
-
-
-        </div>
-    </div> 
+    <!-- Bootstrap JS y Popper.js (si es necesario) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

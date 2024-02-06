@@ -1,5 +1,6 @@
 ﻿using DB;
 using DB.Modelo;
+using LinkSocial1.DTO;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Mail;
 
@@ -177,19 +178,69 @@ namespace LinkSocial1.Servicios
             }
         }
 
-        public List<Comentarios> mostrarComentarios()
+        public List<ComentarioConUsuarioViewModel> mostrarComentariosConUsuario()
         {
             using (var contexto = new GestorLinkSocialDbContext())
             {
                 var listaComentarios = contexto.Comentarios.ToList();
-                foreach (var comen in listaComentarios)
-                {
-                    Console.WriteLine("{0}", comen.contenidoComentario);
-                }
-                return listaComentarios;
-            }
+                var comentariosConUsuario = new List<ComentarioConUsuarioViewModel>();
 
+                foreach (var comentario in listaComentarios)
+                {
+                    var usuarioComentario = contexto.Usuarios.FirstOrDefault(u => u.idUsuario == comentario.idUsuario);
+
+                    // Si el usuario no es null, agregar el comentario con el usuario a la lista
+                    if (usuarioComentario != null)
+                    {
+                        comentariosConUsuario.Add(new ComentarioConUsuarioViewModel
+                        {
+                            Comentario = comentario,
+                            Usuario = usuarioComentario
+                        });
+                    }
+                }
+                return comentariosConUsuario;
+            }
         }
+
+        public Usuarios buscarUsuario(string correoElectronico)
+        {
+
+            using(var contexto = new GestorLinkSocialDbContext())
+            {
+                Usuarios usuarioEncontrado = contexto.Usuarios.FirstOrDefault(u => u.correoElectronico == correoElectronico);
+
+                if (usuarioEncontrado!=null)
+                {
+                    return usuarioEncontrado;
+                }
+                else
+                {
+                    Console.WriteLine("Usuario no encontrado");
+                    return null;
+                }
+                
+            }
+        }
+        public Usuarios buscarUsuarioPorId(int idUsuario)
+        {
+            using (var contexto = new GestorLinkSocialDbContext())
+            {
+                Usuarios usuarioEncontrado = contexto.Usuarios.FirstOrDefault(u => u.idUsuario == idUsuario);
+
+                if (usuarioEncontrado != null)
+                {
+                    return usuarioEncontrado;
+                }
+                else
+                {
+                    Console.WriteLine("Usuario no encontrado");
+                    return null;
+                }
+
+            }
+        }
+
 
     }
 }

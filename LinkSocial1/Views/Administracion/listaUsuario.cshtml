@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Lista de Usuarios";
     var listaUsuario = ViewData["listaUsuario"] as List<DB.Modelo.Usuarios>;
+   // Layout = "_LayoutSidebar"; // Especifica el nuevo layout
+    Layout = null;
 }
 <head>
     <!-- Required meta tags -->
@@ -13,7 +15,6 @@
 
     <title>Hello, world!</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="styles.css">
     <style>
         #sidebar {
             width: 20%;
@@ -44,22 +45,7 @@
 
 
 <div class="d-flex">
-    <div id="sidebar">
-        <div class="p-2">
-            <a href="#" class="navbar-brand text-center text-light w-100 p-4 border-bottom">
-                LinkSocial
-            </a>
-        </div>
-        <div id="sidebar-accordion" class="accordion">
-            <div class="list-group">
-
-                <a asp-controller="ControladorAdministracion" asp-action="irUsuario" data-toggle="collapse" aria-expanded="false"
-                   class="list-group-item list-group-item-action bg-dark text-light">
-                    <i class="fa fa-cog mr-3" aria-hidden="true"></i>Usuarios
-                </a>
-            </div>
-        </div>
-    </div>
+   
 
     <div class="flex-grow-1">
         <div class="table-responsive">

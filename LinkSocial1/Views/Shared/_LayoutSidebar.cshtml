@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark">
+                <div class="p-2">
+                    <a href="#" class="navbar-brand text-center text-light w-100 p-4 border-bottom">
+                        LinkSocial
+                    </a>
+                </div>
+                <div id="sidebar-accordion" class="accordion">
+                    <div class="list-group">
+                        <a asp-controller="ControladorAdministracion" asp-action="irUsuario" data-toggle="collapse" aria-expanded="false"
+                           class="list-group-item list-group-item-action bg-dark text-light">
+                            <i class="fa fa-cog mr-3" aria-hidden="true"></i>Usuarios
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenido a la derecha del Sidebar -->
+            <div class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS y Popper.js (si es necesario) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

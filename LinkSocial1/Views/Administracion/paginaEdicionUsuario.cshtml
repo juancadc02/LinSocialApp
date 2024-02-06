@@ -1,4 +1,8 @@
 ﻿@model DB.Modelo.Usuarios
+@{
+    // Layout = "_LayoutSidebar"; // Especifica el nuevo layout
+    Layout = null;
+}
 <!doctype html>
 
 
@@ -25,27 +29,11 @@
 
 
 <div class="d-flex">
-    <div id="sidebar">
-        <div class="p-2">
-            <a href="#" class="navbar-brand text-center text-light w-100 p-4 border-bottom">
-                LinkSocial
-            </a>
-        </div>
-        <div id="sidebar-accordion" class="accordion">
-            <div class="list-group">
-
-                <a asp-controller="ControladorAdministracion" asp-action="irUsuario" data-toggle="collapse" aria-expanded="false"
-                   class="list-group-item list-group-item-action bg-dark text-light">
-                    <i class="fa fa-cog mr-3" aria-hidden="true"></i>Usuarios
-                </a>
-            </div>
-        </div>
-    </div>
-
     <div class="flex-grow-1">
         <div class="container">
             <h2 style="text-align:center;">Actualizar Usuarios</h2>
         </div>
+        <div class="container">
         <form asp-controller="ControladorAdministracion" asp-action="GuardarEdicion" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="idUsuario" />
             <input type="hidden" asp-for="dniUsuario" />
@@ -79,15 +67,17 @@
                 </select>
             </div>
 
-            <div class="form-outline mt-4">
-                <label class="form-label" for="imagen">Cambiar Imagen</label>
-                <input type="file" accept="image/jpeg,image/png, image/jpg" asp-for="rutaImagen" id="rutaImagen" name="imagen" class="form-control" />
-            </div>
+           
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="imagen">Foto.</label>
+                    <input type="file" accept="image/jpeg,image/png, image/jpg" asp-for="rutaImagen" id="rutaImagen" name="imagen" class="form-control " />
+                </div>
 
             <button id="btn-actualizar" type="submit" class="btn btn-primary">
                 Actualizar Datos
             </button>
         </form>
+        </div>
     </div>
    
 </div>

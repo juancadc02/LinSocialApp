@@ -1,5 +1,7 @@
 ﻿using DB.Modelo;
+using LinkSocial1.DTO;
 using System.Net.Mail;
+using static LinkSocial1.Servicios.ServicioConsultasImpl;
 
 namespace LinkSocial1.Servicios
 {
@@ -43,6 +45,11 @@ namespace LinkSocial1.Servicios
         public List<Publicaciones> mostrarPublicaciones();
 
         public void añadirComentario(Comentarios nuevoComentario);
-        public List<Comentarios> mostrarComentarios();
+        public List<ComentarioConUsuarioViewModel> mostrarComentariosConUsuario();
+
+        //Metodos para buscar usuarios 
+
+        public Usuarios buscarUsuario(string correoElectronico);
+        public Usuarios buscarUsuarioPorId(int idUsuario);
     }
 }
