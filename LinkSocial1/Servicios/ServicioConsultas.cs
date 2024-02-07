@@ -58,5 +58,7 @@ namespace LinkSocial1.Servicios
         //Metodos para seguir a un usuario
 
         public void iniciarSeguimiento(Seguidores nuevoSeguidor);
+        public void dejarDeSeguir(int idSeguidorSolicitud, int idSeguidorSeguido);
+        public bool estaSiguiendo(int idSeguidorSolicitud, int idSeguidorSeguido);
     }
 }

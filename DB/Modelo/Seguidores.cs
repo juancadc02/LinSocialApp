@@ -23,6 +23,8 @@ namespace DB.Modelo
 
         public DateTime fchSeguimiento { get; set; }
 
+        public bool siguiendo { get; set; }
+
 
         public Usuarios usuarioSolicitud { get; set; }
 
@@ -36,11 +38,13 @@ namespace DB.Modelo
         {
         }
 
-        public Seguidores(int idSeguidorSolicitud, int idSeguidorSeguido, DateTime fchSeguimiento)
+       
+        public Seguidores(int idSeguidorSolicitud, int idSeguidorSeguido, DateTime fchSeguimiento, bool siguiendo)
         {
             this.idSeguidorSolicitud = idSeguidorSolicitud;
             this.idSeguidorSeguido = idSeguidorSeguido;
             this.fchSeguimiento = fchSeguimiento;
+            this.siguiendo = siguiendo;
         }
 
         #endregion

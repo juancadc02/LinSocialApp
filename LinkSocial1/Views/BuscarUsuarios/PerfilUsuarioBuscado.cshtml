@@ -69,11 +69,25 @@
                     <p>Siguiendo: </p>
                 </div>
 
-                @* Botón para seguir al usuario *@
-                <form method="post" action="@Url.Action("solicitudSeguimiento", "ControladorSeguidores")">
-                    <input type="hidden" name="idSeguidorSeguido" value="@Model.idUsuario" />
-                    <button type="submit" class="btn btn-primary">Seguir</button>
-                </form>
+                <div>
+                    <!-- Botón para seguir al usuario -->
+                    <form method="post" action="@Url.Action("solicitudSeguimiento", "ControladorSeguidores")">
+                        <input type="hidden" name="idSeguidorSeguido" value="@Model.idUsuario" />
+
+                        @if (ViewData["EstaSiguiendo"] != null && (bool)ViewData["EstaSiguiendo"])
+                        {
+                            <!-- Si ya está siguiendo, mostrar botón deshabilitado -->
+                            <button type="button" class="btn btn-primary" disabled>Siguiendo</button>
+                        }
+                        else
+                        {
+                            <!-- Si no está siguiendo, mostrar botón habilitado para seguir -->
+                            <button type="submit" class="btn btn-primary">Seguir</button>
+                        }
+                    </form>
+                </div>
+
+
             </div>
             <div class="contenedor-imagenes">
                
@@ -93,7 +107,7 @@
 
         </main>
     </div>
-
+    
     <!-- Bootstrap JS y Popper.js (si es necesario) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

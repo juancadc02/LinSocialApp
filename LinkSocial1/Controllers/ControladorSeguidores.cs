@@ -7,7 +7,7 @@ namespace LinkSocial1.Controllers
 {
     public class ControladorSeguidores : Controller
     {
-        
+
         public IActionResult solicitudSeguimiento(int idSeguidorSeguido)
         {
             ServicioConsultas consultas = new ServicioConsultasImpl();
@@ -15,17 +15,25 @@ namespace LinkSocial1.Controllers
             string idSeguidorSolicitud = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             DateTime fchSeguimiento = DateTime.Now.ToUniversalTime();
 
-            Seguidores nuevoSeguidor = new Seguidores(Convert.ToInt32(idSeguidorSolicitud),Convert.ToInt32(idSeguidorSeguido),fchSeguimiento);
+            Seguidores nuevoSeguidor = new Seguidores(Convert.ToInt32(idSeguidorSolicitud), Convert.ToInt32(idSeguidorSeguido), fchSeguimiento);
             consultas.iniciarSeguimiento(nuevoSeguidor);
-            
-            //Para despues poder mostrar la vista del perfil del usuario necesito cargar los datos que se van a mostrar en el perfil.
+
+            // También puedes cargar los datos directamente desde la base de datos
             Usuarios usuarioEncontrado = consultas.buscarUsuarioPorId(idSeguidorSeguido);
             List<Publicaciones> listaPublicaciones = consultas.buscarPublicacionesPorIdUsuario(idSeguidorSeguido);
             int numeroPublicacion = listaPublicaciones.Count;
             ViewData["numeroPublicacion"] = numeroPublicacion;
             ViewData["listaPublicaciones"] = listaPublicaciones;
-            return View("~/Views/BuscarUsuarios/PerfilUsuarioBuscado.cshtml", usuarioEncontrado);
 
+            // Verificar si el usuario está siguiendo al otro
+            bool siguiendo = consultas.estaSiguiendo(Convert.ToInt32(idSeguidorSolicitud), idSeguidorSeguido);
+            ViewData["EstaSiguiendo"] = siguiendo;
+
+            return View("~/Views/BuscarUsuarios/PerfilUsuarioBuscado.cshtml", usuarioEncontrado);
         }
+
+
+
+
     }
 }

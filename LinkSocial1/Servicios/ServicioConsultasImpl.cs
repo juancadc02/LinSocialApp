@@ -274,6 +274,35 @@ namespace LinkSocial1.Servicios
                 contexto.SaveChanges();
             }
         }
+        public void dejarDeSeguir(int idSeguidorSolicitud, int idSeguidorSeguido)
+        {
+            using (var dbContext = new GestorLinkSocialDbContext())
+            {
+                // Buscar la relación de seguimiento
+                var seguimiento = dbContext.Seguidores
+                    .FirstOrDefault(s => s.idSeguidorSolicitud == idSeguidorSolicitud && s.idSeguidorSeguido == idSeguidorSeguido);
+
+                if (seguimiento != null)
+                {
+                    // Si la relación de seguimiento existe, eliminarla
+                    dbContext.Seguidores.Remove(seguimiento);
+                    dbContext.SaveChanges();
+                }
+                // Puedes manejar una lógica adicional si la relación de seguimiento no existe
+            }
+        }
+        public bool estaSiguiendo(int idSeguidorSolicitud, int idSeguidorSeguido)
+        {
+            using (var dbContext = new GestorLinkSocialDbContext())
+            {
+                // Verificar si ya existe una relación de seguimiento
+                var existeSeguimiento = dbContext.Seguidores.Any(s => s.idSeguidorSolicitud == idSeguidorSolicitud && s.idSeguidorSeguido == idSeguidorSeguido);
+
+
+                return existeSeguimiento;
+            }
+        }
+
 
 
     }

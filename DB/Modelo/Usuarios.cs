@@ -29,6 +29,8 @@ namespace DB.Modelo
         public string? rutaImagen { get; set; }
 
 
+
+
         #region Constructores
 
         //Constructor con todos los campos.
@@ -55,7 +57,6 @@ namespace DB.Modelo
             this.tokenRecuperacion = tokenRecuperacion;
             this.fchVencimientoToken = fchVencimientoToken;
         }
-
         //Constructor para el registro de usuarios.
         public Usuarios(string nombreCompleto, string correoElectronico, string dniUsuario, string movilUsuario, string contraseña, DateTime fchRegistro, DateTime fchNacimiento, string rolAcceso, string rutaImagen) : this(nombreCompleto, correoElectronico, dniUsuario, movilUsuario, contraseña)
         {
