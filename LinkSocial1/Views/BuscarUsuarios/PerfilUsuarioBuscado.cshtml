@@ -76,12 +76,13 @@
 
                         @if (ViewData["EstaSiguiendo"] != null && (bool)ViewData["EstaSiguiendo"])
                         {
-                            <!-- Si ya está siguiendo, mostrar botón deshabilitado -->
-                            <button type="button" class="btn btn-primary" disabled>Siguiendo</button>
+                            <!-- Si ya está siguiendo, mostrar el mensaje -->
+                            <button type="submit" class="btn btn-primary" disabled>Siguiendo</button>
+
                         }
                         else
                         {
-                            <!-- Si no está siguiendo, mostrar botón habilitado para seguir -->
+                            <!-- Si no está siguiendo, mostrar el botón habilitado para seguir -->
                             <button type="submit" class="btn btn-primary">Seguir</button>
                         }
                     </form>

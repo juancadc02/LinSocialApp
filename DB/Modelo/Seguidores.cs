@@ -23,7 +23,7 @@ namespace DB.Modelo
 
         public DateTime fchSeguimiento { get; set; }
 
-        public bool siguiendo { get; set; }
+        public bool siguiendo { get; set; } 
 
 
         public Usuarios usuarioSolicitud { get; set; }

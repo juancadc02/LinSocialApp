@@ -267,7 +267,8 @@ namespace LinkSocial1.Servicios
                 {
                     idSeguidorSolicitud=nuevoSeguidor.idSeguidorSolicitud,
                     idSeguidorSeguido=nuevoSeguidor.idSeguidorSeguido,
-                    fchSeguimiento=nuevoSeguidor.fchSeguimiento
+                    fchSeguimiento=nuevoSeguidor.fchSeguimiento,
+                    siguiendo=nuevoSeguidor.siguiendo
                 };
 
                 contexto.Seguidores.Add(nuevoSeguidor);
@@ -296,8 +297,10 @@ namespace LinkSocial1.Servicios
             using (var dbContext = new GestorLinkSocialDbContext())
             {
                 // Verificar si ya existe una relación de seguimiento
-                var existeSeguimiento = dbContext.Seguidores.Any(s => s.idSeguidorSolicitud == idSeguidorSolicitud && s.idSeguidorSeguido == idSeguidorSeguido);
-
+                var existeSeguimiento = dbContext.Seguidores
+                    .Any(s => s.idSeguidorSolicitud == idSeguidorSolicitud
+                           && s.idSeguidorSeguido == idSeguidorSeguido
+                           && s.siguiendo);
 
                 return existeSeguimiento;
             }
