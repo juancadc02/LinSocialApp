@@ -32,15 +32,20 @@ namespace LinkSocial1.Controllers
 
         }
 
+        [HttpGet]
         public IActionResult perfilUsuarioBuscado(int idUsuario)
         {
             ServicioConsultas consultas = new ServicioConsultasImpl();
 
             Usuarios usuarioEncontrado = consultas.buscarUsuarioPorId(idUsuario);
 
-            
-                TempData["mensajeExito"] = "Usuario encontrado";
-                return View("~/Views/BuscarUsuarios/PerfilUsuarioBuscado.cshtml", usuarioEncontrado);
+            List<Publicaciones> listaPublicaciones = consultas.buscarPublicacionesPorIdUsuario(idUsuario);
+            int numeroPublicacion = listaPublicaciones.Count;
+            ViewData["numeroPublicacion"] = numeroPublicacion;
+            ViewData["listaPublicaciones"] = listaPublicaciones;
+            TempData["mensajeExito"] = "Usuario encontrado";
+                
+            return View("~/Views/BuscarUsuarios/PerfilUsuarioBuscado.cshtml", usuarioEncontrado);
             
           
         }

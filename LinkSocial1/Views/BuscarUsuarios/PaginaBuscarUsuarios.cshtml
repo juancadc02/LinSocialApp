@@ -63,7 +63,7 @@
             </form>
             @if (Model != null)
             {
-                <a href="@Url.Action("perfilUsuarioBuscado", "ControladorBuscarUsuarios", new { id = Model.idUsuario})">
+                <a href="@Url.Action("perfilUsuarioBuscado", "ControladorBuscarUsuarios", new { idUsuario  = Model.idUsuario})">
                     <div class="usuario-encontrado">
                         <div class="imagen-circular">
                             <img src="@Model.rutaImagen" alt="Foto de perfil" />

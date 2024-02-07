@@ -57,6 +57,33 @@ namespace DB.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Seguidores",
+                columns: table => new
+                {
+                    idSeguidores = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    idSeguidorSolicitud = table.Column<int>(type: "integer", nullable: false),
+                    idSeguidorSeguido = table.Column<int>(type: "integer", nullable: false),
+                    fchSeguimiento = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Seguidores", x => x.idSeguidores);
+                    table.ForeignKey(
+                        name: "FK_Seguidores_Usuarios_idSeguidorSeguido",
+                        column: x => x.idSeguidorSeguido,
+                        principalTable: "Usuarios",
+                        principalColumn: "idUsuario",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Seguidores_Usuarios_idSeguidorSolicitud",
+                        column: x => x.idSeguidorSolicitud,
+                        principalTable: "Usuarios",
+                        principalColumn: "idUsuario",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Comentarios",
                 columns: table => new
                 {
@@ -98,6 +125,16 @@ namespace DB.Migrations
                 name: "IX_Publicaciones_idUsuario",
                 table: "Publicaciones",
                 column: "idUsuario");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Seguidores_idSeguidorSeguido",
+                table: "Seguidores",
+                column: "idSeguidorSeguido");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Seguidores_idSeguidorSolicitud",
+                table: "Seguidores",
+                column: "idSeguidorSolicitud");
         }
 
         /// <inheritdoc />
@@ -105,6 +142,9 @@ namespace DB.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Comentarios");
+
+            migrationBuilder.DropTable(
+                name: "Seguidores");
 
             migrationBuilder.DropTable(
                 name: "Publicaciones");

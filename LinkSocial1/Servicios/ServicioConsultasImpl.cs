@@ -240,6 +240,40 @@ namespace LinkSocial1.Servicios
 
             }
         }
+        public List<Publicaciones> buscarPublicacionesPorIdUsuario(int idUsuario)
+        {
+           using(var contexto = new GestorLinkSocialDbContext())
+            {
+                var publicacionesDelUsuario = dbContext.Publicaciones
+                                               .Where(p => p.idUsuario == idUsuario)
+                                               .ToList();
+
+                foreach(var publicaciones in publicacionesDelUsuario)
+                {
+                    Console.WriteLine("{0}",publicaciones.contenidoPublicacion);
+                }
+                return publicacionesDelUsuario;
+            }
+
+           
+
+           
+        }
+        public void iniciarSeguimiento(Seguidores nuevoSeguidor)
+        {
+            using(var contexto = new GestorLinkSocialDbContext())
+            {
+                nuevoSeguidor = new Seguidores
+                {
+                    idSeguidorSolicitud=nuevoSeguidor.idSeguidorSolicitud,
+                    idSeguidorSeguido=nuevoSeguidor.idSeguidorSeguido,
+                    fchSeguimiento=nuevoSeguidor.fchSeguimiento
+                };
+
+                contexto.Seguidores.Add(nuevoSeguidor);
+                contexto.SaveChanges();
+            }
+        }
 
 
     }

@@ -1,4 +1,9 @@
 ﻿@model DB.Modelo.Usuarios
+@{
+    var listaPublicaciones = ViewData["listaPublicaciones"] as List<DB.Modelo.Publicaciones>;
+
+}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,13 +28,62 @@
             margin-top: 20px;
         }
 
-      
+        .contenedor-imagenes {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around; /* Distribuye las imágenes de manera uniforme en el contenedor */
+            gap: 20px; /* Espacio entre las imágenes */
+        }
+
+            .contenedor-imagenes div {
+                flex: 0 0 calc(30% - 20px); /* Establece el ancho de cada contenedor con margen */
+                box-sizing: border-box; /* Asegura que el margen no afecte el ancho real */
+                margin-bottom: 20px; /* Espacio inferior entre las imágenes */
+                border: 1px solid black;
+                border-radius: 8px;
+            }
+
+            .contenedor-imagenes img {
+                width: 100%; /* Ocupa el ancho completo del contenedor div */
+                height: auto; /* Mantiene la proporción de aspecto */
+            }
+
+        .scrollable-container {
+            overflow-y: auto; /* Agrega desplazamiento vertical si el contenido es demasiado grande */
+            max-height: 99vh; /* Ajusta la altura máxima según sea necesario */
+        }
+
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <div class="scrollable-container">
         <main>
+            <div>
+                <img src="@Model.rutaImagen" alt="Foto de perfil" style="width: 150px; height: 150px; border-radius: 50%;" />
+                <h2>@Model.correoElectronico</h2>
+
+                <div>
+                    <p>Publicaciones: @ViewData["numeroPublicacion"]</p>
+                    <p>Seguidores: </p>
+                    <p>Siguiendo: </p>
+                </div>
+
+                @* Botón para seguir al usuario *@
+                <form method="post" action="@Url.Action("solicitudSeguimiento", "ControladorSeguidores")">
+                    <input type="hidden" name="idSeguidorSeguido" value="@Model.idUsuario" />
+                    <button type="submit" class="btn btn-primary">Seguir</button>
+                </form>
+            </div>
+            <div class="contenedor-imagenes">
+               
+                @foreach (var publicacion in listaPublicaciones)
+                {
+                    <div >
+                        <img src="@publicacion.contenidoPublicacion" />
+                    </div>
+                }
+            </div>
             @if (TempData["mensajeExito"] != null)
             {
                 <div class="alert alert-success">

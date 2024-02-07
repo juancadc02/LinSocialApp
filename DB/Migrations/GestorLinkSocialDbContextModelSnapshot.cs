@@ -77,6 +77,32 @@ namespace DB.Migrations
                     b.ToTable("Publicaciones");
                 });
 
+            modelBuilder.Entity("DB.Modelo.Seguidores", b =>
+                {
+                    b.Property<int>("idSeguidores")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("idSeguidores"));
+
+                    b.Property<DateTime>("fchSeguimiento")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("idSeguidorSeguido")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("idSeguidorSolicitud")
+                        .HasColumnType("integer");
+
+                    b.HasKey("idSeguidores");
+
+                    b.HasIndex("idSeguidorSeguido");
+
+                    b.HasIndex("idSeguidorSolicitud");
+
+                    b.ToTable("Seguidores");
+                });
+
             modelBuilder.Entity("DB.Modelo.Usuarios", b =>
                 {
                     b.Property<int>("idUsuario")
@@ -157,6 +183,25 @@ namespace DB.Migrations
                         .IsRequired();
 
                     b.Navigation("usuarios");
+                });
+
+            modelBuilder.Entity("DB.Modelo.Seguidores", b =>
+                {
+                    b.HasOne("DB.Modelo.Usuarios", "usuarioSeguido")
+                        .WithMany()
+                        .HasForeignKey("idSeguidorSeguido")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DB.Modelo.Usuarios", "usuarioSolicitud")
+                        .WithMany()
+                        .HasForeignKey("idSeguidorSolicitud")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("usuarioSeguido");
+
+                    b.Navigation("usuarioSolicitud");
                 });
 #pragma warning restore 612, 618
         }
