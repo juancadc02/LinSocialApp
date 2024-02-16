@@ -60,5 +60,12 @@ namespace LinkSocial1.Servicios
         public void iniciarSeguimiento(Seguidores nuevoSeguidor);
         public void dejarDeSeguir(int idSeguidorSolicitud, int idSeguidorSeguido);
         public bool estaSiguiendo(int idSeguidorSolicitud, int idSeguidorSeguido);
+
+
+        //Metodo para likes 
+
+        public void añadirLike(LikeUsuariosPublicaciones nuevoLike);
+
+        public bool usuarioDioLike(int idUsuario, int idPublicacion);
     }
 }

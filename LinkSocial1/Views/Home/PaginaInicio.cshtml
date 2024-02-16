@@ -86,8 +86,20 @@
                         <div class="publicacion-container mx-auto mb-4">
                             <div class="img-container">
                                 <img src="@publicacion.contenidoPublicacion" class="img-fluid">
+                                <br>
+                                @if ((bool)ViewData["usuarioDioLike"])
+                                {
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("darLikePublicacion", "ControladorLikes", new { idPublicacion = publicacion.idPublicacion })">
+                                        <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                    </a>
+                                }
                             </div>
 
+                            <br>
                             <div class="comentarios-container">
                                 <h4>Comentarios:</h4>
                                 <ul class="list-unstyled">

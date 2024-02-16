@@ -29,5 +29,6 @@ namespace DB
         public DbSet<Publicaciones> Publicaciones { get; set;}
         public DbSet<Comentarios> Comentarios { get; set; }
         public DbSet<Seguidores> Seguidores { get; set; }
+        public DbSet<LikeUsuariosPublicaciones> LikeUsuariosPublicaciones { get; set; }
     }
 }

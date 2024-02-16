@@ -52,6 +52,32 @@ namespace DB.Migrations
                     b.ToTable("Comentarios");
                 });
 
+            modelBuilder.Entity("DB.Modelo.LikeUsuariosPublicaciones", b =>
+                {
+                    b.Property<int>("idLike")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("idLike"));
+
+                    b.Property<DateTime>("fchLike")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("idPublicacion")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("idUsuario")
+                        .HasColumnType("integer");
+
+                    b.HasKey("idLike");
+
+                    b.HasIndex("idPublicacion");
+
+                    b.HasIndex("idUsuario");
+
+                    b.ToTable("LikeUsuariosPublicaciones");
+                });
+
             modelBuilder.Entity("DB.Modelo.Publicaciones", b =>
                 {
                     b.Property<int>("idPublicacion")
@@ -175,6 +201,25 @@ namespace DB.Migrations
                     b.Navigation("publicaciones");
 
                     b.Navigation("usuarios");
+                });
+
+            modelBuilder.Entity("DB.Modelo.LikeUsuariosPublicaciones", b =>
+                {
+                    b.HasOne("DB.Modelo.Publicaciones", "publicaciones")
+                        .WithMany()
+                        .HasForeignKey("idPublicacion")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DB.Modelo.Usuarios", "usuario")
+                        .WithMany()
+                        .HasForeignKey("idUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("publicaciones");
+
+                    b.Navigation("usuario");
                 });
 
             modelBuilder.Entity("DB.Modelo.Publicaciones", b =>

@@ -308,6 +308,35 @@ namespace LinkSocial1.Servicios
         }
 
 
+        public void añadirLike(LikeUsuariosPublicaciones nuevoLike)
+        {
+            using(var contexto = new GestorLinkSocialDbContext())
+            {
+                nuevoLike = new LikeUsuariosPublicaciones
+                {
+                    idUsuario=nuevoLike.idUsuario,
+                    idPublicacion=nuevoLike.idPublicacion,
+                    fchLike=nuevoLike.fchLike
+                };
+
+                contexto.LikeUsuariosPublicaciones.Add(nuevoLike);
+                contexto.SaveChanges();
+            }
+        }
+
+        public bool usuarioDioLike(int idUsuario, int idPublicacion)
+        {
+            using (var dbContext = new GestorLinkSocialDbContext())
+            {
+                // Supongamos que tienes una entidad Likes con campos idUsuario y idPublicacion
+                var likeExistente = dbContext.LikeUsuariosPublicaciones
+                    .FirstOrDefault(l => l.idUsuario == idUsuario && l.idPublicacion == idPublicacion);
+
+                // Devuelve true si el usuario ya dio "me gusta", false en caso contrario
+                return likeExistente != null;
+            }
+        }
+
 
     }
 }

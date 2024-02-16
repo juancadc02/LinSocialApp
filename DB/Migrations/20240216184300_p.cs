@@ -112,6 +112,33 @@ namespace DB.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "LikeUsuariosPublicaciones",
+                columns: table => new
+                {
+                    idLike = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    idUsuario = table.Column<int>(type: "integer", nullable: false),
+                    idPublicacion = table.Column<int>(type: "integer", nullable: false),
+                    fchLike = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LikeUsuariosPublicaciones", x => x.idLike);
+                    table.ForeignKey(
+                        name: "FK_LikeUsuariosPublicaciones_Publicaciones_idPublicacion",
+                        column: x => x.idPublicacion,
+                        principalTable: "Publicaciones",
+                        principalColumn: "idPublicacion",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LikeUsuariosPublicaciones_Usuarios_idUsuario",
+                        column: x => x.idUsuario,
+                        principalTable: "Usuarios",
+                        principalColumn: "idUsuario",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Comentarios_idPublicacion",
                 table: "Comentarios",
@@ -120,6 +147,16 @@ namespace DB.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Comentarios_idUsuario",
                 table: "Comentarios",
+                column: "idUsuario");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LikeUsuariosPublicaciones_idPublicacion",
+                table: "LikeUsuariosPublicaciones",
+                column: "idPublicacion");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LikeUsuariosPublicaciones_idUsuario",
+                table: "LikeUsuariosPublicaciones",
                 column: "idUsuario");
 
             migrationBuilder.CreateIndex(
@@ -143,6 +180,9 @@ namespace DB.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Comentarios");
+
+            migrationBuilder.DropTable(
+                name: "LikeUsuariosPublicaciones");
 
             migrationBuilder.DropTable(
                 name: "Seguidores");
