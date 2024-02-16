@@ -123,7 +123,8 @@ namespace LinkSocial1.Servicios
             smtpCliente.EnableSsl = true;
             smtpCliente.UseDefaultCredentials = false;
             smtpCliente.Port = 587;
-            smtpCliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, "tkgn lppw wopr xrih");
+            smtpCliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, "mepy ftvq rbui vmqq" +
+                "");
 
             smtpCliente.Send(mensajeDelCorreo);
 
