@@ -337,6 +337,22 @@ namespace LinkSocial1.Servicios
             }
         }
 
+        public void eliminarLike(int idUsuario, int idPublicacion)
+        {
+            // Lógica para eliminar un "me gusta" de la publicación
+            using (var dbContext = new GestorLinkSocialDbContext())
+            {
+                var likeExistente = dbContext.LikeUsuariosPublicaciones
+                    .FirstOrDefault(l => l.idUsuario == idUsuario && l.idPublicacion == idPublicacion);
+
+                if (likeExistente != null)
+                {
+                    dbContext.LikeUsuariosPublicaciones.Remove(likeExistente);
+                    dbContext.SaveChanges();
+                }
+            }
+        }
+
 
     }
 }

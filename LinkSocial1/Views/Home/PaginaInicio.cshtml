@@ -81,13 +81,22 @@
                 </div>
 
                 <main>
+                    @{
+                        Dictionary<int, bool> likesPorPublicacion = ViewData["likesPorPublicacion"] as Dictionary<int, bool>;
+                    }
+
                     @foreach (var publicacion in listaPublicaciones)
                     {
                         <div class="publicacion-container mx-auto mb-4">
                             <div class="img-container">
                                 <img src="@publicacion.contenidoPublicacion" class="img-fluid">
                                 <br>
-                                @if ((bool)ViewData["usuarioDioLike"])
+                                @{
+                                    bool usuarioDioLike = likesPorPublicacion.ContainsKey(publicacion.idPublicacion) &&
+                                    likesPorPublicacion[publicacion.idPublicacion];
+                                }
+
+                                @if (usuarioDioLike)
                                 {
                                     <i class="fa fa-heart" aria-hidden="true"></i>
                                 }
@@ -130,6 +139,7 @@
                         </div>
                     }
                 </main>
+
 
             </div>
         </div>

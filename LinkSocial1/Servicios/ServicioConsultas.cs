@@ -67,5 +67,7 @@ namespace LinkSocial1.Servicios
         public void añadirLike(LikeUsuariosPublicaciones nuevoLike);
 
         public bool usuarioDioLike(int idUsuario, int idPublicacion);
+
+        public void eliminarLike(int idUsuario, int idPublicacion);
     }
 }

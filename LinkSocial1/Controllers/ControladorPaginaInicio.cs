@@ -22,21 +22,26 @@ namespace LinkSocial1.Controllers
                 ServicioConsultas consultas = new ServicioConsultasImpl();
                 List<Publicaciones> listaPublicaciones = consultas.mostrarPublicaciones();
 
-                // Usar el nuevo método para obtener comentarios con usuarios
-                List<ComentarioConUsuarioViewModel> comentariosConUsuario = consultas.mostrarComentariosConUsuario();
-
                 // Obtener el ID del usuario actual
                 var claimsPrincipal = User;
                 string idUsuario = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
+                // Obtener los IDs de todas las publicaciones
+                List<int> idsPublicaciones = listaPublicaciones.Select(p => p.idPublicacion).ToList();
+                List<ComentarioConUsuarioViewModel> comentariosConUsuario = consultas.mostrarComentariosConUsuario();
+
                 // Verificar si el usuario dio "me gusta" a cada publicación
-                foreach (var publicacion in listaPublicaciones)
+                Dictionary<int, bool> likesPorPublicacion = new Dictionary<int, bool>();
+                foreach (var idPublicacion in idsPublicaciones)
                 {
-                    publicacion.UsuarioDioLike = consultas.usuarioDioLike(Convert.ToInt32(idUsuario), publicacion.Id);
+                    bool usuarioDioLike = consultas.usuarioDioLike(Convert.ToInt32(idUsuario), idPublicacion);
+                    likesPorPublicacion.Add(idPublicacion, usuarioDioLike);
                 }
 
                 ViewData["listaPublicaciones"] = listaPublicaciones;
+                ViewData["likesPorPublicacion"] = likesPorPublicacion;
                 ViewData["comentariosConUsuario"] = comentariosConUsuario;
+
                 return View("~/Views/Home/PaginaInicio.cshtml");
             }
             catch (Exception ex)

@@ -11,12 +11,10 @@ namespace LinkSocial1.Controllers
        
         public IActionResult darLikePublicacion(int idPublicacion)
         {
-            ServicioConsultas consulta = new ServicioConsultasImpl();
             ServicioConsultas consultas = new ServicioConsultasImpl();
             List<Publicaciones> listaPublicaciones = consultas.mostrarPublicaciones();
 
-            // Usar el nuevo método para obtener comentarios con usuarios
-            List<ComentarioConUsuarioViewModel> comentariosConUsuario = consultas.mostrarComentariosConUsuario();
+         
 
         
             var claimsPrincipal = User;
@@ -24,11 +22,26 @@ namespace LinkSocial1.Controllers
 
             DateTime fchLike = DateTime.Now.ToUniversalTime();
             LikeUsuariosPublicaciones nuevaLike = new LikeUsuariosPublicaciones(Convert.ToInt32(idUsuario), idPublicacion, fchLike);
-            consulta.añadirLike(nuevaLike);
-            bool usuarioDioLike = consulta.usuarioDioLike(Convert.ToInt32(idUsuario), idPublicacion);
+            consultas.añadirLike(nuevaLike);
+
+            // Obtener los IDs de todas las publicaciones
+            List<int> idsPublicaciones = listaPublicaciones.Select(p => p.idPublicacion).ToList();
+            List<ComentarioConUsuarioViewModel> comentariosConUsuario = consultas.mostrarComentariosConUsuario();
+
+            // Verificar si el usuario dio "me gusta" a cada publicación
+            Dictionary<int, bool> likesPorPublicacion = new Dictionary<int, bool>();
+            foreach (var idPublicaciones in idsPublicaciones)
+            {
+                bool usuarioDioLike = consultas.usuarioDioLike(Convert.ToInt32(idUsuario), idPublicacion);
+                likesPorPublicacion.Add(idPublicacion, usuarioDioLike);
+            }
+
             ViewData["listaPublicaciones"] = listaPublicaciones;
+            ViewData["likesPorPublicacion"] = likesPorPublicacion;
             ViewData["comentariosConUsuario"] = comentariosConUsuario;
-            ViewData["usuarioDioLike"] = usuarioDioLike;
+
+
+
 
             return View("~/Views/Home/PaginaInicio.cshtml");
 
