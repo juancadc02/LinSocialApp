@@ -79,12 +79,7 @@
                 <div class="container">
                     <h2 style="text-align: center;">LinkSocial</h2>
                 </div>
-
                 <main>
-                    @{
-                        Dictionary<int, bool> likesPorPublicacion = ViewData["likesPorPublicacion"] as Dictionary<int, bool>;
-                    }
-
                     @foreach (var publicacion in listaPublicaciones)
                     {
                         <div class="publicacion-container mx-auto mb-4">
@@ -92,13 +87,18 @@
                                 <img src="@publicacion.contenidoPublicacion" class="img-fluid">
                                 <br>
                                 @{
-                                    bool usuarioDioLike = likesPorPublicacion.ContainsKey(publicacion.idPublicacion) &&
+                                    Dictionary<int, bool> likesPorPublicacion = ViewData["likesPorPublicacion"] as Dictionary<int, bool>;
+
+                                    bool usuarioDioLike = likesPorPublicacion != null &&
+                                    likesPorPublicacion.ContainsKey(publicacion.idPublicacion) &&
                                     likesPorPublicacion[publicacion.idPublicacion];
                                 }
 
                                 @if (usuarioDioLike)
                                 {
-                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                    <a href="@Url.Action("darLikePublicacion", "ControladorLikes", new { idPublicacion = publicacion.idPublicacion })">
+                                        <i class="fa fa-heart" aria-hidden="true"></i>
+                                    </a>
                                 }
                                 else
                                 {

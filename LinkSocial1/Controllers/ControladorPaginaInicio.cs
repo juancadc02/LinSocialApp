@@ -28,7 +28,6 @@ namespace LinkSocial1.Controllers
 
                 // Obtener los IDs de todas las publicaciones
                 List<int> idsPublicaciones = listaPublicaciones.Select(p => p.idPublicacion).ToList();
-                List<ComentarioConUsuarioViewModel> comentariosConUsuario = consultas.mostrarComentariosConUsuario();
 
                 // Verificar si el usuario dio "me gusta" a cada publicación
                 Dictionary<int, bool> likesPorPublicacion = new Dictionary<int, bool>();
@@ -37,6 +36,8 @@ namespace LinkSocial1.Controllers
                     bool usuarioDioLike = consultas.usuarioDioLike(Convert.ToInt32(idUsuario), idPublicacion);
                     likesPorPublicacion.Add(idPublicacion, usuarioDioLike);
                 }
+
+                List<ComentarioConUsuarioViewModel> comentariosConUsuario = consultas.mostrarComentariosConUsuario();
 
                 ViewData["listaPublicaciones"] = listaPublicaciones;
                 ViewData["likesPorPublicacion"] = likesPorPublicacion;

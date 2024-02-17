@@ -8,21 +8,30 @@ namespace LinkSocial1.Controllers
 {
     public class ControladorLikes : Controller
     {
-       
+
         public IActionResult darLikePublicacion(int idPublicacion)
         {
             ServicioConsultas consultas = new ServicioConsultasImpl();
             List<Publicaciones> listaPublicaciones = consultas.mostrarPublicaciones();
 
-         
-
-        
             var claimsPrincipal = User;
             string idUsuario = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            DateTime fchLike = DateTime.Now.ToUniversalTime();
-            LikeUsuariosPublicaciones nuevaLike = new LikeUsuariosPublicaciones(Convert.ToInt32(idUsuario), idPublicacion, fchLike);
-            consultas.añadirLike(nuevaLike);
+            // Verificar si el usuario ya dio "me gusta" a la publicación
+            bool usuarioDioLike = consultas.usuarioDioLike(Convert.ToInt32(idUsuario), idPublicacion);
+
+            if (usuarioDioLike)
+            {
+                // Si ya dio "me gusta", eliminar el like
+                consultas.eliminarLike(Convert.ToInt32(idUsuario), idPublicacion);
+            }
+            else
+            {
+                // Si no dio "me gusta", añadir el nuevo like
+                DateTime fchLike = DateTime.Now.ToUniversalTime();
+                LikeUsuariosPublicaciones nuevaLike = new LikeUsuariosPublicaciones(Convert.ToInt32(idUsuario), idPublicacion, fchLike);
+                consultas.añadirLike(nuevaLike);
+            }
 
             // Obtener los IDs de todas las publicaciones
             List<int> idsPublicaciones = listaPublicaciones.Select(p => p.idPublicacion).ToList();
@@ -32,20 +41,17 @@ namespace LinkSocial1.Controllers
             Dictionary<int, bool> likesPorPublicacion = new Dictionary<int, bool>();
             foreach (var idPublicaciones in idsPublicaciones)
             {
-                bool usuarioDioLike = consultas.usuarioDioLike(Convert.ToInt32(idUsuario), idPublicacion);
-                likesPorPublicacion.Add(idPublicacion, usuarioDioLike);
+                bool usuarioDioLikeActualizado = consultas.usuarioDioLike(Convert.ToInt32(idUsuario), idPublicaciones);
+                likesPorPublicacion.Add(idPublicaciones, usuarioDioLikeActualizado);
             }
 
             ViewData["listaPublicaciones"] = listaPublicaciones;
             ViewData["likesPorPublicacion"] = likesPorPublicacion;
             ViewData["comentariosConUsuario"] = comentariosConUsuario;
 
-
-
-
             return View("~/Views/Home/PaginaInicio.cshtml");
-
         }
+
 
 
     }
