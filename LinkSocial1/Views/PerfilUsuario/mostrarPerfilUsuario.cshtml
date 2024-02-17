@@ -1,6 +1,8 @@
 ﻿@model DB.Modelo.Usuarios
 @{
     var listaPublicaciones = ViewData["listaPublicaciones"] as List<DB.Modelo.Publicaciones>;
+    var publicacionEliminada = TempData["publicacionEliminada"] as string;
+
 
 }
 
@@ -74,11 +76,14 @@
 
             </div>
             <div class="contenedor-imagenes">
-
                 @foreach (var publicacion in listaPublicaciones)
                 {
-                    <div>
+                    <div class="publicacion-container">
                         <img src="@publicacion.contenidoPublicacion" />
+                        <form method="post" action="@Url.Action("EliminarPublicacion", "ControladorPerfilUsuario")" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta publicación?')">
+                            <input type="hidden" name="idPublicacion" value="@publicacion.idPublicacion"> <!-- Asegúrate de tener un campo que almacene el Id de la publicación -->
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
                     </div>
                 }
             </div>
@@ -87,6 +92,25 @@
                 <div class="alert alert-success">
                     @TempData["mensajeExito"]
                 </div>
+            }
+
+            @section scripts {
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var exitoMensaje = '@TempData["publicacionEliminada"]';
+
+                        if (exitoMensaje) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '¡Éxito!',
+                                text: exitoMensaje,
+                                showConfirmButton: true,
+                            });
+                        }
+                    });
+                </script>
             }
 
         </main>

@@ -2,6 +2,11 @@
     ViewData["Title"] = "Lista de Publicaciones";
     var listaPublicaciones = ViewData["listaPublicaciones"] as List<DB.Modelo.Publicaciones>;
     var listaComentarios = ViewData["comentariosConUsuario"] as List<ComentarioConUsuarioViewModel>;
+    var exitoMensaje = TempData["ExitoMensaje"] as string;
+    var eliminarMeGusta = TempData["eliminarMeGusta"] as string;
+    var darMeGusta = TempData["darMeGusta"] as string;
+
+    
 }
 
 @using LinkSocial1.DTO
@@ -139,6 +144,54 @@
                         </div>
                     }
                 </main>
+                @section scripts {
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            var exitoMensaje = '@TempData["ExitoMensaje"]';
+
+                            if (exitoMensaje) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '¡Éxito!',
+                                    text: exitoMensaje,
+                                    showConfirmButton: true,
+                                });
+                            }
+                        });
+                    </script>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            var exitoMensaje = '@TempData["darMeGusta"]';
+
+                            if (exitoMensaje) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '¡Éxito!',
+                                    text: exitoMensaje,
+                                    showConfirmButton: true,
+                                });
+                            }
+                        });
+                    </script>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            var exitoMensaje = '@TempData["eliminarMeGusta"]';
+
+                            if (exitoMensaje) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '¡Éxito!',
+                                    text: exitoMensaje,
+                                    showConfirmButton: true,
+                                });
+                            }
+                        });
+                    </script>
+                }
+              
 
 
             </div>

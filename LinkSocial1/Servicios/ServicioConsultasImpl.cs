@@ -204,6 +204,22 @@ namespace LinkSocial1.Servicios
             }
         }
 
+        public void eliminarPublicacion (int idPublicacion)
+        {
+            using(var contexto = new GestorLinkSocialDbContext())
+            {
+                var publicacionExistente = dbContext.Publicaciones.Find(idPublicacion);
+
+                if (publicacionExistente == null)
+                {
+                    Console.WriteLine("Error: No existe publicacion.");
+                }
+
+                contexto.Publicaciones.Remove(publicacionExistente);
+                contexto.SaveChanges();
+            }
+        }
+
         public Usuarios buscarUsuario(string correoElectronico)
         {
 

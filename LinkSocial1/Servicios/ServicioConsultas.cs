@@ -42,6 +42,7 @@ namespace LinkSocial1.Servicios
         public List<Publicaciones> mostrarPublicaciones();
         public void añadirComentario(Comentarios nuevoComentario);
         public List<ComentarioConUsuarioViewModel> mostrarComentariosConUsuario();
+        public void eliminarPublicacion(int idPublicacion);
 
         //Metodos para buscar usuarios 
 

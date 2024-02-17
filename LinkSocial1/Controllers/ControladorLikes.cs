@@ -28,6 +28,8 @@ namespace LinkSocial1.Controllers
                 {
                     // Si ya dio me gusta, eliminar el like
                     consultas.eliminarLike(Convert.ToInt32(idUsuario), idPublicacion);
+                    TempData["eliminarMeGusta"] = "Has quitado el me gusta a la publicacion";
+
                 }
                 else // Si no dio me gusta, añadir el nuevo like
 
@@ -35,6 +37,8 @@ namespace LinkSocial1.Controllers
                     DateTime fchLike = DateTime.Now.ToUniversalTime();
                     LikeUsuariosPublicaciones nuevaLike = new LikeUsuariosPublicaciones(Convert.ToInt32(idUsuario), idPublicacion, fchLike);
                     consultas.añadirLike(nuevaLike);
+                    TempData["darMeGusta"] = "Has dado me gusta a la publicacion";
+
                 }
 
                 // Obtener los IDs de todas las publicaciones para volver a mostrar la publicacion despues de dar mg o eliminarlo

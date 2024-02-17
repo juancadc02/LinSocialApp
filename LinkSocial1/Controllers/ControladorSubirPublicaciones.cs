@@ -67,6 +67,8 @@ namespace LinkSocial1.Controllers
                     Publicaciones nuevaPublicacion = new Publicaciones(idUsuario, fchPublicacion, rutaImagen);
 
                     consulta.subirPublicacion(nuevaPublicacion);
+
+                    TempData["ExitoMensaje"] = "Publicacion subida con exito.";
                     return RedirectToAction("cargarPaginaInicio", "ControladorPaginaInicio");
                 }
                 else
