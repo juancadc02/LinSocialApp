@@ -354,5 +354,37 @@ namespace LinkSocial1.Servicios
         }
 
 
+        public List<Mensajes> ObtenerHistorialMensajes(string idUsuarioActual, int idUsuarioDestino)
+        {
+            // Obtén el historial de mensajes entre el usuario actual y el usuario destino
+            List<Mensajes> historialMensajes = dbContext.Mensajes
+                .Where(m =>
+                    (m.idUsuarioQueEnvia == Convert.ToInt32(idUsuarioActual) && m.idUsuarioQueRecibe == idUsuarioDestino) ||
+                    (m.idUsuarioQueEnvia == idUsuarioDestino && m.idUsuarioQueRecibe == Convert.ToInt32(idUsuarioActual))
+                )
+                .OrderBy(m => m.fchEnvioMensaje)
+                .ToList();
+
+            return historialMensajes;
+        }
+
+        public void enviarMensaje(Mensajes nuevoMensaje)
+        {
+            using(var contexto = new GestorLinkSocialDbContext())
+            {
+                nuevoMensaje = new Mensajes
+                {
+                    idUsuarioQueEnvia=nuevoMensaje.idUsuarioQueEnvia,
+                    idUsuarioQueRecibe=nuevoMensaje.idUsuarioQueRecibe,
+                    contenidoMensaje=nuevoMensaje.contenidoMensaje,
+                    fchEnvioMensaje=nuevoMensaje.fchEnvioMensaje
+                };
+
+                contexto.Mensajes.Add(nuevoMensaje);
+                contexto.SaveChanges();
+            }
+        }
+
+
     }
 }

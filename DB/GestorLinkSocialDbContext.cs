@@ -30,5 +30,6 @@ namespace DB
         public DbSet<Comentarios> Comentarios { get; set; }
         public DbSet<Seguidores> Seguidores { get; set; }
         public DbSet<LikeUsuariosPublicaciones> LikeUsuariosPublicaciones { get; set; }
+        public DbSet<Mensajes> Mensajes { get; set;}
     }
 }

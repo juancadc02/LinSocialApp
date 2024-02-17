@@ -36,6 +36,34 @@ namespace DB.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Mensajes",
+                columns: table => new
+                {
+                    idMensaje = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    idUsuarioQueEnvia = table.Column<int>(type: "integer", nullable: false),
+                    idUsuarioQueRecibe = table.Column<int>(type: "integer", nullable: false),
+                    contenidoMensaje = table.Column<string>(type: "text", nullable: false),
+                    fchEnvioMensaje = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Mensajes", x => x.idMensaje);
+                    table.ForeignKey(
+                        name: "FK_Mensajes_Usuarios_idUsuarioQueEnvia",
+                        column: x => x.idUsuarioQueEnvia,
+                        principalTable: "Usuarios",
+                        principalColumn: "idUsuario",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Mensajes_Usuarios_idUsuarioQueRecibe",
+                        column: x => x.idUsuarioQueRecibe,
+                        principalTable: "Usuarios",
+                        principalColumn: "idUsuario",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Publicaciones",
                 columns: table => new
                 {
@@ -160,6 +188,16 @@ namespace DB.Migrations
                 column: "idUsuario");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Mensajes_idUsuarioQueEnvia",
+                table: "Mensajes",
+                column: "idUsuarioQueEnvia");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Mensajes_idUsuarioQueRecibe",
+                table: "Mensajes",
+                column: "idUsuarioQueRecibe");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Publicaciones_idUsuario",
                 table: "Publicaciones",
                 column: "idUsuario");
@@ -183,6 +221,9 @@ namespace DB.Migrations
 
             migrationBuilder.DropTable(
                 name: "LikeUsuariosPublicaciones");
+
+            migrationBuilder.DropTable(
+                name: "Mensajes");
 
             migrationBuilder.DropTable(
                 name: "Seguidores");

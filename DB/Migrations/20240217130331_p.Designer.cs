@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DB.Migrations
 {
     [DbContext(typeof(GestorLinkSocialDbContext))]
-    [Migration("20240216184300_p")]
+    [Migration("20240217130331_p")]
     partial class p
     {
         /// <inheritdoc />
@@ -79,6 +79,36 @@ namespace DB.Migrations
                     b.HasIndex("idUsuario");
 
                     b.ToTable("LikeUsuariosPublicaciones");
+                });
+
+            modelBuilder.Entity("DB.Modelo.Mensajes", b =>
+                {
+                    b.Property<int>("idMensaje")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("idMensaje"));
+
+                    b.Property<string>("contenidoMensaje")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("fchEnvioMensaje")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("idUsuarioQueEnvia")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("idUsuarioQueRecibe")
+                        .HasColumnType("integer");
+
+                    b.HasKey("idMensaje");
+
+                    b.HasIndex("idUsuarioQueEnvia");
+
+                    b.HasIndex("idUsuarioQueRecibe");
+
+                    b.ToTable("Mensajes");
                 });
 
             modelBuilder.Entity("DB.Modelo.Publicaciones", b =>
@@ -223,6 +253,25 @@ namespace DB.Migrations
                     b.Navigation("publicaciones");
 
                     b.Navigation("usuario");
+                });
+
+            modelBuilder.Entity("DB.Modelo.Mensajes", b =>
+                {
+                    b.HasOne("DB.Modelo.Usuarios", "usuariosEnvia")
+                        .WithMany()
+                        .HasForeignKey("idUsuarioQueEnvia")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DB.Modelo.Usuarios", "usuariosRecibe")
+                        .WithMany()
+                        .HasForeignKey("idUsuarioQueRecibe")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("usuariosEnvia");
+
+                    b.Navigation("usuariosRecibe");
                 });
 
             modelBuilder.Entity("DB.Modelo.Publicaciones", b =>

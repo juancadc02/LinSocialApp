@@ -37,13 +37,9 @@ namespace LinkSocial1.Servicios
         public void EnviarEmail(string emailDestino, string nombreUser, string token);
 
 
-
         //Metodos para subir publicaciones 
-
         public void subirPublicacion(Publicaciones nuevaPublicacion);
-       
         public List<Publicaciones> mostrarPublicaciones();
-
         public void añadirComentario(Comentarios nuevoComentario);
         public List<ComentarioConUsuarioViewModel> mostrarComentariosConUsuario();
 
@@ -51,23 +47,28 @@ namespace LinkSocial1.Servicios
 
         public Usuarios buscarUsuario(string correoElectronico);
         public Usuarios buscarUsuarioPorId(int idUsuario);
-
         public List<Publicaciones> buscarPublicacionesPorIdUsuario(int idUsuario);
 
 
         //Metodos para seguir a un usuario
-
         public void iniciarSeguimiento(Seguidores nuevoSeguidor);
         public void dejarDeSeguir(int idSeguidorSolicitud, int idSeguidorSeguido);
         public bool estaSiguiendo(int idSeguidorSolicitud, int idSeguidorSeguido);
 
 
         //Metodo para likes 
-
         public void añadirLike(LikeUsuariosPublicaciones nuevoLike);
-
         public bool usuarioDioLike(int idUsuario, int idPublicacion);
-
         public void eliminarLike(int idUsuario, int idPublicacion);
+
+
+        //Metodos enviar mensaje 
+
+        public List<Mensajes> ObtenerHistorialMensajes(string idUsuarioActual, int idUsuarioDestino);
+
+        public void enviarMensaje (Mensajes nuevoMensaje);
+
+
+
     }
 }
