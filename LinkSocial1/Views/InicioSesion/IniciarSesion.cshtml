@@ -135,6 +135,13 @@
                                     @TempData["MensajeModificacionContraseñaExito"]
                                 </div>
                             }
+
+                            @if (TempData["mensajeSesionCerrada"] != null)
+                            {
+                                <div class="alert alert-warning">
+                                    @TempData["mensajeSesionCerrada"]
+                                </div>
+                            }
                            
 
                                 

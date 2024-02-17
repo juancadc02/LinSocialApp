@@ -48,6 +48,8 @@ namespace LinkSocial1.Servicios
         public Usuarios buscarUsuario(string correoElectronico);
         public Usuarios buscarUsuarioPorId(int idUsuario);
         public List<Publicaciones> buscarPublicacionesPorIdUsuario(int idUsuario);
+        public int ObtenerNumeroSeguidores(int idUsuario);
+        public int ObtenerNumeroSeguidos(int idUsuario);
 
 
         //Metodos para seguir a un usuario

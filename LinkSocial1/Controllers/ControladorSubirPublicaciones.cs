@@ -7,68 +7,111 @@ using System.Security.Claims;
 
 namespace LinkSocial1.Controllers
 {
-    [Authorize]
+    [Authorize] //Tiene que tener la sesion iniciada para navegar esta pagina.
     public class ControladorSubirPublicaciones : Controller
     {
 
+        /// <summary>
+        /// Cargamos la pagina para subir publicaciones y controlamos los posibles errores.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult cargarPaginaSubirPublicaciones()
         {
-            
-            return View("~/Views/Publicaciones/subirPublicaciones.cshtml");
+            try
+            {
+                return View("~/Views/Publicaciones/subirPublicaciones.cshtml");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Se ha producido un error: {0}", ex);
+                return View("~/Views/Errores/paginaError.cshtml");
+            }
         }
 
+        /// <summary>
+        /// Metodo que guarda en la base de datos una publicacion con todos los datos recibidos a traves del formulario.
+        /// //Recibe la foto a traves del formulario 
+        /// </summary>
+        /// <param name="imagen"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult guardarPublicacion(IFormFile imagen)
         {
-            ServicioConsultas consulta = new ServicioConsultasImpl();
-            string nombreImagen;
-            string rutaImagen = "";
-
-            var claimsPrincipal = User;
-
-            string idUsuarioString = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            // Intenta convertir la cadena a un entero utilizando int.TryParse
-            if (int.TryParse(idUsuarioString, out int idUsuario))
+            try
             {
-                if (imagen != null && imagen.Length > 0)
+                ServicioConsultas consulta = new ServicioConsultasImpl();
+                string nombreImagen;
+                string rutaImagen = "";
+
+                //Obtenemos el id del usuario que tiene la sesion iniciada (el que va a subir la publicacion).
+                var claimsPrincipal = User;
+                string idUsuarioString = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                // Intenta convertir la cadena a un entero utilizando int.TryParse
+                if (int.TryParse(idUsuarioString, out int idUsuario))
                 {
-                    nombreImagen = Guid.NewGuid().ToString() + Path.GetExtension(imagen.FileName);
-                    string rutaCompleta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imagenes/publicaciones", nombreImagen);
-                    using (var stream = new FileStream(rutaCompleta, FileMode.Create))
+                    if (imagen != null && imagen.Length > 0)
                     {
-                        imagen.CopyTo(stream);
+                        nombreImagen = Guid.NewGuid().ToString() + Path.GetExtension(imagen.FileName);
+                        string rutaCompleta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imagenes/publicaciones", nombreImagen);
+                        using (var stream = new FileStream(rutaCompleta, FileMode.Create))
+                        {
+                            imagen.CopyTo(stream);
+                        }
+                        rutaImagen = "/imagenes/publicaciones/" + nombreImagen;
                     }
-                    rutaImagen = "/imagenes/publicaciones/" + nombreImagen;
+
+                    //Fecha actual.
+                    DateTime fchPublicacion = DateTime.Now.ToUniversalTime();
+                    //Creamos la publicacion
+                    Publicaciones nuevaPublicacion = new Publicaciones(idUsuario, fchPublicacion, rutaImagen);
+
+                    consulta.subirPublicacion(nuevaPublicacion);
+                    return RedirectToAction("cargarPaginaInicio", "ControladorPaginaInicio");
                 }
-
-                DateTime fchPublicacion = DateTime.Now.ToUniversalTime();
-                Publicaciones nuevaPublicacion = new Publicaciones(idUsuario, fchPublicacion, rutaImagen);
-
-                consulta.subirPublicacion(nuevaPublicacion);
-                return RedirectToAction("cargarPaginaInicio", "ControladorPaginaInicio");
+                else
+                {
+                    // La conversión falló, maneja el escenario donde la cadena no es un entero válido
+                    return View("~/Views/Errores/paginaError.cshtml");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // La conversión falló, maneja el escenario donde la cadena no es un entero válido
-                // Puedes redirigir a una página de error o realizar alguna otra acción
-                return RedirectToAction("Error");
+                Console.WriteLine("Se ha producido un error: {0}", ex);
+                return View("~/Views/Errores/paginaError.cshtml");
             }
         }
 
+        /// <summary>
+        /// Metodo para poder añadir comentarios en la publicacion.
+        /// Recibe el id de la publicacion y el comentario.
+        /// </summary>
+        /// <param name="idPublicacion"></param>
+        /// <param name="contenidoComentario"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult añadirComentario(string idPublicacion, string contenidoComentario)
         {
-            ServicioConsultas consultas = new ServicioConsultasImpl();
-            var claimsPrincipal = User;
-            string idUsuarioString = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-           
-            DateTime fchComentario = DateTime.Now.ToUniversalTime();
+            try
+            {
+                ServicioConsultas consultas = new ServicioConsultasImpl();
+                //Obtenemos el id del usuario que tiene la sesion iniciada.
+                var claimsPrincipal = User;
+                string idUsuarioString = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            Comentarios nuevoComentario = new Comentarios(Convert.ToInt32(idUsuarioString),Convert.ToInt32(idPublicacion),contenidoComentario, fchComentario);
-            consultas.añadirComentario(nuevoComentario);
-            return RedirectToAction("cargarPaginaInicio", "ControladorPaginaInicio");
+                //Cargamos la fecha actual
+                DateTime fchComentario = DateTime.Now.ToUniversalTime();
 
+                //Creamos el nuevo comentario.
+                Comentarios nuevoComentario = new Comentarios(Convert.ToInt32(idUsuarioString), Convert.ToInt32(idPublicacion), contenidoComentario, fchComentario);
+                consultas.añadirComentario(nuevoComentario);
+                return RedirectToAction("cargarPaginaInicio", "ControladorPaginaInicio");
+
+            }catch (Exception ex)
+            {
+                Console.WriteLine("Se ha producido un error: {0}", ex);
+                return View("~/Views/Errores/paginaError.cshtml");
+            }
         }
 
 

@@ -243,23 +243,38 @@ namespace LinkSocial1.Servicios
         }
         public List<Publicaciones> buscarPublicacionesPorIdUsuario(int idUsuario)
         {
-           using(var contexto = new GestorLinkSocialDbContext())
+            using (var contexto = new GestorLinkSocialDbContext())
             {
                 var publicacionesDelUsuario = dbContext.Publicaciones
                                                .Where(p => p.idUsuario == idUsuario)
                                                .ToList();
 
-                foreach(var publicaciones in publicacionesDelUsuario)
+                foreach (var publicaciones in publicacionesDelUsuario)
                 {
-                    Console.WriteLine("{0}",publicaciones.contenidoPublicacion);
+                    Console.WriteLine("{0}", publicaciones.contenidoPublicacion);
                 }
                 return publicacionesDelUsuario;
             }
-
-           
-
-           
         }
+
+        public int ObtenerNumeroSeguidores(int idUsuario)
+        {
+            int numeroSeguidores = dbContext.Seguidores
+                .Where(s => s.idSeguidorSeguido == idUsuario && s.siguiendo)
+                .Count();
+
+            return numeroSeguidores;
+        }
+
+        public int ObtenerNumeroSeguidos(int idUsuario)
+        {
+            int numeroSeguidos = dbContext.Seguidores
+                .Where(s => s.idSeguidorSolicitud == idUsuario && s.siguiendo)
+                .Count();
+
+            return numeroSeguidos;
+        }
+
         public void iniciarSeguimiento(Seguidores nuevoSeguidor)
         {
             using(var contexto = new GestorLinkSocialDbContext())
@@ -358,6 +373,7 @@ namespace LinkSocial1.Servicios
         {
             // Obtén el historial de mensajes entre el usuario actual y el usuario destino
             List<Mensajes> historialMensajes = dbContext.Mensajes
+                .Include(m => m.usuariosEnvia) // Incluye el objeto UsuarioQueEnvia en la consulta
                 .Where(m =>
                     (m.idUsuarioQueEnvia == Convert.ToInt32(idUsuarioActual) && m.idUsuarioQueRecibe == idUsuarioDestino) ||
                     (m.idUsuarioQueEnvia == idUsuarioDestino && m.idUsuarioQueRecibe == Convert.ToInt32(idUsuarioActual))

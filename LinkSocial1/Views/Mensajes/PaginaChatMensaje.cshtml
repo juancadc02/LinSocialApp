@@ -56,12 +56,11 @@
     <div class="container">
 
         <h1>Chat con usuario</h1>
-
         <div id="chat-container">
             @foreach (var mensaje in Model)
             {
                 <div>
-                    <strong>@mensaje.idUsuarioQueEnvia:</strong> @mensaje.contenidoMensaje
+                    <strong>@mensaje.usuariosEnvia.nombreCompleto:</strong> @mensaje.contenidoMensaje
                 </div>
             }
         </div>
