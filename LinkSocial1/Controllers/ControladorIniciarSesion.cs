@@ -104,7 +104,7 @@ namespace LinkSocial1.Controllers
             try
             {
                 HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-                TempData["mensajeSesionCerrada"] = "Usuario encontrado";
+                TempData["mensajeSesionCerrada"] = "Sesion cerrada con exito.";
                 return RedirectToAction("irAIniciarSesion", "ControladorIniciarSesion");
             }catch (Exception ex)
             {

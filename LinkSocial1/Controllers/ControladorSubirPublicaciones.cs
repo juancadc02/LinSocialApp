@@ -35,7 +35,7 @@ namespace LinkSocial1.Controllers
         /// <param name="imagen"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult guardarPublicacion(IFormFile imagen)
+        public IActionResult guardarPublicacion(IFormFile imagen,string pieDeFoto)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace LinkSocial1.Controllers
                     //Fecha actual.
                     DateTime fchPublicacion = DateTime.Now.ToUniversalTime();
                     //Creamos la publicacion
-                    Publicaciones nuevaPublicacion = new Publicaciones(idUsuario, fchPublicacion, rutaImagen);
+                    Publicaciones nuevaPublicacion = new Publicaciones(idUsuario, fchPublicacion, rutaImagen,pieDeFoto);
 
                     consulta.subirPublicacion(nuevaPublicacion);
 

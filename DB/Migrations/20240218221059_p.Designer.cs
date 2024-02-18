@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DB.Migrations
 {
     [DbContext(typeof(GestorLinkSocialDbContext))]
-    [Migration("20240217130331_p")]
+    [Migration("20240218221059_p")]
     partial class p
     {
         /// <inheritdoc />
@@ -128,6 +128,9 @@ namespace DB.Migrations
 
                     b.Property<int>("idUsuario")
                         .HasColumnType("integer");
+
+                    b.Property<string>("pieDeFoto")
+                        .HasColumnType("text");
 
                     b.HasKey("idPublicacion");
 

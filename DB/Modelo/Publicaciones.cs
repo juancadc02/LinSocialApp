@@ -17,7 +17,7 @@ namespace DB.Modelo
         public int idUsuario { get; set; }
         public DateTime fchPublicacion { get; set; }
         public string contenidoPublicacion { get; set; }
-
+        public string ? pieDeFoto { get; set; }
         public Usuarios usuarios { get; set; }
 
         #region Constructores
@@ -31,14 +31,15 @@ namespace DB.Modelo
             
         }
 
-        public Publicaciones(int idUsuario, DateTime fchPublicacion, string contenidoPublicacion)
+        public Publicaciones(int idUsuario, DateTime fchPublicacion, string contenidoPublicacion, string pieDeFoto)
         {
             this.idUsuario = idUsuario;
             this.fchPublicacion = fchPublicacion;
             this.contenidoPublicacion = contenidoPublicacion;
+            this.pieDeFoto = pieDeFoto;
         }
 
-     
+
 
 
 

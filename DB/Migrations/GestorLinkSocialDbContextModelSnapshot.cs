@@ -126,6 +126,9 @@ namespace DB.Migrations
                     b.Property<int>("idUsuario")
                         .HasColumnType("integer");
 
+                    b.Property<string>("pieDeFoto")
+                        .HasColumnType("text");
+
                     b.HasKey("idPublicacion");
 
                     b.HasIndex("idUsuario");

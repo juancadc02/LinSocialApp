@@ -139,7 +139,8 @@ namespace LinkSocial1.Servicios
                 {
                    idUsuario=nuevaPublicacion.idUsuario,
                     fchPublicacion=nuevaPublicacion.fchPublicacion,
-                    contenidoPublicacion=nuevaPublicacion.contenidoPublicacion
+                    contenidoPublicacion=nuevaPublicacion.contenidoPublicacion,
+                    pieDeFoto=nuevaPublicacion.pieDeFoto
                 };
 
                 contexto.Add(nuevaPublicacion);

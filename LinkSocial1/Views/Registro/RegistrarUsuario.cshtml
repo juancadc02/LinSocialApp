@@ -12,7 +12,7 @@
 
 </head>
 <body>
-    <section class="background-radial-gradient vh-100 overflow-hidden">
+    <section class="background-radial-gradient vh-100 overflow-y:auto;">
         <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
             <div class="row gx-lg-5 mb-5">
                 <div class="col-lg-6 mb-5 mb-lg-4" style="z-index: 10; margin-bottom: 2rem; margin-top: 160px;">
@@ -26,8 +26,8 @@
                     <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
                     <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
 
-                    <div id="formularioInicio" class="card bg-glass">
-                        <div class="card-body px-4 py-5 px-md-5">
+                    <div id="formularioInicio" class="card bg-glass" >
+                        <div class="card-body px-4 py-5 px-md-5" >
 
                             <form method="post" enctype="multipart/form-data" action="@Url.Action("RegistrarUsuario", "ControladorRegistrarUsuarios")">
 
@@ -70,22 +70,25 @@
                                     <label class="form-label" for="imagen">Foto Perfil.</label>
                                     <input type="file" accept="image/jpeg,image/png, image/jpg" id="imagen" name="imagen" class="form-control" />
                                 </div>
+                                <div id="mensajeError" class="text-danger mb-4" style="display: none;"></div>
 
+                                <!--Mensaje de error si el correo o dni ya existen.-->
+                                @if (TempData["ErrorRegistro"] != null)
+                                {
+                                    <div class="alert alert-danger">
+                                        @TempData["ErrorRegistro"]
+                                    </div>
+                                }
                                 <button id="btn-registrar" type="submit" class="btn btn-primary btn-block mb-4">
                                     Crear Cuenta
                                 </button>
-                                <div id="mensajeError" class="text-danger mb-4" style="display: none;"></div>
 
                               
+                              
                             </form>
-                            <!--Mensaje de error si el correo o dni ya existen.-->
-                            @if (TempData["ErrorRegistro"] != null)
-                            {
-                                <div class="alert alert-danger">
-                                    @TempData["ErrorRegistro"]
-                                </div>
-                            }
+                           
                         </div>
+                        
                     </div>
                 </div>
             </div>

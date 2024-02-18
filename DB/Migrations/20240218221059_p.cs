@@ -71,7 +71,8 @@ namespace DB.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     idUsuario = table.Column<int>(type: "integer", nullable: false),
                     fchPublicacion = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    contenidoPublicacion = table.Column<string>(type: "text", nullable: false)
+                    contenidoPublicacion = table.Column<string>(type: "text", nullable: false),
+                    pieDeFoto = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
