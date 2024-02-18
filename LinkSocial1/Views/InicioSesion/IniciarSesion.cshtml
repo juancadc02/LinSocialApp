@@ -4,37 +4,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Tu título aquí</title>
-
-    <style>
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Color negro con 50% de opacidad */
-            z-index: -1; /* Asegura que el fondo oscuro esté detrás de la imagen */
-        }
-
-        body {
-            background-image: url('/imagenes/fotoFondoInicioSesion.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            height: 100vh;
-            margin: 0;
-        }
-        /* Añade estos estilos para el formulario transparente y bordes redondeados */
-        .bg-glass {
-            background-color: rgba(255, 255, 255, 0.5); /* Color blanco con 50% de opacidad */
-            border-radius: 15px; /* Ajusta el radio de los bordes según tu preferencia */
-        }
-
-
-    </style>
+    <title>LinkSocial</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="~/css/iniciarSesion.css" />
+
 
 </head>
 <body>
@@ -91,8 +64,9 @@
                                         <i class="bi bi-twitter"></i>
                                     </button>
                                 </div>
-
                             </form>
+
+                            <!--Mensaje de errores-->
                             @if (TempData["Error"] != null)
                             {
                                 <div class="alert alert-danger" role="alert">
@@ -142,10 +116,6 @@
                                     @TempData["mensajeSesionCerrada"]
                                 </div>
                             }
-                           
-
-                                
-
                         </div>
                     </div>
                 </div>

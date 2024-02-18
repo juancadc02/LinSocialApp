@@ -1,0 +1,31 @@
+﻿body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+body {
+    background-image: url('/imagenes/fotoFondoInicioSesion.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bg-glass {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+}
+
+#formularioInicio {
+    width: 100%;
+}

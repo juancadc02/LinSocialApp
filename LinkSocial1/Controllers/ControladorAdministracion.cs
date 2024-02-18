@@ -49,6 +49,7 @@ namespace LinkSocial1.Controllers
                 //Creamos una lista y llamamos al metodo lista usuarios.
                 List<Usuarios> listaUsuario = consultas.mostrarUsuarios();
                 ViewData["listaUsuario"] = listaUsuario;
+
                 return View("~/Views/Administracion/listaUsuario.cshtml");
             }catch(Exception ex)
             {
@@ -164,12 +165,78 @@ namespace LinkSocial1.Controllers
             }
         }
 
+        /// <summary>
+        /// Metodo que carga la vista con el formulario para que los administradores puedan crear usuarios.
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult irAAñadirUsuario()
+        {
+            try
+            {
+               
+                return View("~/Views/Administracion/añadirUsuario.cshtml");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Se ha producido un error: {0}", ex);
+                return View("~/Views/Errores/paginaError.cshtml");
+            }
+        }
 
+        /// <summary>
+        /// Metodo que guarda usuarios en la base de datos desde la administracion (en este caso no hace falta la confirmacion por correo electronico).
+        /// </summary>
+        /// <param name="nombreCompleto"></param>
+        /// <param name="correoElectronico"></param>
+        /// <param name="dniUsuario"></param>
+        /// <param name="movilUsuario"></param>
+        /// <param name="contraseña"></param>
+        /// <param name="fchNacimiento"></param>
+        /// <param name="imagen"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult añadirUsuario(string nombreCompleto, string correoElectronico, string dniUsuario, string movilUsuario, string contraseña, DateTime fchNacimiento, IFormFile imagen)
+        {
+            try
+            {
+                ServicioConsultas consulta = new ServicioConsultasImpl();
+                string nombreImagen;
+                string rutaImagen = "";
+                if (imagen != null && imagen.Length > 0)
+                {
+                    nombreImagen = Guid.NewGuid().ToString() + Path.GetExtension(imagen.FileName);
+                    string rutaCompleta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imagenes/usuarios", nombreImagen);
+                    using (var stream = new FileStream(rutaCompleta, FileMode.Create))
+                    {
+                        imagen.CopyTo(stream);
+                    }
+                    rutaImagen = "/imagenes/usuarios/" + nombreImagen;
+                }
 
-       
+                if (consulta.existeCorreoElectronico(correoElectronico) || consulta.existeDNI(dniUsuario))
+                {
+                    TempData["ErrorRegistro"] = "El correo electrónico o el DNI ya están registrados.";
+                    return RedirectToAction("irAAñadirUsuario", "ControladorAdministracion"); // Puedes redirigir a una vista de error o a la misma página de registro
+                }
 
+                //Si el correo electronico no existe, pasamos al registro del usuario.
+                DateTime fchRegistro = DateTime.Now.ToUniversalTime();
+                string rolAcceso = "basico";
 
+                Usuarios nuevoUsuario = new Usuarios(nombreCompleto, correoElectronico, dniUsuario, movilUsuario, contraseña, fchRegistro.Date, fchNacimiento.ToUniversalTime(), rolAcceso, rutaImagen);
+                consulta.registrarUsuario(nuevoUsuario);
+                TempData["MensajeRegistroExitoso"] = "Usuario registrado con éxito.";
+                return RedirectToAction("irUsuario", "ControladorAdministracion");
 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Se ha producido un error: {0}", ex);
+                return View("~/Views/Errores/paginaError.cshtml");
+
+            }
+
+        }
     }
 
 

@@ -3,6 +3,7 @@
     var listaUsuario = ViewData["listaUsuario"] as List<DB.Modelo.Usuarios>;
    // Layout = "_LayoutSidebar"; // Especifica el nuevo layout
     Layout = null;
+
 }
 <head>
     <!-- Required meta tags -->
@@ -86,19 +87,33 @@
                     }
                 </tbody>
             </table>
-            @if (TempData["SuccessMessage"] != null)
+
+            <!-- Mensaje de registro exitoso-->
+            @if (TempData["MensajeRegistroExitoso"] != null)
             {
-                <div class="alert alert-success">
-                    @TempData["SuccessMessage"]
+                <div class="alert alert-success" role="alert">
+                    @TempData["MensajeRegistroExitoso"]
                 </div>
             }
-
+            <!-- Mensaje de registro exitoso-->
             @if (TempData["ErrorMessage"] != null)
             {
-                <div class="alert alert-danger">
+                <div class="alert alert-warning" role="alert">
                     @TempData["ErrorMessage"]
                 </div>
             }
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success" role="alert">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+           
+
         </div>
     </div>
+</div>
+<!-- Botón Volver a Administración -->
+<div class="text-center mt-4">
+    <a href="@Url.Action("irPaginaAdmin", "ControladorAdministracion")" class="btn btn-primary">Volver a Administración</a>
 </div>

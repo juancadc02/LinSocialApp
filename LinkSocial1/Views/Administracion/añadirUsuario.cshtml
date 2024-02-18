@@ -1,0 +1,115 @@
+﻿@{
+    Layout = null;  
+}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles.css">
+  
+</head>
+
+<body>
+    
+
+    <div class="container">
+        <form method="post" enctype="multipart/form-data" action="@Url.Action("añadirUsuario", "ControladorAdministracion")">
+
+
+            <div class="form-outline mb-4">
+                <label class="form-label" for="nombreCompleto">Nombre Completo.</label>
+                <input type="text" id="nombreCompleto" name="nombreCompleto" class="form-control" required />
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="correoElectronico">Correo.</label>
+                <input type="email" id="correoElectronico" name="correoElectronico" class="form-control" required />
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="dniUsuario">Dni.</label>
+                <input type="text" id="dniUsuario" name="dniUsuario" class="form-control" required />
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="movilUsuario">Movil.</label>
+                <input type="tel" id="movilUsuario" name="movilUsuario" class="form-control" required />
+            </div>
+
+            <!-- Contraseña -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="contraseña">Contraseña</label>
+                <input type="password" id="contraseña" name="contraseña" class="form-control" required />
+            </div>
+            <!-- Confirmar Contraseña -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="confirmarContraseña">Confirmar Contraseña</label>
+                <input type="password" id="confirmarContraseña" name="confirmarContraseña" class="form-control" required />
+            </div>
+
+            <div class="form-outline mb-4">
+                <label class="form-label" for="contraseña">Fecha Nacimiento.</label>
+                <input type="date" id="fchNacimiento" name="fchNacimiento" class="form-control" required />
+            </div>
+
+            <!--Imagen-->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="imagen">Foto Perfil.</label>
+                <input type="file" accept="image/jpeg,image/png, image/jpg" id="imagen" name="imagen" class="form-control" />
+            </div>
+
+            <button id="btn-registrar" type="submit" class="btn btn-primary btn-block mb-4">
+                Crear Cuenta
+            </button>
+            <div id="mensajeError" class="text-danger mb-4" style="display: none;"></div>
+        </form>
+
+        <!--Mensaje de error si el correo o dni ya existen.-->
+        @if (TempData["ErrorRegistro"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["ErrorRegistro"]
+            </div>
+        }
+    </div>
+
+    
+    <!-- Botón Volver a Administración -->
+    <div style="margin-left:60px;" class="text-center mt-4">
+        <a href="@Url.Action("irPaginaAdmin", "ControladorAdministracion")" class="btn btn-primary">Volver a Administración</a>
+    </div>
+</body>
+
+</html>
+
+<!--Comprobar que las dos contraseñas coinciden-->
+<script>
+    // Obtén referencias a los campos de contraseña y confirmación
+    var contraseña = document.getElementById("contraseña");
+    var confirmarContraseña = document.getElementById("confirmarContraseña");
+    var mensajeError = document.getElementById("mensajeError");
+
+    // Agrega un listener al formulario para validar la confirmación de la contraseña antes de enviar
+    document.getElementById("btn-registrar").addEventListener("click", function (event) {
+        // Expresión regular que verifica que la contraseña tenga al menos una letra y al menos un número
+        var regex = /^(?=.*[A-Za-z])(?=.*\d).+$/;
+
+        if (contraseña.value !== confirmarContraseña.value || !regex.test(contraseña.value)) {
+            // Muestra el mensaje de error si las contraseñas no coinciden o no cumplen con los requisitos
+            mensajeError.innerText = "Las contraseñas no coinciden o no cumplen con los requisitos (tiene que tener al menos una letra).";
+            mensajeError.style.display = "block";
+            event.preventDefault(); // Evita que el formulario se envíe
+        } else {
+            // Oculta el mensaje de error si las contraseñas coinciden y cumplen con los requisitos
+            mensajeError.style.display = "none";
+        }
+    });
+</script>
+
