@@ -1,4 +1,60 @@
 ﻿@{
     Layout = null;
 }
-<h1>Bienvenido a modificar contraseña</h1>
+@model LinkSocial1.DTO.ModificarContraseñaDTO
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tu título aquí</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/modificarContraseña.css" />
+
+
+</head>
+
+<body>
+    <section class="background-radial-gradient vh-100 overflow-hidden">
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+                <div id="containerPrincipal" class="col-md-8 position-relative">
+                    <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+                    <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+                    <div id="formularioInicio" class="card bg-glass">
+                        <div class="card-body px-4 py-5 px-md-5">
+
+                            <div class="container">
+                                <p class="titulo text-center">Establecer la nueva contraseña</p>
+                            </div>
+                            <form asp-controller="ControladorAjustes" asp-action="ActualizarContraseña" method="post">
+                              
+
+                                <label for="email">Introduce tu nueva contraseña</label>
+                                @Html.PasswordFor(u => u.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(u => u.Password, null, new { @class = "text-danger" })
+                                <br />
+                                <label for="email">Vuelve a introducir tu nueva contraseña</label>
+                                @Html.PasswordFor(u => u.Password2, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(u => u.Password2, null, new { @class = "text-danger" })
+                                <br />
+                                <div class="container">
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Modificar</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>
