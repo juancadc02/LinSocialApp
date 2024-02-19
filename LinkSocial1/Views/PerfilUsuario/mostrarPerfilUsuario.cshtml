@@ -17,64 +17,26 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="~/css/PerfilUsuario/mostrarPerfilUsuario.css">
 
-    <style>
-        #sidebar {
-            width: 10%;
-            height: 100vh;
-            background: #343a40;
-        }
-
-        main {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .contenedor-imagenes {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around; /* Distribuye las imágenes de manera uniforme en el contenedor */
-            gap: 20px; /* Espacio entre las imágenes */
-        }
-
-            .contenedor-imagenes div {
-                flex: 0 0 calc(30% - 20px); /* Establece el ancho de cada contenedor con margen */
-                box-sizing: border-box; /* Asegura que el margen no afecte el ancho real */
-                margin-bottom: 20px; /* Espacio inferior entre las imágenes */
-                border: 1px solid black;
-                border-radius: 8px;
-            }
-
-            .contenedor-imagenes img {
-                width: 100%; /* Ocupa el ancho completo del contenedor div */
-                height: auto; /* Mantiene la proporción de aspecto */
-            }
-
-        .scrollable-container {
-            overflow-y: auto; /* Agrega desplazamiento vertical si el contenido es demasiado grande */
-            max-height: 99vh; /* Ajusta la altura máxima según sea necesario */
-        }
-
-    </style>
 </head>
 
 <body>
     <div class="scrollable-container">
         <main>
             <div>
+                <!--Muestro la foto de perfil del usuario-->
                 <img src="@Model.rutaImagen" alt="Foto de perfil" style="width: 150px; height: 150px; border-radius: 50%;" />
                 <h2>@Model.correoElectronico</h2>
-
+                <!--Muestro la informacion de ese usuario-->
                 <div>
                     <p>Publicaciones: @ViewData["numeroPublicacion"]</p>
                     <p>Seguidores: @ViewData["NumeroSeguidores"] </p>
                     <p>Siguiendo: @ViewData["NumeroSeguidos"]</p>
                 </div>
-
-              
-
-
             </div>
+
+            <!--Muestro las imagenes del usuario-->
             <div class="contenedor-imagenes">
                 @foreach (var publicacion in listaPublicaciones)
                 {
@@ -87,6 +49,7 @@
                     </div>
                 }
             </div>
+
             @if (TempData["mensajeExito"] != null)
             {
                 <div class="alert alert-success">

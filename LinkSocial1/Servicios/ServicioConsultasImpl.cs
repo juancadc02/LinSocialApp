@@ -6,6 +6,9 @@ using System.Net.Mail;
 
 namespace LinkSocial1.Servicios
 {
+    /// <summary>
+    /// Clase que implementa y detalla la lógica de los metodos que actuan sobre la base de datos.
+    /// </summary>
     public class ServicioConsultasImpl:ServicioConsultas
     {
         private readonly GestorLinkSocialDbContext dbContext;
@@ -40,9 +43,12 @@ namespace LinkSocial1.Servicios
         }
 
 
+        #region Metodos de login.
+
         public void registrarUsuario(Usuarios nuevoUsuario)
         {
             ServicioEncriptar encriptar = new ServicioEncriptarImpl();
+            
             using(var contexto = new GestorLinkSocialDbContext())
             {
                 nuevoUsuario = new Usuarios
@@ -130,6 +136,11 @@ namespace LinkSocial1.Servicios
 
             smtpCliente.Dispose();
         }
+
+        #endregion
+
+        #region Metodo para subir publicaciones
+
 
         public void subirPublicacion(Publicaciones nuevaPublicacion)
         {
@@ -221,6 +232,12 @@ namespace LinkSocial1.Servicios
             }
         }
 
+        #endregion
+
+
+
+        #region Metodo para buscar usuarios y mostrar el perfil del usuario
+
         public Usuarios buscarUsuario(string correoElectronico)
         {
 
@@ -273,7 +290,6 @@ namespace LinkSocial1.Servicios
                 return publicacionesDelUsuario;
             }
         }
-
         public int ObtenerNumeroSeguidores(int idUsuario)
         {
             int numeroSeguidores = dbContext.Seguidores
@@ -282,7 +298,6 @@ namespace LinkSocial1.Servicios
 
             return numeroSeguidores;
         }
-
         public int ObtenerNumeroSeguidos(int idUsuario)
         {
             int numeroSeguidos = dbContext.Seguidores
@@ -291,6 +306,10 @@ namespace LinkSocial1.Servicios
 
             return numeroSeguidos;
         }
+        #endregion
+
+
+        #region Metodos para seguir a un usuario
 
         public void iniciarSeguimiento(Seguidores nuevoSeguidor)
         {
@@ -339,6 +358,9 @@ namespace LinkSocial1.Servicios
             }
         }
 
+        #endregion
+
+        #region Metodos para dar like
 
         public void añadirLike(LikeUsuariosPublicaciones nuevoLike)
         {
@@ -360,7 +382,7 @@ namespace LinkSocial1.Servicios
         {
             using (var dbContext = new GestorLinkSocialDbContext())
             {
-                // Supongamos que tienes una entidad Likes con campos idUsuario y idPublicacion
+                
                 var likeExistente = dbContext.LikeUsuariosPublicaciones
                     .FirstOrDefault(l => l.idUsuario == idUsuario && l.idPublicacion == idPublicacion);
 
@@ -384,8 +406,10 @@ namespace LinkSocial1.Servicios
                 }
             }
         }
+        #endregion
 
 
+        #region Metodo para enviar mensajes
         public List<Mensajes> ObtenerHistorialMensajes(string idUsuarioActual, int idUsuarioDestino)
         {
             // Obtén el historial de mensajes entre el usuario actual y el usuario destino
@@ -417,7 +441,7 @@ namespace LinkSocial1.Servicios
                 contexto.SaveChanges();
             }
         }
-
+        #endregion
 
     }
 }

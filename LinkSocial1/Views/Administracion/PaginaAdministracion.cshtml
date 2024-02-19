@@ -8,21 +8,13 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
+   <!--Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title> Hello, world!</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        #sidebar {
-            width: 17%;
-            height: 100vh;
-            background: #343a40;
-        }
-    </style>
+    <link rel="stylesheet" href="~/css/Administracion/paginaAdministracion.css">
 </head>
 
 <body>
@@ -36,7 +28,6 @@
             </div>
             <div id="sidebar-accordion" class="accordion">
                 <div class="list-group">
-          
                     <a asp-controller="ControladorAdministracion" asp-action="irUsuario" data-toggle="collapse" aria-expanded="false"
                        class="list-group-item list-group-item-action bg-dark text-light">
                         <i class="fa fa-cog mr-3" aria-hidden="true"></i>Usuarios
@@ -49,14 +40,11 @@
                        class="list-group-item list-group-item-action bg-dark text-light">
                         <i class="fa fa-cog mr-3" aria-hidden="true"></i>Inicio
                     </a>
-
                 </div>
             </div>
         </div>
-        <!--Fin menu lateral-->
-
     </div>
-
+    <!--Fin menu lateral-->
 </body>
 
 </html>

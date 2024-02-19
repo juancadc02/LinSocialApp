@@ -72,9 +72,7 @@ namespace LinkSocial1.Controllers
                     _contexto.Entry(usuario).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     _contexto.SaveChanges();
                 }
-
-
-                return View("~/Views/Ajustes/PaginaAjuste.cshtml");
+                return RedirectToAction("irAAjustes", "ControladorAjustes");
             }
             catch (Exception ex)
             {

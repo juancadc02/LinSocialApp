@@ -12,37 +12,33 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
-    <title>Hello, world!</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="styles.css">
   
 </head>
 
 <body>
-    
-
     <div class="container">
         <form method="post" enctype="multipart/form-data" action="@Url.Action("añadirUsuario", "ControladorAdministracion")">
-
-
+            <!--Nombre completo-->
             <div class="form-outline mb-4">
                 <label class="form-label" for="nombreCompleto">Nombre Completo.</label>
                 <input type="text" id="nombreCompleto" name="nombreCompleto" class="form-control" required />
             </div>
+            <!--Correo electronico-->
             <div class="form-outline mb-4">
                 <label class="form-label" for="correoElectronico">Correo.</label>
                 <input type="email" id="correoElectronico" name="correoElectronico" class="form-control" required />
             </div>
+            <!--Dni-->
             <div class="form-outline mb-4">
                 <label class="form-label" for="dniUsuario">Dni.</label>
                 <input type="text" id="dniUsuario" name="dniUsuario" class="form-control" required />
             </div>
+            <!--Telefono-->
             <div class="form-outline mb-4">
                 <label class="form-label" for="movilUsuario">Movil.</label>
                 <input type="tel" id="movilUsuario" name="movilUsuario" class="form-control" required />
             </div>
-
             <!-- Contraseña -->
             <div class="form-outline mb-4">
                 <label class="form-label" for="contraseña">Contraseña</label>
@@ -53,9 +49,9 @@
                 <label class="form-label" for="confirmarContraseña">Confirmar Contraseña</label>
                 <input type="password" id="confirmarContraseña" name="confirmarContraseña" class="form-control" required />
             </div>
-
+            <!--Fecha nacimiento-->
             <div class="form-outline mb-4">
-                <label class="form-label" for="contraseña">Fecha Nacimiento.</label>
+                <label class="form-label" for="fchNacimiento">Fecha Nacimiento.</label>
                 <input type="date" id="fchNacimiento" name="fchNacimiento" class="form-control" required />
             </div>
 
@@ -64,10 +60,11 @@
                 <label class="form-label" for="imagen">Foto Perfil.</label>
                 <input type="file" accept="image/jpeg,image/png, image/jpg" id="imagen" name="imagen" class="form-control" />
             </div>
-
+            <!--Boton para registrar-->
             <button id="btn-registrar" type="submit" class="btn btn-primary btn-block mb-4">
                 Crear Cuenta
             </button>
+
             <div id="mensajeError" class="text-danger mb-4" style="display: none;"></div>
         </form>
 
@@ -79,8 +76,6 @@
             </div>
         }
     </div>
-
-    
     <!-- Botón Volver a Administración -->
     <div style="margin-left:60px;" class="text-center mt-4">
         <a href="@Url.Action("irPaginaAdmin", "ControladorAdministracion")" class="btn btn-primary">Volver a Administración</a>

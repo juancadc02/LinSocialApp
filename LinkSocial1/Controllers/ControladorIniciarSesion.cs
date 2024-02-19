@@ -8,6 +8,9 @@ namespace LinkSocial1.Controllers
 {
     public class ControladorIniciarSesion : Controller
     {
+
+        
+
         /// <summary>
         /// Metodo encargardo de abrir la pagina con el formulario de iniciar sesion (es lo primero que se ejecuta al arrancar la aplicacion).
         /// </summary>

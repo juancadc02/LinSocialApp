@@ -1,0 +1,34 @@
+#sidebar {
+    width: 10%;
+    height: 100vh;
+    background: #343a40;
+}
+
+main {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/*CSS para usuario encontrado*/
+.usuario-encontrado {
+    display: flex;
+    align-items: center;
+}
+
+.imagen-circular {
+    width: 50px; /* Ajusta el tamaño según sea necesario */
+    height: 50px; /* Ajusta el tamaño según sea necesario */
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 10px; /* Ajusta el espacio entre la imagen y el nombre según sea necesario */
+}
+
+    .imagen-circular img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.nombre-usuario {
+    font-size: 16px; /* Ajusta el tamaño de fuente según sea necesario */
+}

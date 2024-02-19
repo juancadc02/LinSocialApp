@@ -1,0 +1,35 @@
+#sidebar {
+    width: 10%;
+    height: 100vh;
+    background: #343a40;
+}
+
+main {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.contenedor-imagenes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Distribuye las imágenes de manera uniforme en el contenedor */
+    gap: 20px; /* Espacio entre las imágenes */
+}
+
+    .contenedor-imagenes div {
+        flex: 0 0 calc(30% - 20px); /* Establece el ancho de cada contenedor con margen */
+        box-sizing: border-box; /* Asegura que el margen no afecte el ancho real */
+        margin-bottom: 20px; /* Espacio inferior entre las imágenes */
+        border: 1px solid black;
+        border-radius: 8px;
+    }
+
+    .contenedor-imagenes img {
+        width: 100%; /* Ocupa el ancho completo del contenedor div */
+        height: auto; /* Mantiene la proporción de aspecto */
+    }
+
+.scrollable-container {
+    overflow-y: auto; /* Agrega desplazamiento vertical si el contenido es demasiado grande */
+    max-height: 99vh; /* Ajusta la altura máxima según sea necesario */
+}

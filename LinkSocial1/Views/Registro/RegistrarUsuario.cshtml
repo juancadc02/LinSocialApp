@@ -8,7 +8,7 @@
 
    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link rel="stylesheet" href="~/css/registrar.css" />
+    <link rel="stylesheet" href="~/css/Registro/registrar.css" />
 
 </head>
 <body>
@@ -31,19 +31,22 @@
 
                             <form method="post" enctype="multipart/form-data" action="@Url.Action("RegistrarUsuario", "ControladorRegistrarUsuarios")">
 
-                                
+                                <!--Nombre completo-->
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="nombreCompleto">Nombre Completo.</label>
                                     <input type="text" id="nombreCompleto" name="nombreCompleto" class="form-control" required/>
                                 </div>
+                                <!--Correo electronico-->
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="correoElectronico">Correo.</label>
                                     <input type="email" id="correoElectronico" name="correoElectronico" class="form-control" required />
                                 </div>
+                                <!--DNI-->
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="dniUsuario">Dni.</label>
                                     <input type="text" id="dniUsuario" name="dniUsuario" class="form-control" required />
                                 </div>
+                                <!--Telefono-->
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="movilUsuario">Movil.</label>
                                     <input type="tel" id="movilUsuario" name="movilUsuario" class="form-control" required />
@@ -59,7 +62,7 @@
                                     <label class="form-label" for="confirmarContraseña">Confirmar Contraseña</label>
                                     <input type="password" id="confirmarContraseña" name="confirmarContraseña" class="form-control" required />
                                 </div>
-                                
+                                <!--Fecha nacimiento-->
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="contraseña">Fecha Nacimiento.</label>
                                     <input type="date" id="fchNacimiento" name="fchNacimiento" class="form-control" required />
@@ -70,8 +73,13 @@
                                     <label class="form-label" for="imagen">Foto Perfil.</label>
                                     <input type="file" accept="image/jpeg,image/png, image/jpg" id="imagen" name="imagen" class="form-control" />
                                 </div>
+                                <!--Mensaje de eror de contraseña-->
                                 <div id="mensajeError" class="text-danger mb-4" style="display: none;"></div>
 
+                              <!--Boton registrar-->
+                                <button id="btn-registrar" type="submit" class="btn btn-primary btn-block mb-4">
+                                    Crear Cuenta
+                                </button>
                                 <!--Mensaje de error si el correo o dni ya existen.-->
                                 @if (TempData["ErrorRegistro"] != null)
                                 {
@@ -79,12 +87,6 @@
                                         @TempData["ErrorRegistro"]
                                     </div>
                                 }
-                                <button id="btn-registrar" type="submit" class="btn btn-primary btn-block mb-4">
-                                    Crear Cuenta
-                                </button>
-
-                              
-                              
                             </form>
                            
                         </div>
