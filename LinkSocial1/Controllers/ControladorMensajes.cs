@@ -65,17 +65,19 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
-                
+
                 // Obtenemos el ID del usuario actual
                 var idUsuarioActual = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-                //Obtenemos todos los mensajes entre el usuario que tiene la sesion iniciada y al que queremos enviar un mensaje.
+                // Obtenemos todos los mensajes entre el usuario que tiene la sesión iniciada y al que queremos enviar un mensaje.
                 List<Mensajes> historialMensajes = consultas.ObtenerHistorialMensajes(idUsuarioActual, idUsuarioDestino);
 
                 ViewBag.IdUsuarioDestino = idUsuarioDestino;
-                //Mostramos la pagina del chat con los mensajes entre esos usuarios.
+
+                // Mostramos la página del chat con los mensajes entre esos usuarios.
                 return View("~/Views/Mensajes/PaginaChatMensaje.cshtml", historialMensajes);
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine("Se ha producido un error: {0}", ex);
                 return View("~/Views/Errores/paginaError.cshtml");
@@ -102,17 +104,17 @@ namespace LinkSocial1.Controllers
                 DateTime fchMensaje = DateTime.Now.ToUniversalTime();
                 Mensajes nuevoMensaje = new Mensajes(Convert.ToInt32(idUsuarioActual), idUsuarioDestino, mensaje, fchMensaje);
                 consulta.enviarMensaje(nuevoMensaje);
-                //Obtenemos de nuevo los mensajes actualizados
-                List<Mensajes> historialMensajes = consulta.ObtenerHistorialMensajes(idUsuarioActual, idUsuarioDestino);
 
-                // Redirige nuevamente a la página de chat para mostrar el mensaje enviado
-                return View("~/Views/Mensajes/PaginaChatMensaje.cshtml", historialMensajes);
-            }catch(Exception ex)
+                // Redirigir a la acción "paginaChatMensaje" con el idUsuarioDestino
+                return RedirectToAction("paginaChatMensaje", new { idUsuarioDestino = idUsuarioDestino });
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine("Se ha producido un error: {0}", ex);
                 return View("~/Views/Errores/paginaError.cshtml");
             }
         }
+
 
 
 

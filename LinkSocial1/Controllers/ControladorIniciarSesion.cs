@@ -9,8 +9,6 @@ namespace LinkSocial1.Controllers
     public class ControladorIniciarSesion : Controller
     {
 
-        
-
         /// <summary>
         /// Metodo encargardo de abrir la pagina con el formulario de iniciar sesion (es lo primero que se ejecuta al arrancar la aplicacion).
         /// </summary>
@@ -19,6 +17,8 @@ namespace LinkSocial1.Controllers
         {
             try
             {
+                ServicioConsultas consulta = new ServicioConsultasImpl();
+                consulta.log("Entrando en paginaIniciarSesion");
                 return View("~/Views/InicioSesion/IniciarSesion.cshtml");
 
             }catch (Exception ex)
@@ -43,10 +43,11 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
-
+                consultas.log("Entrando en controlador IniciarSesion");
                 //Comprobamos si los campos de el correo y la contraseña estan vacios, si lo estan muestra el mensaje
                 if (string.IsNullOrEmpty(correoElectronico) || string.IsNullOrEmpty(contraseña))
                 {
+
                     TempData["MensajeCampoVacios"] = "Introduzca el correo y contraseña";
                     return View("~/Views/InicioSesion/IniciarSesion.cshtml");
 
@@ -54,6 +55,8 @@ namespace LinkSocial1.Controllers
                 //Comprobamos si el correo y la contraseña introducida son correctos o no.
                 if (consultas.IniciarSesion(correoElectronico, contraseña, out int idUsuario, out string rolUsuario))
                 {
+                    consultas.log("Sesion Iniciada correctamente");
+
                     //Autentificamos al usuario 
                     var claims = new List<Claim>
                 {
@@ -80,12 +83,14 @@ namespace LinkSocial1.Controllers
                         CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(claimsIdentity),
                         authProperties);
+                    consultas.log("Saliendo del controlador IniciarSesion ");
 
                     return RedirectToAction("cargarPaginaInicio", "ControladorPaginaInicio");
                 }
                 //Mostramos mensaje de que el usuario o la contraseña son incorrectos.
                 else
                 {
+                    consultas.log("Error: Usuario o contraseña incorrectos ");
                     TempData["Error"] = "Usuario o contraseña incorrectos. Inténtelo de nuevo.";
                     return View("~/Views/InicioSesion/IniciarSesion.cshtml");
                 }
@@ -93,6 +98,7 @@ namespace LinkSocial1.Controllers
                 //Controlamos todos los posibles errores y redirigimos a una pagina de error.
             }catch (Exception ex)
             {
+
                 Console.WriteLine("Se ha producido un error: {0}", ex);
                 return View("~/Views/Errores/paginaError.cshtml");
             }
@@ -106,7 +112,9 @@ namespace LinkSocial1.Controllers
         {
             try
             {
+                ServicioConsultas consultas = new ServicioConsultasImpl();
                 HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                consultas.log("Sesion cerrada.");
                 TempData["mensajeSesionCerrada"] = "Sesion cerrada con exito.";
                 return RedirectToAction("irAIniciarSesion", "ControladorIniciarSesion");
             }catch (Exception ex)

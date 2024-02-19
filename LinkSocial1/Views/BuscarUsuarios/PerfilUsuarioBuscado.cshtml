@@ -40,8 +40,9 @@
                         @if (ViewData["EstaSiguiendo"] != null && (bool)ViewData["EstaSiguiendo"])
                         {
                             <!-- Si ya está siguiendo, mostrar el mensaje -->
-                            <button type="submit" class="btn btn-primary" disabled>Siguiendo</button>
-
+                            <button type="button" class="btn btn-primary" disabled>Siguiendo</button>
+                            <!-- Agrega un botón adicional para dejar de seguir -->
+                            <button type="submit" class="btn btn-danger" formaction="@Url.Action("dejarDeSeguir", "ControladorSeguidores")">Dejar de seguir</button>
                         }
                         else
                         {
