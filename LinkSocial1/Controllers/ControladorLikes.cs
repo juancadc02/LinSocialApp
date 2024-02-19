@@ -14,7 +14,9 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
+                ServicioADto servicioADto = new ServicioADtoImpl();
                 List<Publicaciones> listaPublicaciones = consultas.mostrarPublicaciones();
+                List<PublicacionesDTO> listaPublicacionesDto =servicioADto.ConvertirListaDAOaDTOPublicaciones(listaPublicaciones);
 
                 //Obtenemos el id del usuario que tiene la sesion iniciada.
                 var claimsPrincipal = User;
@@ -42,7 +44,7 @@ namespace LinkSocial1.Controllers
                 }
 
                 // Obtener los IDs de todas las publicaciones para volver a mostrar la publicacion despues de dar mg o eliminarlo
-                List<int> idsPublicaciones = listaPublicaciones.Select(p => p.idPublicacion).ToList();
+                List<int> idsPublicaciones = listaPublicacionesDto.Select(p => p.idPublicacion).ToList();
                 List<ComentarioConUsuarioViewModel> comentariosConUsuario = consultas.mostrarComentariosConUsuario();
 
                 // Verificar si el usuario dio "me gusta" a cada publicación
@@ -54,7 +56,7 @@ namespace LinkSocial1.Controllers
                 }
 
                 //Mostramos los datos
-                ViewData["listaPublicaciones"] = listaPublicaciones;
+                ViewData["listaPublicaciones"] = listaPublicacionesDto;
                 ViewData["likesPorPublicacion"] = likesPorPublicacion;
                 ViewData["comentariosConUsuario"] = comentariosConUsuario;
 

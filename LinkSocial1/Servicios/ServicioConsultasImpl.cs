@@ -2,6 +2,7 @@
 using DB.Modelo;
 using LinkSocial1.DTO;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging.Signing;
 using System.Net.Mail;
 
 namespace LinkSocial1.Servicios
@@ -12,7 +13,7 @@ namespace LinkSocial1.Servicios
     public class ServicioConsultasImpl:ServicioConsultas
     {
         private readonly GestorLinkSocialDbContext dbContext;
-
+        private readonly string logFilePath = "log.txt";
         public ServicioConsultasImpl(GestorLinkSocialDbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -442,6 +443,17 @@ namespace LinkSocial1.Servicios
             }
         }
         #endregion
+
+        public void log(string mensaje)
+        {
+            string horaActual = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+            using(StreamWriter sw = new StreamWriter(logFilePath))
+            {
+                sw.WriteLine($"[{horaActual}] {mensaje}");
+            }
+            Console.WriteLine($"[{horaActual}] {mensaje}");
+        }
 
     }
 }

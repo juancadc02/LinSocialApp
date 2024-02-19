@@ -1,4 +1,5 @@
 ﻿using DB.Modelo;
+using LinkSocial1.DTO;
 using LinkSocial1.Servicios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,15 +37,20 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
+                ServicioADto servicioADto = new ServicioADtoImpl();
 
                 //Buscamos el usuarios introduciendo el correo electronico en el formulario
                 Usuarios usuarioEncontrado = consultas.buscarUsuario(correoElectronico);
 
+               
+
                 //Si encuentra al usuario cargamos la vista y le pasamos el usuario.
                 if (usuarioEncontrado != null)
                 {
-                    string nombreUsuario = usuarioEncontrado.nombreCompleto;
-                    return View("~/Views/BuscarUsuarios/PaginaBuscarUsuarios.cshtml", usuarioEncontrado);
+                    //Pasamos le usuario a DTO
+                    UsuariosDTO usuarioEncontradoDto = servicioADto.ConvertirDAOaDTOUsuarios(usuarioEncontrado);
+                    string nombreUsuario = usuarioEncontradoDto.nombreCompleto;
+                    return View("~/Views/BuscarUsuarios/PaginaBuscarUsuarios.cshtml", usuarioEncontradoDto);
                 }
                 else //Si no encuentra al usuario muestra el mensaje de errores 
                 {
@@ -71,16 +77,19 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
-
+                ServicioADto servicioADto = new ServicioADtoImpl();
                 //Obtenemos el id del usuario que tiene la sesion inciaca
                 var claimsPrincipal = User;
                 string idUsuarioString = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
                 //Cargamos los datos del usuario a traves del su id
                 Usuarios usuarioEncontrado = consultas.buscarUsuarioPorId(idUsuario);
+                //Pasamos el usuario a DTO
+                UsuariosDTO usuarioEncontradoDTO=servicioADto.ConvertirDAOaDTOUsuarios(usuarioEncontrado);
                 //Cargamos las publicaciones del usuario que hemos buscado a traves del id.
                 List<Publicaciones> listaPublicaciones = consultas.buscarPublicacionesPorIdUsuario(idUsuario);
-
+                //Pasamos la lista a DTO
+                List<PublicacionesDTO> listaPublicacionesDto = servicioADto.ConvertirListaDAOaDTOPublicaciones(listaPublicaciones);
                 //Cargamos el numero de imagenes que tiene el usuario
                 int numeroPublicacion = listaPublicaciones.Count;
                
@@ -92,13 +101,13 @@ namespace LinkSocial1.Controllers
                 ViewData["NumeroSeguidores"] = numeroSeguidores;
                 ViewData["NumeroSeguidos"] = numeroSeguidos;
                 ViewData["numeroPublicacion"] = numeroPublicacion;
-                ViewData["listaPublicaciones"] = listaPublicaciones;
+                ViewData["listaPublicaciones"] = listaPublicacionesDto;
 
                 // Comprobamos si el usuario que tiene la sesion iniciada sigue al usuario para no mostrar el boton de seguir.
                 bool? estaSiguiendo = consultas.estaSiguiendo(Convert.ToInt32(idUsuarioString), idUsuario);
                 ViewData["EstaSiguiendo"] = estaSiguiendo;
 
-                return View("~/Views/BuscarUsuarios/PerfilUsuarioBuscado.cshtml", usuarioEncontrado);
+                return View("~/Views/BuscarUsuarios/PerfilUsuarioBuscado.cshtml", usuarioEncontradoDTO);
             }catch(Exception ex)
             {
                 Console.WriteLine("Se ha producido un error: {0}", ex);

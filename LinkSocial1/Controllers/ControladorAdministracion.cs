@@ -1,5 +1,6 @@
 ﻿using DB;
 using DB.Modelo;
+using LinkSocial1.DTO;
 using LinkSocial1.Servicios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -46,9 +47,11 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
+                ServicioADto servicioADto = new ServicioADtoImpl();
                 //Creamos una lista y llamamos al metodo lista usuarios.
                 List<Usuarios> listaUsuario = consultas.mostrarUsuarios();
-                ViewData["listaUsuario"] = listaUsuario;
+                List<UsuariosDTO> listaUsuarioDto =servicioADto.ConvertirListaDAOaDTOUsuarios(listaUsuario);
+                ViewData["listaUsuario"] = listaUsuarioDto;
 
                 return View("~/Views/Administracion/listaUsuario.cshtml");
             }catch(Exception ex)
@@ -67,15 +70,17 @@ namespace LinkSocial1.Controllers
         {
             try
             {
+                ServicioADto servicioADto=new ServicioADtoImpl();
                 // Obtén el usuario de la base de datos usando el ID
-                var usuario = _contexto.Usuarios.Find(id);
+                Usuarios usuario = _contexto.Usuarios.Find(id);
 
+                UsuariosDTO usuarioDto = servicioADto.ConvertirDAOaDTOUsuarios(usuario);
                 // Verifica si el usuario existe
-                if (usuario == null)
+                if (usuarioDto == null)
                 {
                     return NotFound(); // Puedes manejar la situación en la que el usuario no se encuentra
                 }
-                return View("~/Views/Administracion/paginaEdicionUsuario.cshtml", usuario);
+                return View("~/Views/Administracion/paginaEdicionUsuario.cshtml", usuarioDto);
 
             }catch(Exception ex)
             {

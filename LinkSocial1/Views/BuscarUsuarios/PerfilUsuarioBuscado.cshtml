@@ -1,6 +1,6 @@
-﻿@model DB.Modelo.Usuarios
+﻿@model LinkSocial1.DTO.UsuariosDTO
 @{
-    var listaPublicaciones = ViewData["listaPublicaciones"] as List<DB.Modelo.Publicaciones>;
+    var listaPublicaciones = ViewData["listaPublicaciones"] as List<LinkSocial1.DTO.PublicacionesDTO>;
 
 }
 
@@ -54,19 +54,19 @@
 
             </div>
             <div class="contenedor-imagenes">
-               
+
                 @foreach (var publicacion in listaPublicaciones)
                 {
-                    <div >
+                    <div>
                         <img src="@publicacion.contenidoPublicacion" />
                     </div>
                 }
             </div>
-          
+
 
         </main>
     </div>
-    
+
     <!-- Bootstrap JS y Popper.js (si es necesario) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

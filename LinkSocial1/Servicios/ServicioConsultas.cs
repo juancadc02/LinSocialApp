@@ -169,6 +169,6 @@ namespace LinkSocial1.Servicios
         public void enviarMensaje (Mensajes nuevoMensaje);
         #endregion
 
-
+        public void log(string mensaje);
     }
 }

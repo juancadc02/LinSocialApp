@@ -20,13 +20,15 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
+                ServicioADto servicioADto = new ServicioADtoImpl();
+
                 // Obtenemos el id del usuario que ha iniciado sesion.
                 var claimsPrincipal = User;
                 string idUsuario = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                
                 //Cargamos en la lista todas las publicaciones de todos los usuarios.
                 List<Publicaciones> listaPublicaciones = consultas.mostrarPublicaciones();
-
+               
                 // Obtener los IDs de todas las publicaciones
                 List<int> idsPublicaciones = listaPublicaciones.Select(p => p.idPublicacion).ToList();
 
@@ -41,8 +43,11 @@ namespace LinkSocial1.Controllers
                 //Cargamos en una lista todos los comentarios de las publicaciones con el usuario que ha puesto el comentario.
                 List<ComentarioConUsuarioViewModel> comentariosConUsuario = consultas.mostrarComentariosConUsuario();
 
+                //Pasamos los datos a DTO antes de mostrarlos
+                List<PublicacionesDTO> listaPublicacionesDTO = servicioADto.ConvertirListaDAOaDTOPublicaciones(listaPublicaciones);
+              
                 //Pasamos toda la informacion a la vista.
-                ViewData["listaPublicaciones"] = listaPublicaciones;
+                ViewData["listaPublicaciones"] = listaPublicacionesDTO;
                 ViewData["likesPorPublicacion"] = likesPorPublicacion;
                 ViewData["comentariosConUsuario"] = comentariosConUsuario;
 

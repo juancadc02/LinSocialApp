@@ -1,4 +1,5 @@
 ﻿using DB.Modelo;
+using LinkSocial1.DTO;
 using LinkSocial1.Servicios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,7 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
-
+                ServicioADto servicioADto = new ServicioADtoImpl();
                 //Obtenemos el id del usuario que tiene la sesion iniciada.
                 var claimsPrincipal = User;
                 string idSeguidorSolicitud = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -39,12 +40,15 @@ namespace LinkSocial1.Controllers
                 {
                     // Cargamos los datos del usuario.
                     Usuarios usuarioEncontrado = consultas.buscarUsuarioPorId(idSeguidorSeguido);
+                    UsuariosDTO usuarioEncontradoDto = servicioADto.ConvertirDAOaDTOUsuarios(usuarioEncontrado);
                     List<Publicaciones> listaPublicaciones = consultas.buscarPublicacionesPorIdUsuario(idSeguidorSeguido);
+                    List<PublicacionesDTO> listaPublicacionesDto = servicioADto.ConvertirListaDAOaDTOPublicaciones(listaPublicaciones);
+
                     int numeroPublicacion = listaPublicaciones.Count;
                     ViewData["numeroPublicacion"] = numeroPublicacion;
-                    ViewData["listaPublicaciones"] = listaPublicaciones;
+                    ViewData["listaPublicaciones"] = listaPublicacionesDto;
                     ViewData["EstaSiguiendo"] = siguiendo;
-                    return View("~/Views/BuscarUsuarios/PerfilUsuarioBuscado.cshtml", usuarioEncontrado);
+                    return View("~/Views/BuscarUsuarios/PerfilUsuarioBuscado.cshtml", usuarioEncontradoDto);
                 }
 
                 // Si no está siguiendo, realizar la acción de seguimiento
@@ -53,7 +57,9 @@ namespace LinkSocial1.Controllers
 
                 // Cargamos los datos del usuario.
                 Usuarios usuarioEncontradoNuevo = consultas.buscarUsuarioPorId(idSeguidorSeguido);
+                UsuariosDTO usuarioEncontradoNuevoDto = servicioADto.ConvertirDAOaDTOUsuarios(usuarioEncontradoNuevo);
                 List<Publicaciones> listaPublicacionesNuevo = consultas.buscarPublicacionesPorIdUsuario(idSeguidorSeguido);
+                List<PublicacionesDTO> listaPublicacionesNuevoDto = servicioADto.ConvertirListaDAOaDTOPublicaciones(listaPublicacionesNuevo);
 
                 //Cargamos el numero de publicaciones del usuario
                 int numeroPublicacionNuevo = listaPublicacionesNuevo.Count;
@@ -65,10 +71,10 @@ namespace LinkSocial1.Controllers
                 ViewData["NumeroSeguidores"] = numeroSeguidores;
                 ViewData["NumeroSeguidos"] = numeroSeguidos;
                 ViewData["numeroPublicacion"] = numeroPublicacionNuevo;
-                ViewData["listaPublicaciones"] = listaPublicacionesNuevo;
+                ViewData["listaPublicaciones"] = listaPublicacionesNuevoDto;
                 ViewData["EstaSiguiendo"] = true;
 
-                return View("~/Views/BuscarUsuarios/PerfilUsuarioBuscado.cshtml", usuarioEncontradoNuevo);
+                return View("~/Views/BuscarUsuarios/PerfilUsuarioBuscado.cshtml", usuarioEncontradoNuevoDto);
             }
             catch (Exception ex)
             {
@@ -76,10 +82,6 @@ namespace LinkSocial1.Controllers
                 return View("~/Views/Errores/paginaError.cshtml");
             }
         }
-
-
-
-
 
     }
 }

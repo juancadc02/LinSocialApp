@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>Tu título aquí</title>
 
-   
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="~/css/Registro/registrar.css" />
 
@@ -26,15 +26,15 @@
                     <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
                     <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
 
-                    <div id="formularioInicio" class="card bg-glass" >
-                        <div class="card-body px-4 py-5 px-md-5" >
+                    <div id="formularioInicio" class="card bg-glass">
+                        <div class="card-body px-4 py-5 px-md-5">
 
                             <form method="post" enctype="multipart/form-data" action="@Url.Action("RegistrarUsuario", "ControladorRegistrarUsuarios")">
 
                                 <!--Nombre completo-->
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="nombreCompleto">Nombre Completo.</label>
-                                    <input type="text" id="nombreCompleto" name="nombreCompleto" class="form-control" required/>
+                                    <input type="text" id="nombreCompleto" name="nombreCompleto" class="form-control" required />
                                 </div>
                                 <!--Correo electronico-->
                                 <div class="form-outline mb-4">
@@ -67,7 +67,7 @@
                                     <label class="form-label" for="contraseña">Fecha Nacimiento.</label>
                                     <input type="date" id="fchNacimiento" name="fchNacimiento" class="form-control" required />
                                 </div>
-                                
+
                                 <!--Imagen-->
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="imagen">Foto Perfil.</label>
@@ -76,7 +76,7 @@
                                 <!--Mensaje de eror de contraseña-->
                                 <div id="mensajeError" class="text-danger mb-4" style="display: none;"></div>
 
-                              <!--Boton registrar-->
+                                <!--Boton registrar-->
                                 <button id="btn-registrar" type="submit" class="btn btn-primary btn-block mb-4">
                                     Crear Cuenta
                                 </button>
@@ -88,9 +88,9 @@
                                     </div>
                                 }
                             </form>
-                           
+
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
