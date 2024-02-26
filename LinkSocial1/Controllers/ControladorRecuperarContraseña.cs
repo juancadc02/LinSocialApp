@@ -21,6 +21,8 @@ namespace LinkSocial1.Controllers
         {
             try
             {
+                ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrando en el metodo que abre la vista del formulario para recuperar la contraseña");
                 return View("~/Views/RecuperarContraseña/RecuperarContraseña.cshtml");
             }catch (Exception ex)
             {
@@ -36,6 +38,7 @@ namespace LinkSocial1.Controllers
             {
                 ServicioEncriptar encriptarContraseña = new ServicioEncriptarImpl();
                 ServicioConsultas consultar = new ServicioConsultasImpl();
+                consultar.log("Entrando en el metodo que envia un correo electronico al usuario para recuperar la contraseña");
 
 
                 //Comprobamos que el formulario esta relleno.
@@ -102,6 +105,8 @@ namespace LinkSocial1.Controllers
         {
             try
             {
+                ServicioConsultas consultar = new ServicioConsultasImpl();
+                consultar.log("Entrando en el metodo que abre el enlace que enviamos por correo electronico para recuperar la contraseña");
                 // Crea un modelo de vista y asigna el token.
                 RecuperacionDTO model = new RecuperacionDTO();
                 model.Token = token;
@@ -144,6 +149,8 @@ namespace LinkSocial1.Controllers
         {
             try
             {
+                ServicioConsultas consultar = new ServicioConsultasImpl();
+                consultar.log("Entrando en el metodo que modifica la contraseña del usuario");
                 ServicioEncriptar encriptarContraseña = new ServicioEncriptarImpl();
 
                 //Comprobamos que los datos del formulario estan rellenos.

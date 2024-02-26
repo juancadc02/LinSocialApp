@@ -1,5 +1,8 @@
 ﻿namespace LinkSocial1.DTO
 {
+    /// <summary>
+    /// DTO para mostrar los usuarios en la administracion
+    /// </summary>
     public class UsuariosDTO
     {
         public int idUsuario { get; set; }

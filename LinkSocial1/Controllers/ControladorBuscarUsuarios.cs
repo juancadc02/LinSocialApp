@@ -18,6 +18,8 @@ namespace LinkSocial1.Controllers
         {
             try
             {
+                ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrado en metodo que abre la vista para buscar un usuario");
                 return View("~/Views/BuscarUsuarios/PaginaBuscarUsuarios.cshtml");
             }catch (Exception ex)
             {
@@ -37,6 +39,8 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrado en metodo que busca un usuario por el correo electronico.");
+
                 ServicioADto servicioADto = new ServicioADtoImpl();
 
                 //Buscamos el usuarios introduciendo el correo electronico en el formulario
@@ -77,6 +81,7 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrado en metodo que carga una vista con los datos del usuario que hemos buscado");
                 ServicioADto servicioADto = new ServicioADtoImpl();
                 //Obtenemos el id del usuario que tiene la sesion inciaca
                 var claimsPrincipal = User;

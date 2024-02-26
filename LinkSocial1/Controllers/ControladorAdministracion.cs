@@ -30,6 +30,8 @@ namespace LinkSocial1.Controllers
         {
             try
             {
+                ServicioConsultas consulta = new ServicioConsultasImpl();
+                consulta.log("Entrado en metodo que carga la vista de pagina administracion");
                 return View("~/Views/Administracion/PaginaAdministracion.cshtml");
             }catch (Exception ex)
             {
@@ -47,6 +49,7 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrado en metodo que carga el listado de usuarios");
                 ServicioADto servicioADto = new ServicioADtoImpl();
                 //Creamos una lista y llamamos al metodo lista usuarios.
                 List<Usuarios> listaUsuario = consultas.mostrarUsuarios();
@@ -70,6 +73,8 @@ namespace LinkSocial1.Controllers
         {
             try
             {
+                ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrado en metodo que carga el formulario para editar un usuario.");
                 ServicioADto servicioADto=new ServicioADtoImpl();
                 // Obtén el usuario de la base de datos usando el ID
                 Usuarios usuario = _contexto.Usuarios.Find(id);
@@ -99,6 +104,8 @@ namespace LinkSocial1.Controllers
         {
             try
             {
+                ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrado en metodo que guarda un usuario editado.");
                 if (imagen != null && imagen.Length > 0)
                 {
                     string nombreImagen = Guid.NewGuid().ToString() + Path.GetExtension(imagen.FileName);
@@ -132,6 +139,8 @@ namespace LinkSocial1.Controllers
         {
             try
             {
+                ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrado en metodo que elimina un usuario.");
                 var usuarioExistente = _contexto.Usuarios.Find(id);
 
                 if (usuarioExistente == null)
@@ -178,7 +187,8 @@ namespace LinkSocial1.Controllers
         {
             try
             {
-               
+                ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrado en metodo abre el formulario para añadir un usuario desde admin.");
                 return View("~/Views/Administracion/añadirUsuario.cshtml");
             }
             catch (Exception ex)
@@ -204,6 +214,8 @@ namespace LinkSocial1.Controllers
         {
             try
             {
+                ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrado en metodo que guarda un usuario desde admin.");
                 ServicioConsultas consulta = new ServicioConsultasImpl();
                 string nombreImagen;
                 string rutaImagen = "";

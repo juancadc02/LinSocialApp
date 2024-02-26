@@ -169,6 +169,10 @@ namespace LinkSocial1.Servicios
         public void enviarMensaje (Mensajes nuevoMensaje);
         #endregion
 
+        /// <summary>
+        /// Interfaz del metodo que guarda los mensajes de log en el archivo log.
+        /// </summary>
+        /// <param name="mensaje"></param>
         public void log(string mensaje);
     }
 }

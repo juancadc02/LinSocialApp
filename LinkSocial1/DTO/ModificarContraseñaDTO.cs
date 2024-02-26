@@ -2,6 +2,9 @@
 
 namespace LinkSocial1.DTO
 {
+    /// <summary>
+    /// DTo para introducir la nueva contraseña desde modificar contraseña dentro de la aplicacion
+    /// </summary>
     public class ModificarContraseñaDTO
     {
         public int idUsuario { get; set; }

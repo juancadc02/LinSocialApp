@@ -23,6 +23,8 @@ namespace LinkSocial1.Controllers
         {
             try
             {
+                ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrado en metodo abre la vista de ajustes");
                 return View("~/Views/Ajustes/PaginaAjuste.cshtml");
 
             }
@@ -36,6 +38,8 @@ namespace LinkSocial1.Controllers
         {
             try
             {
+                ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrado en metodo que abre el formulario de editar contraseña.");
                 return View("~/Views/Ajustes/ModificarContraseña.cshtml");
 
             }
@@ -51,6 +55,8 @@ namespace LinkSocial1.Controllers
         {
             try
             {
+                ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrado en metodo que guarda la contraseña editada.");
                 ServicioEncriptar encriptarContraseña = new ServicioEncriptarImpl();
 
                 // Comprobamos que los datos del formulario están rellenos.

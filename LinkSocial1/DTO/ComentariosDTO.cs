@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LinkSocial1.DTO
 {
+    /// <summary>
+    /// DTO de la entidad comentarios de la base de datos, para mostrar los comentarios en las publicaciones
+    /// </summary>
     public class ComentariosDTO
     {
 

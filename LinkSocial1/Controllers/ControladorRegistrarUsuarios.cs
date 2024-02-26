@@ -15,6 +15,8 @@ namespace LinkSocial1.Controllers
         public IActionResult irARegistro()
         {
             try {
+                ServicioConsultas consultar = new ServicioConsultasImpl();
+                consultar.log("Entrando en el metodo abre la pagina para registrar a un usuario");
                 return View("~/Views/Registro/RegistrarUsuario.cshtml");
 
             }
@@ -43,6 +45,8 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consulta = new ServicioConsultasImpl();
+                consulta.log("Entrando en el metodo que registra un usuario en la base de datos");
+
                 string nombreImagen;
                 string rutaImagen="";
                 if (imagen!=null && imagen.Length > 0)

@@ -21,7 +21,7 @@ namespace LinkSocial1.Controllers
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
                 ServicioADto servicioADto = new ServicioADtoImpl();
-
+                consultas.log("Entrando en el metodo que carga la pagina de inicio");
                 // Obtenemos el id del usuario que ha iniciado sesión.
                 var claimsPrincipal = User;
                 string idUsuario = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;

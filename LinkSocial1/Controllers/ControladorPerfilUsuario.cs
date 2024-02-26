@@ -19,7 +19,7 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
-
+                consultas.log("Entrando en el metodo que carga el perfil del usuario que tiene la sesion iniciada");
                 //Obtebemos el id de la sesion actual y lo convertimos en int
                 var claimsPrincipal = User;
                 string idUsuarioString = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -57,6 +57,7 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrando en el metodo que elimina una publicacion del usuario");
                 consultas.eliminarPublicacion(idPublicacion);
                 //Mostramos los datos del usuario 
                 //Obtebemos el id de la sesion actual y lo convertimos en int

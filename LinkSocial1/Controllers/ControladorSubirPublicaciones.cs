@@ -40,6 +40,8 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consulta = new ServicioConsultasImpl();
+                consulta.log("Entrando en el metodo que guarda una publicacion en la base de datos. ");
+
                 string nombreImagen;
                 string rutaImagen = "";
 
@@ -97,6 +99,8 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrando en el metodo que añade una comentario en una publicacion y guarda el registro en la base de datos. ");
+
                 //Obtenemos el id del usuario que tiene la sesion iniciada.
                 var claimsPrincipal = User;
                 string idUsuarioString = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;

@@ -14,6 +14,7 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrando en el metodo para dar me gusta a una publicacion");
                 ServicioADto servicioADto = new ServicioADtoImpl();
 
                 // Obtener el id del usuario que tiene la sesión iniciada.

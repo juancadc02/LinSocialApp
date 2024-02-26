@@ -24,6 +24,7 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrando en el metodo que empieza a seguir al usuario y guarda el registro en la base de datos ");
                 ServicioADto servicioADto = new ServicioADtoImpl();
                 //Obtenemos el id del usuario que tiene la sesion iniciada.
                 var claimsPrincipal = User;
@@ -88,6 +89,8 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrando en el metodo que deja de seguir al usuario y elimina el registro en la base de datos ");
+
                 ServicioADto servicioADto = new ServicioADtoImpl();
 
                 // Obtenemos el id del usuario que tiene la sesión iniciada.

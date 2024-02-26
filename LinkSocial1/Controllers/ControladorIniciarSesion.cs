@@ -18,7 +18,7 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consulta = new ServicioConsultasImpl();
-                consulta.log("Entrando en paginaIniciarSesion");
+                consulta.log("Entrando en metodo que carga la pagina para iniciar sesion");
                 return View("~/Views/InicioSesion/IniciarSesion.cshtml");
 
             }catch (Exception ex)
@@ -43,7 +43,7 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
-                consultas.log("Entrando en controlador IniciarSesion");
+                consultas.log("Entrando en el metodo que inicia la sesion con los datos introducdios");
                 //Comprobamos si los campos de el correo y la contraseña estan vacios, si lo estan muestra el mensaje
                 if (string.IsNullOrEmpty(correoElectronico) || string.IsNullOrEmpty(contraseña))
                 {
@@ -114,7 +114,7 @@ namespace LinkSocial1.Controllers
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
                 HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-                consultas.log("Sesion cerrada.");
+                consultas.log("Entrando en el metodo para cerrar sesion");
                 TempData["mensajeSesionCerrada"] = "Sesion cerrada con exito.";
                 return RedirectToAction("irAIniciarSesion", "ControladorIniciarSesion");
             }catch (Exception ex)

@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LinkSocial1.DTO
 {
+    /// <summary>
+    /// DTO para mostrar las publicaciones de la base de datos en la vista
+    /// </summary>
     public class PublicacionesDTO
     {
         

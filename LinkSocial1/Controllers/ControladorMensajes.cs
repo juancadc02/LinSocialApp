@@ -17,6 +17,8 @@ namespace LinkSocial1.Controllers
         {
             try
             {
+                ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrando en el metodo que abre la vista de mensajes");
                 return View("~/Views/Mensajes/PaginaPrincipalMensajes.cshtml");
             }catch (Exception ex)
             {
@@ -30,6 +32,7 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
+                consultas.log("Entrando en el metodo que busca una usuario para enviar mensaje por el correo electronico");
 
                 //Obtenemos el usuario que hemos introducido en el formulario por el correo.
                 Usuarios usuarioEncontrado = consultas.buscarUsuario(correoElectronico);
@@ -66,6 +69,8 @@ namespace LinkSocial1.Controllers
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
 
+                consultas.log("Entrando en el metodo que abre la pagina de chat con el usuario buscado por el correo");
+
                 // Obtenemos el ID del usuario actual
                 var idUsuarioActual = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -97,6 +102,8 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consulta = new ServicioConsultasImpl();
+                consulta.log("Entrando en el metodo queenvia un mensaje al usuario que hemos buscado por el correo electronico");
+
                 // Obtenemos el ID del usuario actual
                 var idUsuarioActual = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
