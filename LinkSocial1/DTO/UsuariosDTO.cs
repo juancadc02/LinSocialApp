@@ -18,5 +18,6 @@
         public DateTime? fchVencimientoToken { get; set; }
         //Para poder tener imagen los usuarios.
         public string? rutaImagen { get; set; }
+        public bool correoConfirmado {  get; set; }
     }
 }

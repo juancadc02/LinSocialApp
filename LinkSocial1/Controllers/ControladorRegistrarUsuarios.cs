@@ -1,13 +1,20 @@
-﻿using DB.Modelo;
+﻿using DB;
+using DB.Modelo;
 using LinkSocial1.Servicios;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LinkSocial1.Controllers
 {
     public class ControladorRegistrarUsuarios : Controller
     {
+        private readonly GestorLinkSocialDbContext _contexto;
 
+        public ControladorRegistrarUsuarios(GestorLinkSocialDbContext contexto)
+        {
+            _contexto = contexto;
+        }
         /// <summary>
         /// Metodo encargado de cargar la pagina del formulario de registro.
         /// </summary>
@@ -26,7 +33,7 @@ namespace LinkSocial1.Controllers
                 return View("~/Views/Errores/paginaError.cshtml");
             }
         }
-        
+
         /// <summary>
         /// Metodo encargado de guardar un registro en la base de datos, comprobando previamente si el correo electronico y el dni no existe,
         /// en el caso de que existiera mostraria un mensaje de error y no podria registrarme.
@@ -40,48 +47,89 @@ namespace LinkSocial1.Controllers
         /// <param name="fchNacimiento"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult RegistrarUsuario(string nombreCompleto,string correoElectronico,string dniUsuario,string movilUsuario,string contraseña,DateTime fchNacimiento,IFormFile imagen)
+        public IActionResult RegistrarUsuario(string nombreCompleto, string correoElectronico, string dniUsuario, string movilUsuario, string contraseña, DateTime fchNacimiento, IFormFile imagen)
         {
             try
             {
                 ServicioConsultas consulta = new ServicioConsultasImpl();
-                consulta.log("Entrando en el metodo que registra un usuario en la base de datos");
+                consulta.log("Entrando en el método que registra un usuario en la base de datos");
 
                 string nombreImagen;
-                string rutaImagen="";
-                if (imagen!=null && imagen.Length > 0)
+                string rutaImagen = "";
+
+                if (imagen != null && imagen.Length > 0)
                 {
-                     nombreImagen = Guid.NewGuid().ToString() + Path.GetExtension(imagen.FileName);
+                    nombreImagen = Guid.NewGuid().ToString() + Path.GetExtension(imagen.FileName);
                     string rutaCompleta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imagenes/usuarios", nombreImagen);
-                    using(var stream = new FileStream(rutaCompleta,FileMode.Create))
+                    using (var stream = new FileStream(rutaCompleta, FileMode.Create))
                     {
                         imagen.CopyTo(stream);
                     }
                     rutaImagen = "/imagenes/usuarios/" + nombreImagen;
                 }
+
                 if (consulta.existeCorreoElectronico(correoElectronico) || consulta.existeDNI(dniUsuario))
                 {
                     TempData["ErrorRegistro"] = "El correo electrónico o el DNI ya están registrados.";
-                    return RedirectToAction("irARegistro", "ControladorRegistrarUsuarios"); // Puedes redirigir a una vista de error o a la misma página de registro
+                    return RedirectToAction("irARegistro", "ControladorRegistrarUsuarios");
                 }
 
-                //Si el correo electronico no existe, pasamos al registro del usuario.
+                // Si el correo electrónico no existe, pasamos al registro del usuario.
                 DateTime fchRegistro = DateTime.Now.ToUniversalTime();
                 string rolAcceso = "basico";
-               
-                Usuarios nuevoUsuario = new Usuarios(nombreCompleto, correoElectronico, dniUsuario, movilUsuario, contraseña, fchRegistro.Date, fchNacimiento.ToUniversalTime(), rolAcceso,rutaImagen);
-                consulta.registrarUsuario(nuevoUsuario);
-                TempData["MensajeRegistroExitoso"] = "Usuario registrado con éxito.";
-                return RedirectToAction("irAIniciarSesion", "ControladorIniciarSesion");
 
+                // Generar token para la confirmación de correo
+                string tokenConfirmacion = Guid.NewGuid().ToString();
+
+                bool correoConfirmado = false;
+                Usuarios nuevoUsuario = new Usuarios(nombreCompleto, correoElectronico, dniUsuario, movilUsuario, contraseña, fchRegistro.Date, fchNacimiento.ToUniversalTime(), rolAcceso, rutaImagen, correoConfirmado, tokenConfirmacion);
+                consulta.registrarUsuario(nuevoUsuario);
+
+                // Enviar correo de confirmación
+                consulta.EnviarEmailConfirmacion(correoElectronico, nombreCompleto, tokenConfirmacion);
+
+                TempData["MensajeRegistroExitoso"] = "Usuario registrado con éxito. Por favor, confirme su correo electrónico.";
+                return RedirectToAction("irAIniciarSesion", "ControladorIniciarSesion");
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Se ha producido un error: {0}", ex);
                 return View("~/Views/Errores/paginaError.cshtml");
-
             }
+        }
+        [HttpGet]
+        public IActionResult ConfirmarCuenta(string token)
+        {
+            try
+            {
+                ServicioConsultas consultar = new ServicioConsultasImpl();
+                consultar.log("Entrando en el método que confirma la cuenta del usuario");
 
+                // Buscar usuario por token y actualizar la confirmación de correo
+                var user= _contexto.Usuarios.SingleOrDefault(u => u.tokenRecuperacion == token);
+
+                if (user != null)
+                {
+                    user.correoConfirmado = true;
+                    user.tokenRecuperacion = null;
+                    user.fchVencimientoToken = null;
+
+                    _contexto.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    _contexto.SaveChanges();
+
+                    TempData["MensajeConfirmacionExitosa"] = "¡Cuenta confirmada exitosamente!";
+                    return View("~/Views/InicioSesion/IniciarSesion.cshtml");
+                }
+
+                TempData["MensajeTokenInvalido"] = "El token ha expirado o no es válido.";
+                return View("~/Views/Errores/paginaError.cshtml");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Se ha producido un error: {0}", ex);
+                return View("~/Views/Errores/paginaError.cshtml");
+            }
         }
     }
 }
+

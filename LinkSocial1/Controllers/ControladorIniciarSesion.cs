@@ -55,6 +55,14 @@ namespace LinkSocial1.Controllers
                 //Comprobamos si el correo y la contraseña introducida son correctos o no.
                 if (consultas.IniciarSesion(correoElectronico, contraseña, out int idUsuario, out string rolUsuario))
                 {
+                    // Verificamos si el usuario ha confirmado su correo electrónico
+                    bool correoConfirmado = consultas.VerificarCorreoConfirmado(correoElectronico);
+
+                    if (!correoConfirmado)
+                    {
+                        TempData["Error"] = "Por favor, confirme su correo electrónico para iniciar sesión.";
+                        return View("~/Views/InicioSesion/IniciarSesion.cshtml");
+                    }
                     consultas.log("Sesion Iniciada correctamente");
 
                     //Autentificamos al usuario 

@@ -2,6 +2,7 @@
 using DB.Modelo;
 using LinkSocial1.DTO;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Common;
 using NuGet.Packaging.Signing;
 using System.Net.Mail;
 
@@ -62,7 +63,10 @@ namespace LinkSocial1.Servicios
                     fchNacimiento=nuevoUsuario.fchNacimiento,
                     fchRegistro=nuevoUsuario.fchRegistro,
                     rolAcceso=nuevoUsuario.rolAcceso,
-                    rutaImagen=nuevoUsuario.rutaImagen
+                    rutaImagen=nuevoUsuario.rutaImagen,
+                    correoConfirmado=nuevoUsuario.correoConfirmado,
+                    tokenRecuperacion=nuevoUsuario.tokenRecuperacion
+                    
                 };
 
                 contexto.Usuarios.Add(nuevoUsuario);
@@ -130,7 +134,7 @@ namespace LinkSocial1.Servicios
             smtpCliente.EnableSsl = true;
             smtpCliente.UseDefaultCredentials = false;
             smtpCliente.Port = 587;
-            smtpCliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, "mepy ftvq rbui vmqq" +
+            smtpCliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, "olxd fldi ixek xjnm" +
                 "");
 
             smtpCliente.Send(mensajeDelCorreo);
@@ -138,6 +142,56 @@ namespace LinkSocial1.Servicios
             smtpCliente.Dispose();
         }
 
+        public void EnviarEmailConfirmacion(string emailDestino, string nombreUser, string tokenConfirmacion)
+        {
+            string urlDominio = "https://localhost:7294";
+
+            string EmailOrigen = "juanccaaa15@gmail.com";
+            // URL de confirmación de cuenta con el token
+            string urlDeConfirmacion = String.Format("{0}/ControladorRegistrarUsuarios/ConfirmarCuenta?token={1}", urlDominio, tokenConfirmacion);
+
+            // Contenido del correo
+            string asunto = "Confirmación de Cuenta";
+            string mensaje = $"Hola {nombreUser},\n\nBienvenido a nuestra plataforma. Por favor, confirma tu cuenta haciendo clic en el siguiente botón:\n";
+            string botonConfirmacion = $"<a href=\"{urlDeConfirmacion}\" style=\"display: inline-block; padding: 10px 20px; background-color: #28a745; color: #fff; text-decoration: none;\">Confirmar Cuenta</a>";
+            mensaje += botonConfirmacion + "\n\nGracias por unirte a nosotros.";
+
+            MailMessage mensajeDelCorreo = new MailMessage(EmailOrigen, emailDestino, asunto, mensaje);
+
+            mensajeDelCorreo.IsBodyHtml = true;
+
+            SmtpClient smtpCliente = new SmtpClient("smtp.gmail.com");
+            smtpCliente.EnableSsl = true;
+            smtpCliente.UseDefaultCredentials = false;
+            smtpCliente.Port = 587;
+            smtpCliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, "olxd fldi ixek xjnm");
+
+            smtpCliente.Send(mensajeDelCorreo);
+
+            smtpCliente.Dispose();
+        }
+
+        public bool VerificarCorreoConfirmado(string correoElectronico)
+        {
+            try
+            {
+                var usuario = dbContext.Usuarios.SingleOrDefault(u => u.correoElectronico == correoElectronico);
+
+                if (usuario != null)
+                {
+                    // Verificamos si el correo del usuario está confirmado
+                    return usuario.correoConfirmado;
+                }
+
+                // Si no encontramos al usuario, asumimos que el correo no está confirmado
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al verificar correo confirmado: {0}", ex);
+                throw; // Puedes manejar el error de otra manera según tus necesidades
+            }
+        }
         #endregion
 
         #region Metodo para subir publicaciones

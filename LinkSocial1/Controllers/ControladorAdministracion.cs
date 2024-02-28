@@ -116,7 +116,10 @@ namespace LinkSocial1.Controllers
                     }
                     usuarioEditado.rutaImagen = "/imagenes/usuarios/" + nombreImagen;
                 }
+               
+
                 // Actualiza el estado del usuario en la base de datos
+                usuarioEditado.correoConfirmado = true;
                 _contexto.Update(usuarioEditado);
                 _contexto.SaveChanges();
 
@@ -239,8 +242,9 @@ namespace LinkSocial1.Controllers
                 //Si el correo electronico no existe, pasamos al registro del usuario.
                 DateTime fchRegistro = DateTime.Now.ToUniversalTime();
                 string rolAcceso = "basico";
-
-                Usuarios nuevoUsuario = new Usuarios(nombreCompleto, correoElectronico, dniUsuario, movilUsuario, contraseña, fchRegistro.Date, fchNacimiento.ToUniversalTime(), rolAcceso, rutaImagen);
+                bool confirmacion = true;
+                string token = null;
+                Usuarios nuevoUsuario = new Usuarios(nombreCompleto, correoElectronico, dniUsuario, movilUsuario, contraseña, fchRegistro.Date, fchNacimiento.ToUniversalTime(), rolAcceso, rutaImagen, confirmacion, token);
                 consulta.registrarUsuario(nuevoUsuario);
                 TempData["MensajeRegistroExitoso"] = "Usuario registrado con éxito.";
                 return RedirectToAction("irUsuario", "ControladorAdministracion");

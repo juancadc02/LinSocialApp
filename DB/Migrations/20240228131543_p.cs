@@ -28,7 +28,8 @@ namespace DB.Migrations
                     rolAcceso = table.Column<string>(type: "text", nullable: false),
                     tokenRecuperacion = table.Column<string>(type: "text", nullable: true),
                     fchVencimientoToken = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    rutaImagen = table.Column<string>(type: "text", nullable: true)
+                    rutaImagen = table.Column<string>(type: "text", nullable: true),
+                    correoConfirmado = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -116,6 +116,13 @@
                                     @TempData["mensajeSesionCerrada"]
                                 </div>
                             }
+                            <!--Mensaje contraseña modificada-->
+                            @if (TempData["MensajeConfirmacionExitosa"] != null)
+                            {
+                                <div class="alert alert-success" role="alert">
+                                    @TempData["MensajeConfirmacionExitosa"]
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

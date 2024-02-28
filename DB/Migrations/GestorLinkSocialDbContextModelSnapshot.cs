@@ -177,6 +177,9 @@ namespace DB.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("correoConfirmado")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("correoElectronico")
                         .IsRequired()
                         .HasColumnType("text");

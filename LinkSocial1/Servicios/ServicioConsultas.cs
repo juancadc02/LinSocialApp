@@ -44,6 +44,10 @@ namespace LinkSocial1.Servicios
         /// <param name="token">El token para ver si a caducado ese correo o no.</param>
         public void EnviarEmail(string emailDestino, string nombreUser, string token);
 
+        public void EnviarEmailConfirmacion(string emailDestino, string nombreUser, string tokenConfirmacion);
+
+        public bool VerificarCorreoConfirmado(string correoElectronico);
+
         #endregion
 
         #region Metodo para subir publicaciones

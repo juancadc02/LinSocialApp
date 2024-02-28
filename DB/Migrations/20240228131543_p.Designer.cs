@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DB.Migrations
 {
     [DbContext(typeof(GestorLinkSocialDbContext))]
-    [Migration("20240219230308_p")]
+    [Migration("20240228131543_p")]
     partial class p
     {
         /// <inheritdoc />
@@ -179,6 +179,9 @@ namespace DB.Migrations
                     b.Property<string>("contraseña")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("correoConfirmado")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("correoElectronico")
                         .IsRequired()
