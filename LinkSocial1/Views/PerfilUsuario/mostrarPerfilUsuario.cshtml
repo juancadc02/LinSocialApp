@@ -1,6 +1,6 @@
-﻿@model DB.Modelo.Usuarios
+﻿@model LinkSocial1.DTO.UsuariosDTO
 @{
-    var listaPublicaciones = ViewData["listaPublicaciones"] as List<DB.Modelo.Publicaciones>;
+    var listaPublicaciones = ViewData["listaPublicacionesDto"] as List<LinkSocial1.DTO.PublicacionesDTO>;
     var publicacionEliminada = TempData["publicacionEliminada"] as string;
 
 

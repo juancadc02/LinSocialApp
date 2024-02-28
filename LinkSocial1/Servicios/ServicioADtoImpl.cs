@@ -73,5 +73,31 @@ namespace LinkSocial1.Servicios
                 rutaImagen = usuarioDAO.rutaImagen
             };
         }
+
+
+        public MensajeDto ConvertirDAOaDTOMensajes(Mensajes mensajesDAO)
+        {
+            return new MensajeDto
+            {
+                idMensaje = mensajesDAO.idMensaje,
+                contenidoMensaje = mensajesDAO.contenidoMensaje,
+                fchEnvioMensaje = mensajesDAO.fchEnvioMensaje,
+                idUsuarioQueEnvia=mensajesDAO.idUsuarioQueEnvia,
+                idUsuarioQueRecibe=mensajesDAO.idUsuarioQueRecibe,
+                usuariosEnvia=mensajesDAO.usuariosEnvia,
+                usuariosRecibe=mensajesDAO.usuariosRecibe
+                /*     public Usuarios usuariosEnvia { get; set; }
+        public Usuarios usuariosRecibe { get; set; }*/
+
+
+
+            };
+        }
+        public List<MensajeDto> ConvertirListaDAOaDTOMensajes(List<Mensajes> listaDAO)
+        {
+            return listaDAO.Select(ConvertirDAOaDTOMensajes).ToList();
+
+        }
+
     }
 }

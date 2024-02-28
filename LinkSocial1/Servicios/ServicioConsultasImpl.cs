@@ -134,7 +134,7 @@ namespace LinkSocial1.Servicios
             smtpCliente.EnableSsl = true;
             smtpCliente.UseDefaultCredentials = false;
             smtpCliente.Port = 587;
-            smtpCliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, "olxd fldi ixek xjnm" +
+            smtpCliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, "veyr bftc ymgd ygbd" +
                 "");
 
             smtpCliente.Send(mensajeDelCorreo);
@@ -164,7 +164,7 @@ namespace LinkSocial1.Servicios
             smtpCliente.EnableSsl = true;
             smtpCliente.UseDefaultCredentials = false;
             smtpCliente.Port = 587;
-            smtpCliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, "olxd fldi ixek xjnm");
+            smtpCliente.Credentials = new System.Net.NetworkCredential(EmailOrigen, "veyr bftc ymgd ygbd");
 
             smtpCliente.Send(mensajeDelCorreo);
 

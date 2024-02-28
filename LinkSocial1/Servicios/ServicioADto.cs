@@ -20,6 +20,10 @@ namespace LinkSocial1.Servicios
       
         public UsuariosDTO ConvertirDAOaDTOUsuarios(Usuarios usuarioDAO);
 
+        public MensajeDto ConvertirDAOaDTOMensajes(Mensajes mensajesDAO);
+
+        public List<MensajeDto> ConvertirListaDAOaDTOMensajes(List<Mensajes> listaDAO);
+
 
 
     }

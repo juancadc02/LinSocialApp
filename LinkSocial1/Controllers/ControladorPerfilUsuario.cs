@@ -1,4 +1,5 @@
 ﻿using DB.Modelo;
+using LinkSocial1.DTO;
 using LinkSocial1.Servicios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,8 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
+                ServicioADto aDto = new ServicioADtoImpl();
+
                 consultas.log("Entrando en el metodo que carga el perfil del usuario que tiene la sesion iniciada");
                 //Obtebemos el id de la sesion actual y lo convertimos en int
                 var claimsPrincipal = User;
@@ -27,10 +30,12 @@ namespace LinkSocial1.Controllers
 
                 //Buscamos el usuario por el id que tiene la sesion iniciada
                 Usuarios usuarioEncontrado = consultas.buscarUsuarioPorId(idUsuario);
-
+                UsuariosDTO usuarioDto = aDto.ConvertirDAOaDTOUsuarios(usuarioEncontrado);
                 //Cargamos todas las publicaciones de ese usuario en una lista
                 List<Publicaciones> listaPublicaciones = consultas.buscarPublicacionesPorIdUsuario(idUsuario);
                 //Contamos el numero de publicaciones
+                List<PublicacionesDTO> listaPublicacionesDto = aDto.ConvertirListaDAOaDTOPublicaciones(listaPublicaciones);
+
                 int numeroPublicacion = listaPublicaciones.Count;
                 // Obtenemos el número de seguidores y seguidos
                 int numeroSeguidores = consultas.ObtenerNumeroSeguidores(idUsuario);
@@ -40,9 +45,9 @@ namespace LinkSocial1.Controllers
                 ViewData["NumeroSeguidores"] = numeroSeguidores;
                 ViewData["NumeroSeguidos"] = numeroSeguidos;
                 ViewData["numeroPublicacion"] = numeroPublicacion;
-                ViewData["listaPublicaciones"] = listaPublicaciones;
+                ViewData["listaPublicacionesDto"] = listaPublicacionesDto;
 
-                return View("~/Views/PerfilUsuario/mostrarPerfilUsuario.cshtml", usuarioEncontrado);
+                return View("~/Views/PerfilUsuario/mostrarPerfilUsuario.cshtml", usuarioDto);
 
             }catch (Exception ex)
             {
@@ -57,6 +62,7 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
+                ServicioADto aDto = new ServicioADtoImpl();
                 consultas.log("Entrando en el metodo que elimina una publicacion del usuario");
                 consultas.eliminarPublicacion(idPublicacion);
                 //Mostramos los datos del usuario 
@@ -68,8 +74,12 @@ namespace LinkSocial1.Controllers
                 //Buscamos el usuario por el id que tiene la sesion iniciada
                 Usuarios usuarioEncontrado = consultas.buscarUsuarioPorId(idUsuario);
 
+                UsuariosDTO usuarioDto = aDto.ConvertirDAOaDTOUsuarios(usuarioEncontrado);
                 //Cargamos todas las publicaciones de ese usuario en una lista
                 List<Publicaciones> listaPublicaciones = consultas.buscarPublicacionesPorIdUsuario(idUsuario);
+
+                List<PublicacionesDTO> listaPublicacionesDto =aDto.ConvertirListaDAOaDTOPublicaciones(listaPublicaciones);
+
                 //Contamos el numero de publicaciones
                 int numeroPublicacion = listaPublicaciones.Count;
                 // Obtenemos el número de seguidores y seguidos
@@ -80,11 +90,11 @@ namespace LinkSocial1.Controllers
                 ViewData["NumeroSeguidores"] = numeroSeguidores;
                 ViewData["NumeroSeguidos"] = numeroSeguidos;
                 ViewData["numeroPublicacion"] = numeroPublicacion;
-                ViewData["listaPublicaciones"] = listaPublicaciones;
+                ViewData["listaPublicacionesDto"] = listaPublicacionesDto;
 
                 TempData["publicacionEliminada"] = "Publicación eliminada con éxito.";
 
-                return View("~/Views/PerfilUsuario/mostrarPerfilUsuario.cshtml", usuarioEncontrado);
+                return View("~/Views/PerfilUsuario/mostrarPerfilUsuario.cshtml", usuarioDto);
             }catch(Exception ex)
             {
                 Console.WriteLine("Se ha producido un error: {0}", ex);

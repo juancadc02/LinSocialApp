@@ -1,4 +1,5 @@
 ﻿using DB.Modelo;
+using LinkSocial1.DTO;
 using LinkSocial1.Servicios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,17 +33,19 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
+                ServicioADto Adto = new ServicioADtoImpl();
                 consultas.log("Entrando en el metodo que busca una usuario para enviar mensaje por el correo electronico");
 
                 //Obtenemos el usuario que hemos introducido en el formulario por el correo.
                 Usuarios usuarioEncontrado = consultas.buscarUsuario(correoElectronico);
 
+                UsuariosDTO usuarioDto =Adto.ConvertirDAOaDTOUsuarios(usuarioEncontrado);
                 //Si existe el usuario lo mostramos.
-                if (usuarioEncontrado != null)
+                if (usuarioDto != null)
                 {
-                    string nombreUsuario = usuarioEncontrado.nombreCompleto;
+                    string nombreUsuario = usuarioDto.nombreCompleto;
                     TempData["mensajeExito"] = "Usuario encontrado";
-                    return View("~/Views/Mensajes/PaginaPrincipalMensajes.cshtml", usuarioEncontrado);
+                    return View("~/Views/Mensajes/PaginaPrincipalMensajes.cshtml", usuarioDto);
 
                 }
                 else //Si no existe el usuario mostramos que no existe.
@@ -68,6 +71,7 @@ namespace LinkSocial1.Controllers
             try
             {
                 ServicioConsultas consultas = new ServicioConsultasImpl();
+                ServicioADto Adto = new ServicioADtoImpl();
 
                 consultas.log("Entrando en el metodo que abre la pagina de chat con el usuario buscado por el correo");
 
@@ -76,11 +80,11 @@ namespace LinkSocial1.Controllers
 
                 // Obtenemos todos los mensajes entre el usuario que tiene la sesión iniciada y al que queremos enviar un mensaje.
                 List<Mensajes> historialMensajes = consultas.ObtenerHistorialMensajes(idUsuarioActual, idUsuarioDestino);
-
+                List<MensajeDto> historialMensajesDto = Adto.ConvertirListaDAOaDTOMensajes(historialMensajes);
                 ViewBag.IdUsuarioDestino = idUsuarioDestino;
 
                 // Mostramos la página del chat con los mensajes entre esos usuarios.
-                return View("~/Views/Mensajes/PaginaChatMensaje.cshtml", historialMensajes);
+                return View("~/Views/Mensajes/PaginaChatMensaje.cshtml", historialMensajesDto);
             }
             catch (Exception ex)
             {
